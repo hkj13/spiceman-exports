@@ -312,3 +312,100 @@ html.lenis body {
     opacity: 0;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Cursor (mouse only, loaded with the motion layer)                   */
+/* ------------------------------------------------------------------ */
+
+html.has-cursor,
+html.has-cursor * {
+  cursor: none;
+}
+html.has-cursor :is(input, textarea, select, [contenteditable]) {
+  cursor: auto;
+}
+html.has-cursor :is(input:not([type="checkbox"], [type="radio"], [type="submit"]), textarea) {
+  cursor: text;
+}
+
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.cursor[data-visible="true"] {
+  opacity: 1;
+}
+.cursor[data-state="text"] {
+  opacity: 0;
+}
+.cursor-dot {
+  position: absolute;
+  left: -4px;
+  top: -4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #6b5a4e, #2b2420 60%);
+  transition: transform 0.3s var(--ease-settle), opacity 0.2s;
+}
+.cursor-ring {
+  position: absolute;
+  left: -22px;
+  top: -22px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-brown);
+  transform: scale(0.2);
+  opacity: 0;
+  transition: transform 0.4s var(--ease-settle), opacity 0.3s, background-color 0.3s;
+}
+.cursor[data-state="hover"] .cursor-ring {
+  transform: scale(1);
+  opacity: 1;
+}
+.cursor[data-state="hover"] .cursor-dot {
+  transform: scale(0.6);
+}
+.cursor[data-label="true"] .cursor-ring {
+  transform: scale(1.7);
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+}
+.cursor[data-pressed="true"] .cursor-ring {
+  transform: scale(0.8);
+}
+.cursor-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate(-50%, -50%);
+  color: var(--color-paper);
+  font-size: 0.6rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.cursor[data-label="true"] .cursor-label {
+  opacity: 1;
+}
+.cursor[data-label="true"] .cursor-dot {
+  opacity: 0;
+}
+html[data-tone="night"] .cursor-ring {
+  border-color: var(--color-paper);
+}
+html[data-tone="night"] .cursor-dot {
+  background: radial-gradient(circle at 35% 30%, #fff3c9, #e3a21a 60%);
+}
+
+/* Line masks from the text splitter: leave room for descenders. */
+.reveal-line-mask {
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
