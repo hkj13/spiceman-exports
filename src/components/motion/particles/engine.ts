@@ -399,7 +399,20 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
 
   const tick = (now: number) => {
     raf = 0;
-    if (destroyed || document.hidden) return;
+    if (destroyed) return;
+    if (document.hidden) {
+      // Nobody is watching: land the scene so page artwork is never left hidden.
+      if (!settled && scene) {
+        settled = true;
+        start = now - duration;
+        if (scene.handoff) {
+          alphaMul = 0;
+          handedOff = true;
+        }
+        scene.onSettled?.();
+      }
+      return;
+    }
 
     // Adaptive quality: if the first frames are slow, draw fewer particles.
     if (lastFrame) {
@@ -483,7 +496,7 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
           return;
         }
       }
-      build(s, !!s.instant);
+      build(s, !!s.instant || document.hidden);
       draw(performance.now());
       schedule();
     },

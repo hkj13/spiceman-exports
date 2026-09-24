@@ -15,8 +15,6 @@ export const PATHS = {
   pin: "M50 127S12 80 12 49a38 38 0 0 1 76 0c0 31-38 78-38 78Zm0-60a18 18 0 1 0 0-36 18 18 0 0 0 0 36Z",
   chilli:
     "M21 21c7-4 13 1 15 9 8 26 26 46 54 56 4 2 2 6-4 6-30 0-52-18-60-48-2-8-8-16-5-23ZM19 23c-4-6-4-12 2-16l2 2c-4 4-4 8 0 12Z",
-  finger:
-    "M12 60c0-10 10-14 20-12 4-12 14-16 20-8 6-10 18-10 20 2 10-2 20 6 16 16 6 6 2 16-8 14-6 8-20 8-26 2-8 6-24 4-28-4-10 2-16-4-14-10ZM52 40c-2-16 6-26 12-24 4 4-2 14-4 22Z",
   pod: "M50 6c18 12 22 54 2 88-2 2-4 2-6 0C28 60 32 18 50 6Zm0-4 3 6h-6Z",
   clove: "M46 32h8l-2 62h-4ZM50 10a12 12 0 1 1 0 24 12 12 0 0 1 0-24ZM36 30l10-4v8ZM64 30l-10-4v8Z",
 } as const;
@@ -62,6 +60,18 @@ export const shipShape: ShapeFn = silhouette(
   240,
   100,
 );
+
+export type Capsule = { x: number; y: number; len: number; w: number; rot: number };
+
+/** Turmeric: a knuckled rhizome with fingers branching off it. */
+export const FINGERS: Capsule[] = [
+  { x: 16, y: 58, len: 56, w: 19, rot: -4 },
+  { x: 44, y: 52, len: 34, w: 11, rot: -58 },
+  { x: 60, y: 57, len: 30, w: 10, rot: -28 },
+  { x: 30, y: 60, len: 26, w: 10, rot: 52 },
+  { x: 62, y: 60, len: 28, w: 11, rot: 18 },
+  { x: 24, y: 55, len: 24, w: 9, rot: -120 },
+];
 
 export type Disc = { cx: number; cy: number; rx: number; ry: number; rot: number };
 
@@ -109,7 +119,17 @@ const quill = silhouette("quill", (ctx) => {
 
 export const productShapes: Record<Silhouette, ShapeFn> = {
   peppercorns: discs("peppercorns"),
-  finger: pathShape("finger", PATHS.finger),
+  finger: silhouette("finger", (ctx) => {
+    for (const c of FINGERS) {
+      ctx.save();
+      ctx.translate(c.x, c.y);
+      ctx.rotate((c.rot * Math.PI) / 180);
+      ctx.beginPath();
+      ctx.roundRect(0, -c.w / 2, c.len, c.w, c.w / 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }),
   chilli: pathShape("chilli", PATHS.chilli),
   pod: pathShape("pod", PATHS.pod),
   "round-seeds": discs("round-seeds"),
