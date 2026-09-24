@@ -2,6 +2,7 @@ import { useId } from "react";
 import { PATHS } from "@/components/motion/particles/silhouettes";
 import { bed, furrows, heap, loupe, mulberry, sieve, strands } from "@/components/motion/particles/shapes";
 import type { ShapeFn } from "@/components/motion/particles/types";
+import { dotPaths } from "@/lib/dots";
 
 /**
  * A still of each particle scene, drawn as SVG on the server. It's what
@@ -49,14 +50,13 @@ export function StageArt({ kind, colors, className = "", count = 160, w = 400, h
     const out = shape(count, { x: 0, y: 0, w, h }, rng);
     return (
       <svg viewBox={`0 0 ${w} ${h}`} className={`stage-art ${className}`} aria-hidden preserveAspectRatio="xMidYMid meet">
-        {Array.from({ length: count }, (_, i) => (
-          <circle
-            key={i}
-            cx={out.pos[i * 2].toFixed(1)}
-            cy={out.pos[i * 2 + 1].toFixed(1)}
-            r={(2.4 * (out.size?.[i] ?? 1)).toFixed(2)}
-            fill={colors[Math.floor(rng() * colors.length)]}
-          />
+        {dotPaths(
+          count,
+          out.pos,
+          (i) => 2.4 * (out.size?.[i] ?? 1),
+          () => colors[Math.floor(rng() * colors.length)],
+        ).map((g) => (
+          <path key={g.fill} d={g.d} fill={g.fill} />
         ))}
       </svg>
     );

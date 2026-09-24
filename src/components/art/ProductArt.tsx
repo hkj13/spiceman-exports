@@ -3,6 +3,7 @@ import { DISC_SETS, FINGERS, PATHS } from "@/components/motion/particles/silhoue
 import { heap, mulberry } from "@/components/motion/particles/shapes";
 import type { Product } from "@/data/products";
 import { accentPalette, shade } from "@/lib/color";
+import { dotPaths } from "@/lib/dots";
 
 /**
  * Illustration of a product in its own colours: the silhouette the
@@ -86,14 +87,13 @@ export function ProductHeapArt({ product, className = "" }: { product: Product; 
   return (
     <svg viewBox="0 0 200 110" className={className} aria-hidden>
       <ellipse cx="100" cy="108" rx="92" ry="3.5" fill="#5A2E1A" opacity=".12" />
-      {Array.from({ length: count }, (_, i) => (
-        <circle
-          key={i}
-          cx={out.pos[i * 2].toFixed(1)}
-          cy={out.pos[i * 2 + 1].toFixed(1)}
-          r={(2.9 * (out.size?.[i] ?? 1)).toFixed(2)}
-          fill={palette[Math.floor(rng() * palette.length)]}
-        />
+      {dotPaths(
+        count,
+        out.pos,
+        (i) => 2.9 * (out.size?.[i] ?? 1),
+        () => palette[Math.floor(rng() * palette.length)],
+      ).map((g) => (
+        <path key={g.fill} d={g.d} fill={g.fill} />
       ))}
     </svg>
   );
