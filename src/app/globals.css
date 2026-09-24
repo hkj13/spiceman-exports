@@ -1,0 +1,314 @@
+@import "tailwindcss";
+
+/* Night chapters flip the page tone; `night:` styles respond to it. */
+@custom-variant night (&:where(html[data-tone="night"] *));
+
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+
+@theme {
+  --color-paper: #fbf7ee;
+  --color-paper-2: #f2ead8;
+  --color-rule: #ddcfb4;
+  --color-ink: #2a1810;
+  --color-brown: #5a2e1a;
+  --color-green: #1d6a2c;
+  --color-green-900: #12361c;
+  --color-chilli: #bf201b;
+  --color-turmeric: #e3a21a;
+  --color-turmeric-ink: #8c5a00;
+  --color-cream: #fbf7ee;
+
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --ease-settle: cubic-bezier(0.22, 0.9, 0.24, 1);
+  --ease-lift: cubic-bezier(0.5, 0, 0.75, 0);
+
+  --breakpoint-xs: 22.5rem;
+  --breakpoint-3xl: 120rem;
+}
+
+:root {
+  --gutter: clamp(16px, 2.5vw, 32px);
+  --margin: clamp(16px, 5vw, 96px);
+  --route-x: clamp(10px, 2.2vw, 40px);
+  --header-h: 64px;
+  color-scheme: light;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.6s var(--ease-settle), color 0.6s var(--ease-settle);
+}
+
+/* Night chapters (container, port) switch the whole page tone. */
+html[data-tone="night"] body {
+  background: var(--color-green-900);
+  color: var(--color-paper);
+}
+
+/* Paper grain: a tiny tiling turbulence, multiplied over everything. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .2 0 0 0 0 .1 0 0 0 1.6 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+html[data-tone="night"] body::before {
+  mix-blend-mode: screen;
+  opacity: 0.05;
+}
+
+/* Warm light falling from the top left. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 8% -10%, rgb(255 244 214 / 0.9), transparent 60%);
+  transition: opacity 0.6s;
+}
+html[data-tone="night"] body::after {
+  opacity: 0;
+}
+
+::selection {
+  background: var(--color-turmeric);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-green);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+html[data-tone="night"] :focus-visible,
+.on-dark :focus-visible {
+  outline-color: var(--color-turmeric);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+svg {
+  display: block;
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ */
+/* Type                                                                */
+/* ------------------------------------------------------------------ */
+
+@utility display-xxl {
+  font-family: var(--font-display);
+  font-size: clamp(3.25rem, 12vw, 12.5rem);
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144;
+}
+@utility display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 7.5vw, 7.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-weight: 400;
+  font-variation-settings: "opsz" 144;
+}
+@utility display-l {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  font-variation-settings: "opsz" 120;
+}
+@utility h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 2.2vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 500;
+  font-variation-settings: "opsz" 48;
+}
+@utility body-l {
+  font-size: clamp(1.0625rem, 1.2vw, 1.25rem);
+  line-height: 1.55;
+}
+@utility mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Italic accent words in display type */
+.display-em {
+  font-style: italic;
+  font-variation-settings: "opsz" 144;
+}
+
+/* ------------------------------------------------------------------ */
+/* Layout helpers                                                      */
+/* ------------------------------------------------------------------ */
+
+@utility wrap {
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+
+@utility grid-12 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+  @media (width >= 80rem) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+
+/* Visually hidden but readable by assistive tech */
+@utility sr-only-focusable {
+  &:not(:focus) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+/* Underline that draws in from the left */
+@utility link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s var(--ease-settle);
+  &:hover {
+    background-size: 0% 1px;
+    background-position: 100% 100%;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* View transitions                                                    */
+/* ------------------------------------------------------------------ */
+
+::view-transition-old(.page-swap) {
+  animation: 260ms var(--ease-lift) both vt-lift;
+}
+::view-transition-new(.page-swap) {
+  animation: 520ms var(--ease-settle) 140ms both vt-fall;
+}
+/* The particle canvas is live throughout; never snapshot-fade it. */
+::view-transition-group(particles),
+::view-transition-new(particles) {
+  animation: none;
+}
+::view-transition-old(particles) {
+  display: none;
+}
+::view-transition-group(site-header),
+::view-transition-group(route-line),
+::view-transition-group(whatsapp) {
+  animation: none;
+}
+::view-transition-old(site-header),
+::view-transition-old(route-line),
+::view-transition-old(whatsapp) {
+  display: none;
+}
+::view-transition-new(site-header),
+::view-transition-new(route-line),
+::view-transition-new(whatsapp) {
+  animation: none;
+}
+
+@keyframes vt-lift {
+  to {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+}
+@keyframes vt-fall {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced motion                                                      */
+/* ------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-old(.page-swap),
+  ::view-transition-new(.page-swap) {
+    animation: 180ms ease both vt-fade !important;
+  }
+  ::view-transition-old(.page-swap) {
+    animation-direction: reverse !important;
+  }
+}
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+}
