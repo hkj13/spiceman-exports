@@ -47,18 +47,13 @@ export function RouteLine() {
           />
         </div>
       ))}
-      {/* peppercorn */}
+      {/* peppercorn, carrying the current stage name */}
       <div
         className="absolute left-1/2 top-0 h-full w-0 transition-transform duration-700 ease-(--ease-settle)"
         style={{ transform: `translateY(${(stage / 7) * 100}%)` }}
       >
         <span className="absolute -left-[5px] -top-[5px] block h-2.5 w-2.5 rounded-full bg-[radial-gradient(circle_at_35%_30%,#6b5a4e,#2b2420_60%)] shadow-[0_1px_0_rgb(0_0_0/0.2)] night:bg-[radial-gradient(circle_at_35%_30%,#fff3c9,#e3a21a_60%)]" />
-      </div>
-      <div
-        className="absolute left-3 top-0 hidden transition-transform duration-700 ease-(--ease-settle) lg:block"
-        style={{ transform: `translateY(calc(${active / 7} * (100vh - var(--header-h) - 3rem) + 12px))` }}
-      >
-        <span className="mono-label block whitespace-nowrap text-[0.625rem] text-brown [writing-mode:vertical-rl] night:text-paper/70">
+        <span className="mono-label absolute left-2 top-3 hidden whitespace-nowrap text-[0.625rem] text-brown [writing-mode:vertical-rl] lg:block night:text-paper/70">
           {stages[active].n} {stages[active].label}
         </span>
       </div>

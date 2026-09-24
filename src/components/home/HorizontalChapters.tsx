@@ -17,12 +17,16 @@ import { homeScenes, type HomeSceneName } from "./scenes";
  */
 export function HorizontalChapters({ children, labelledBy }: { children: ReactNode; labelledBy?: string }) {
   const root = useRef<HTMLElement>(null);
+  // GSAP wraps the pinned element in a spacer, so pin an inner wrapper: the
+  // section React owns must keep its original parent for unmounting.
+  const pinned = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = root.current;
+    const pinEl = pinned.current;
     const tr = track.current;
-    if (!el || !tr) return;
+    if (!el || !pinEl || !tr) return;
     let cancelled = false;
     let revert = () => {};
 
@@ -58,7 +62,7 @@ export function HorizontalChapters({ children, labelledBy }: { children: ReactNo
               x: () => -distance(),
               ease: "none",
               scrollTrigger: {
-                trigger: el,
+                trigger: pinEl,
                 start: "top top",
                 end: () => `+=${distance()}`,
                 pin: true,
@@ -124,17 +128,14 @@ export function HorizontalChapters({ children, labelledBy }: { children: ReactNo
   }, []);
 
   return (
-    <section
-      ref={root}
-      aria-labelledby={labelledBy}
-      data-hscroll="off"
-      className="group/h relative overflow-x-clip data-[hscroll=on]:h-svh"
-    >
-      <div
-        ref={track}
-        className="flex flex-col group-data-[hscroll=on]/h:h-full group-data-[hscroll=on]/h:w-max group-data-[hscroll=on]/h:flex-row group-data-[hscroll=on]/h:will-change-transform"
-      >
-        {children}
+    <section ref={root} aria-labelledby={labelledBy} data-hscroll="off" className="group/h relative overflow-x-clip">
+      <div ref={pinned} className="group-data-[hscroll=on]/h:h-svh">
+        <div
+          ref={track}
+          className="flex flex-col group-data-[hscroll=on]/h:h-full group-data-[hscroll=on]/h:w-max group-data-[hscroll=on]/h:flex-row group-data-[hscroll=on]/h:will-change-transform"
+        >
+          {children}
+        </div>
       </div>
     </section>
   );
