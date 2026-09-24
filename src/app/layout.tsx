@@ -5,6 +5,7 @@ import { site } from "@/config/site";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { RouteLine } from "@/components/layout/RouteLine";
+import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { MotionRoot } from "@/components/motion/MotionRoot";
 import { NavigationWatcher } from "@/components/motion/navigation";
 import "./globals.css";
@@ -78,6 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <SiteFooter />
           </div>
         </ViewTransition>
+        <WhatsAppFloat />
       </body>
     </html>
   );
