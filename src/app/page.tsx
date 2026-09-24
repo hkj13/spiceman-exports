@@ -1,8 +1,10 @@
 import Link from "next/link";
+import { HeroHeap } from "@/components/home/HeroHeap";
 
 export default function Home() {
   return (
-    <section className="wrap grid-12 min-h-dvh items-end pb-24 pt-40">
+    <section className="wrap grid-12 relative min-h-dvh items-end pb-24 pt-40">
+      <HeroHeap />
       <h1 className="display-xxl col-span-4 md:col-span-7 xl:col-span-9">
         Pure spices, from the <span className="display-em text-green">soil</span> to the ship.
       </h1>

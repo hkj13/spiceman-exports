@@ -5,6 +5,8 @@ import { site } from "@/config/site";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { RouteLine } from "@/components/layout/RouteLine";
+import { MotionRoot } from "@/components/motion/MotionRoot";
+import { NavigationWatcher } from "@/components/motion/navigation";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -64,6 +66,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <NavigationWatcher />
+        <MotionRoot />
         <SiteHeader />
         <RouteLine />
         <ViewTransition name="page" default="page-swap">
