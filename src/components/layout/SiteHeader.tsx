@@ -45,15 +45,15 @@ export function SiteHeader() {
       <div className="wrap flex h-full items-center justify-between gap-6">
         <Link
           href="/"
-          className="group relative z-10 flex items-center gap-2.5"
+          className="group relative z-10 -ml-3 flex items-center gap-2.5 rounded-full bg-paper/80 py-1.5 pl-2 pr-4 backdrop-blur-md night:bg-green-900/70"
           aria-label={`${site.name}, home`}
         >
-          <LogoMark className="h-9 w-9 transition-transform duration-500 ease-(--ease-settle) group-hover:-rotate-6" />
+          <LogoMark className="h-8 w-8 transition-transform duration-500 ease-(--ease-settle) group-hover:-rotate-6" />
           <span className="flex flex-col leading-none">
             <span className="font-display text-[1.2rem] font-semibold tracking-[-0.01em] [font-variation-settings:'opsz'_48]">
               Spiceman
             </span>
-            <span className="mono-label mt-0.5 text-[0.6rem] text-brown">Exports</span>
+            <span className="mono-label mt-0.5 text-[0.6rem] text-brown night:text-turmeric">Exports</span>
           </span>
         </Link>
 

@@ -56,7 +56,7 @@ export function RouteLine() {
       </div>
       <div
         className="absolute left-3 top-0 hidden transition-transform duration-700 ease-(--ease-settle) lg:block"
-        style={{ transform: `translateY(calc(${(active / 7)} * (100vh - var(--header-h) - 3rem) - 50%))` }}
+        style={{ transform: `translateY(calc(${active / 7} * (100vh - var(--header-h) - 3rem) + 12px))` }}
       >
         <span className="mono-label block whitespace-nowrap text-[0.625rem] text-brown [writing-mode:vertical-rl] night:text-paper/70">
           {stages[active].n} {stages[active].label}
