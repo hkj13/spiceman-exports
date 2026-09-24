@@ -1,7 +1,7 @@
 /**
  * TODO(logo): placeholder mark drawn from the business card (mortar and
  * pestle, leaves, chilli, peppercorns). Replace with the client's vector
- * logo when supplied; keep the group ids if the intro animation should
+ * logo when supplied; keep the `pestle` group class if the intro animation should
  * still grind the pestle.
  */
 type Props = {
@@ -34,7 +34,7 @@ export function LogoMark({ className, title, compact = false }: Props) {
       <path d="M50 55c2-14 12-24 26-25-3 13-13 22-26 25Z" fill="#1D6A2C" />
       <path d="M47 55c-1-12 0-22 0-35" stroke="#12361C" strokeWidth="1.2" fill="none" opacity=".5" />
       {/* pestle */}
-      <g id="pestle">
+      <g className="pestle">
         <rect x="68" y="14" width="13" height="50" rx="6.5" transform="rotate(32 74.5 39)" fill="#6B3A22" />
         <ellipse cx="88" cy="17" rx="7.5" ry="6" transform="rotate(32 88 17)" fill="#5A2E1A" />
       </g>
