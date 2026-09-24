@@ -1,5 +1,14 @@
 import type { Rect, ShapeFn, ShapeOut } from "./types";
 
+/** Small deterministic PRNG, usable on the server for static fallbacks. */
+export const mulberry = (seed: number) => () => {
+  seed |= 0;
+  seed = (seed + 0x6d2b79f5) | 0;
+  let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+  t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+
 /* ------------------------------------------------------------------ */
 /* Procedural shapes                                                   */
 /* ------------------------------------------------------------------ */
@@ -124,6 +133,26 @@ export const loupe = (): ShapeFn => (n, r, rng) => {
   }
   return { pos, size };
 };
+
+/** Hanging strands of berries, like pepper spikes on the vine. */
+export const strands =
+  (count = 7): ShapeFn =>
+  (n, r, rng) => {
+    const pos = new Float32Array(n * 2);
+    const size = new Float32Array(n);
+    for (let i = 0; i < n; i++) {
+      const k = Math.floor(rng() * count);
+      const t = Math.pow(rng(), 0.85);
+      const x0 = r.x + r.w * ((k + 0.5) / count) + Math.sin(k * 2.3) * r.w * 0.03;
+      const top = r.y + r.h * (0.05 + 0.25 * ((k * 37) % 5) / 5);
+      const len = r.h * (0.45 + 0.15 * ((k * 13) % 4) / 4);
+      const sway = Math.sin(t * 2.4 + k) * r.w * 0.012 * t;
+      pos[i * 2] = x0 + sway + gauss(rng) * (2 + 5 * (1 - t));
+      pos[i * 2 + 1] = top + t * len;
+      size[i] = 1.05 - t * 0.4;
+    }
+    return { pos, size };
+  };
 
 /** Grains lifting off a mouth (ellipse), used as a spawn shape. */
 export const mouth = (): ShapeFn => (n, r, rng) => {

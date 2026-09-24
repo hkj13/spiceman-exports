@@ -43,6 +43,7 @@
 /* Base                                                                */
 /* ------------------------------------------------------------------ */
 
+@layer base {
 html {
   background: var(--color-paper);
   color: var(--color-ink);
@@ -120,6 +121,7 @@ a {
 img,
 svg {
   display: block;
+}
 }
 
 /* Lenis */
@@ -408,4 +410,42 @@ html[data-tone="night"] .cursor-dot {
 .reveal-line-mask {
   padding-bottom: 0.14em;
   margin-bottom: -0.14em;
+}
+
+/* Static stills of particle scenes; hidden while live particles draw them. */
+.stage-art {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.5s var(--ease-settle);
+}
+html[data-particles="on"] .stage-art {
+  opacity: 0;
+}
+
+@keyframes tag-swing {
+  0%,
+  100% {
+    transform: rotate(-1.2deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+/* Night chapters carry their own background whenever the page tone can't
+   (no JS, reduced motion, or before the particle layer boots). The wrap
+   utility's max-width is lifted so the colour runs edge to edge. */
+html:not([data-particles="on"]) .night-bg {
+  background: var(--color-green-900);
+  box-shadow: 0 0 0 100vmax var(--color-green-900);
+  clip-path: inset(0 -100vmax);
+}
+
+/* Text set for paper stays legible when the page turns to night. Paper
+   objects (tags, cards) opt out with .keep-tone. */
+html[data-tone="night"] main :is(.text-brown, .text-ink):not(.keep-tone *) {
+  color: rgb(251 247 238 / 0.78);
+}
+html[data-tone="night"] main .text-green:not(.keep-tone *) {
+  color: var(--color-turmeric);
 }

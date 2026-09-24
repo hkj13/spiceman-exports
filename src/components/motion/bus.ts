@@ -26,6 +26,8 @@ export function getTier() {
 
 export function registerEngine(e: Engine | null) {
   engine = e;
+  // Static stage art steps aside once live particles can draw the scenes.
+  document.documentElement.dataset.particles = e ? "on" : "off";
   if (e && pending) {
     // The page is already on screen: land the scene without a morph.
     e.play({ ...pending, instant: true });
