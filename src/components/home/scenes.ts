@@ -18,7 +18,7 @@ export type HomeSceneName =
   | "container"
   | "port";
 
-type Build = (anchor: Element | null, extra?: Element | null) => Scene;
+type Build = (anchor: Element | null, extra?: Element | null, palette?: readonly string[]) => Scene;
 
 export const homeScenes: Record<HomeSceneName, Build> = {
   heap: (a) => ({
@@ -39,16 +39,18 @@ export const homeScenes: Record<HomeSceneName, Build> = {
   }),
   check: (a) => ({ id: "home-check", parts: [{ anchor: a, shape: loupe(), colors: PALETTE.dried }], scatter: 80 }),
   pack: (a) => ({ id: "home-pack", parts: [{ anchor: a, shape: sackShape, colors: PALETTE.dried }], scatter: 120 }),
-  container: (a) => ({
+  container: (a, _x, palette) => ({
     id: "home-container",
-    parts: [{ anchor: a, shape: containerShape, colors: PALETTE.night }],
+    parts: [{ anchor: a, shape: containerShape, colors: palette ?? PALETTE.night }],
     scatter: 120,
   }),
-  port: (a, horizon) => ({
+  port: (a, horizon, palette) => ({
     id: "home-port",
     parts: [
-      { anchor: a, shape: shipShape, colors: PALETTE.night, weight: 3 },
-      { anchor: horizon ?? a, shape: combine([line(2), 1]), colors: ["#FBF7EE", "#E3A21A"], weight: 1, size: 0.6, alpha: 0.7 },
+      { anchor: a, shape: shipShape, colors: palette ?? PALETTE.night, weight: horizon ? 3 : 1 },
+      ...(horizon
+        ? [{ anchor: horizon, shape: combine([line(2), 1]), colors: ["#FBF7EE", "#E3A21A"], weight: 1, size: 0.6, alpha: 0.7 }]
+        : []),
     ],
     live: true,
     scatter: 140,
