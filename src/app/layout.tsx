@@ -16,8 +16,17 @@ const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
   axes: ["opsz"],
-  style: ["normal", "italic"],
   display: "swap",
+});
+
+// Italic only styles single accent words, so it isn't preloaded.
+const frauncesItalic = Fraunces({
+  variable: "--font-fraunces-italic",
+  subsets: ["latin"],
+  axes: ["opsz"],
+  style: ["italic"],
+  display: "swap",
+  preload: false,
 });
 
 const schibsted = Schibsted_Grotesk({
@@ -55,7 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${schibsted.variable} ${plexMono.variable}`}
+      className={`${fraunces.variable} ${frauncesItalic.variable} ${schibsted.variable} ${plexMono.variable}`}
     >
       <body className="min-h-dvh">
         <JsonLd />
@@ -70,7 +79,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteHeader />
         <RouteLine />
         <ViewTransition name="page" default="page-swap">
-          <div>
+          {/* Clipped here rather than on body: body overflow propagates to the
+              viewport and would not stop mobile browsers widening the page. */}
+          <div className="overflow-x-clip">
             <main id="main" className="relative z-10">
               {children}
             </main>

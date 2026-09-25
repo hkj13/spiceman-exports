@@ -187,10 +187,15 @@ html.lenis body {
   text-transform: uppercase;
 }
 
-/* Italic accent words in display type */
+/* Italic accent words in display type. The italic is its own (lazily
+   loaded) font file, so point italic display text at it explicitly. */
 .display-em {
   font-style: italic;
   font-variation-settings: "opsz" 144;
+}
+.display-em,
+.font-display.italic {
+  font-family: var(--font-fraunces-italic), var(--font-fraunces), Georgia, serif;
 }
 
 /* ------------------------------------------------------------------ */
@@ -432,13 +437,16 @@ html[data-particles="on"] .stage-art {
   }
 }
 
-/* Night chapters carry their own background whenever the page tone can't
-   (no JS, reduced motion, or before the particle layer boots). The wrap
-   utility's max-width is lifted so the colour runs edge to edge. */
-html:not([data-particles="on"]) .night-bg {
-  background: var(--color-green-900);
+/* Night chapters always carry their own background (so their text stays
+   legible whatever the page tone), extended edge to edge. While the page is
+   in its night tone the particle canvas rises above content so it can draw
+   over those backgrounds. */
+.night-bg {
   box-shadow: 0 0 0 100vmax var(--color-green-900);
   clip-path: inset(0 -100vmax);
+}
+html[data-tone="night"] canvas[data-particles-canvas] {
+  z-index: 11;
 }
 
 /* Text set for paper stays legible when the page turns to night. Paper
