@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
+import { MaskedPhoto, type MaskShape } from "@/components/art/MaskedPhoto";
 import { StageArt, type StageKind } from "@/components/art/StageArt";
+import { photos, type PhotoKey } from "@/data/photos";
 import { PALETTE } from "@/components/home/palette";
 import { Reveal } from "@/components/motion/Reveal";
 import { Slot } from "@/components/placeholder/Slot";
@@ -26,6 +28,17 @@ const ART_COLORS: Record<StageKind, readonly string[]> = {
   sack: ["#5A2E1A", "#B99459"],
   container: ["#5A2E1A", "#B99459"],
   ship: ["#5A2E1A", "#B99459"],
+};
+
+const STAGE_PHOTO: Record<string, { key: PhotoKey; shape: MaskShape }> = {
+  soil: { key: "stage-soil", shape: "pebble" },
+  harvest: { key: "stage-harvest", shape: "leaf" },
+  sun: { key: "stage-sun", shape: "seed" },
+  sort: { key: "stage-sort", shape: "arch" },
+  check: { key: "black-pepper", shape: "circle" },
+  pack: { key: "stage-pack", shape: "pebble" },
+  container: { key: "stage-container", shape: "arch" },
+  port: { key: "stage-port", shape: "seed" },
 };
 
 function Art({ kind }: { kind: StageKind }) {
@@ -77,10 +90,18 @@ export default function ProcessPage() {
                 <div data-inline-anchor className="relative my-10 aspect-[4/3] w-full max-w-[440px] lg:hidden">
                   <Art kind={s.art} />
                 </div>
-                <div className="mt-8 max-w-[58ch] space-y-5 text-[1.0625rem] lg:mt-10">
-                  {s.body.map((p) => (
-                    <p key={p.slice(0, 24)}>{p}</p>
-                  ))}
+                <div className="mt-8 grid max-w-[58ch] gap-8 lg:mt-10 lg:max-w-none lg:grid-cols-[minmax(0,58ch)_1fr] lg:items-start">
+                  <div className="space-y-5 text-[1.0625rem]">
+                    {s.body.map((p) => (
+                      <p key={p.slice(0, 24)}>{p}</p>
+                    ))}
+                  </div>
+                  <MaskedPhoto
+                    photo={photos[STAGE_PHOTO[s.id].key]}
+                    shape={STAGE_PHOTO[s.id].shape}
+                    sizes="(min-width: 1024px) 18vw, 70vw"
+                    className={`w-[min(70%,280px)] lg:w-full ${STAGE_PHOTO[s.id].shape === "circle" ? "aspect-square" : "aspect-[4/5]"}`}
+                  />
                 </div>
                 <div className="mt-10 max-w-[58ch] border-l-2 border-turmeric pl-5">
                   <p className="mono-label text-brown">You can specify</p>

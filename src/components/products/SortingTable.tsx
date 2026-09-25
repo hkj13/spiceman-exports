@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MaskedPhoto } from "@/components/art/MaskedPhoto";
 import { ProductHeapArt } from "@/components/art/ProductArt";
+import { productPhoto } from "@/data/photos";
 import { SampleTag } from "@/components/art/SampleTag";
 import { particlesLive, play } from "@/components/motion/bus";
 import { heap } from "@/components/motion/particles/shapes";
@@ -201,6 +203,15 @@ export function SortingTable({ products }: { products: Product[] }) {
                     } ${isOpen ? "block" : "hidden md:block"}`}
                   >
                     <SampleTag title={`${p.name} · ${p.botanical}`} swing={false} className="md:pt-12">
+                      {productPhoto(p.slug) && (
+                        <MaskedPhoto
+                          photo={productPhoto(p.slug)!}
+                          shape="circle"
+                          decorative
+                          sizes="72px"
+                          className="absolute right-4 top-4 aspect-square w-14"
+                        />
+                      )}
                       <dl className="space-y-2 text-[0.8125rem]">
                         <div className="flex items-center gap-2">
                           <dt className="sr-only">Colour</dt>

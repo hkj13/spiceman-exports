@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { MaskedPhoto, type MaskShape } from "@/components/art/MaskedPhoto";
 import { ProductArt } from "@/components/art/ProductArt";
+import { productPhoto } from "@/data/photos";
 import { ProductStage } from "@/components/products/ProductStage";
 import { QuoteForProduct } from "@/components/products/QuoteForProduct";
 import { Reveal } from "@/components/motion/Reveal";
@@ -31,6 +33,8 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
   if (!product) notFound();
 
   const i = products.indexOf(product);
+  const photo = productPhoto(product.slug);
+  const shape = (["seed", "pebble", "pod", "arch", "leaf"] as MaskShape[])[i % 5];
   const prev = products[(i - 1 + products.length) % products.length];
   const next = products[(i + 1) % products.length];
 
@@ -77,7 +81,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           {product.name}
         </h1>
         <div className="wrap grid-12 mt-8 items-end gap-y-10">
-          <div className="col-span-4 md:col-span-4 xl:col-span-5">
+          <div className="col-span-4 md:col-span-4 xl:col-span-5 xl:self-center">
             <p className="font-display text-2xl italic text-brown [font-variation-settings:'opsz'_36]">
               {product.botanical}
             </p>
@@ -85,14 +89,27 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
               {product.summary}
             </Reveal>
           </div>
-          <ProductStage
-            slug={product.slug}
-            silhouette={product.silhouette}
-            accent={product.accent}
-            className="col-span-3 col-start-2 aspect-square w-full max-w-[420px] md:col-span-3 md:col-start-6 xl:col-span-4 xl:col-start-8"
-          >
-            <ProductArt product={product} className="h-full w-full" />
-          </ProductStage>
+          {/* The goods photographed, with the drawn silhouette the particles form beside it */}
+          <div className="relative col-span-4 aspect-[6/5] w-full md:col-span-4 md:col-start-5 xl:col-span-6 xl:col-start-7">
+            {photo && (
+              <MaskedPhoto
+                photo={photo}
+                shape={shape}
+                echo={product.accent}
+                priority
+                sizes="(min-width: 1280px) 34vw, (min-width: 768px) 38vw, 64vw"
+                className="absolute right-0 top-0 h-full w-[58%]"
+              />
+            )}
+            <ProductStage
+              slug={product.slug}
+              silhouette={product.silhouette}
+              accent={product.accent}
+              className="absolute bottom-0 left-0 aspect-square w-[36%]"
+            >
+              <ProductArt product={product} className="h-full w-full" />
+            </ProductStage>
+          </div>
         </div>
       </header>
 
