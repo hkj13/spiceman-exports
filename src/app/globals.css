@@ -457,3 +457,37 @@ html[data-tone="night"] main :is(.text-brown, .text-ink):not(.keep-tone *) {
 html[data-tone="night"] main .text-green:not(.keep-tone *) {
   color: var(--color-turmeric);
 }
+
+/* ------------------------------------------------------------------ */
+/* Photo masks: organic shapes that stretch to their box               */
+/* ------------------------------------------------------------------ */
+
+.mask-leaf {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M50%200C86%2018%20100%2056%2050%20100%200%2056%2014%2018%2050%200Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M50%200C86%2018%20100%2056%2050%20100%200%2056%2014%2018%2050%200Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.mask-seed {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M50%200C82%206%20100%2034%20100%2055%20100%2082%2076%20100%2050%20100%2024%20100%200%2082%200%2055%200%2034%2018%206%2050%200Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M50%200C82%206%20100%2034%20100%2055%20100%2082%2076%20100%2050%20100%2024%20100%200%2082%200%2055%200%2034%2018%206%2050%200Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.mask-pod {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M50%200C76%2010%2090%2034%2090%2058%2090%2084%2073%20100%2050%20100%2027%20100%2010%2084%2010%2058%2010%2034%2024%2010%2050%200Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M50%200C76%2010%2090%2034%2090%2058%2090%2084%2073%20100%2050%20100%2027%20100%2010%2084%2010%2058%2010%2034%2024%2010%2050%200Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.mask-pebble {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M16%2012C33-2%2070%200%2086%2013%20100%2025%20102%2057%2093%2076%2081%2097%2045%20103%2022%2090%203%2079-2%2049%203%2032%206%2023%2010%2017%2016%2012Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M16%2012C33-2%2070%200%2086%2013%20100%2025%20102%2057%2093%2076%2081%2097%2045%20103%2022%2090%203%2079-2%2049%203%2032%206%2023%2010%2017%2016%2012Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.mask-arch {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%20100V50C0%2022%2022%200%2050%200S100%2022%20100%2050V100Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M0%20100V50C0%2022%2022%200%2050%200S100%2022%20100%2050V100Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.mask-circle {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M50%200A50%2050%200%201%201%2049.99%200Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%20preserveAspectRatio='none'%3E%3Cpath%20d='M50%200A50%2050%200%201%201%2049.99%200Z'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+
+/* A light, warm grade so photographs from different sources sit together. */
+.photo-grade {
+  filter: saturate(0.9) sepia(0.1) contrast(1.04) brightness(0.98);
+}
