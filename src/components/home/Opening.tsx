@@ -6,6 +6,7 @@ import { LogoMark } from "@/components/brand/LogoMark";
 import { StageArt } from "@/components/art/StageArt";
 import { play, whenReady } from "@/components/motion/bus";
 import { loadGsap } from "@/components/motion/gsap";
+import { claimStage } from "@/components/motion/liveStage";
 import { mouth } from "@/components/motion/particles/shapes";
 import { setStage } from "@/lib/journey";
 import { PALETTE } from "./palette";
@@ -39,7 +40,8 @@ export function Opening() {
 
     whenReady().then(async (engine) => {
       if (cancelled || !engine) return;
-      const heapScene = homeScenes.heap(pile.current);
+      const base = homeScenes.heap(pile.current);
+      const heapScene = { ...base, onSettled: pile.current ? claimStage(pile.current) : undefined };
       // Only grind if the reader is still at the top of the page.
       if (seen || window.scrollY > 40) {
         play(heapScene);
@@ -103,7 +105,8 @@ export function Opening() {
         end: "bottom 45%",
         onEnterBack: () => {
           setStage(0);
-          play(homeScenes.heap(pile.current));
+          const el = pile.current;
+          play({ ...homeScenes.heap(el), onSettled: el ? claimStage(el) : undefined });
         },
       });
       kill = () => st.kill();

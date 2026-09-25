@@ -417,13 +417,13 @@ html[data-tone="night"] .cursor-dot {
   margin-bottom: -0.14em;
 }
 
-/* Static stills of particle scenes; hidden while live particles draw them. */
+/* Static stills of particle scenes; hidden only while live particles are drawing that section. */
 .stage-art {
   width: 100%;
   height: 100%;
   transition: opacity 0.5s var(--ease-settle);
 }
-html[data-particles="on"] .stage-art {
+html[data-particles="on"] :is([data-live="true"], [data-live="pending"]) .stage-art {
   opacity: 0;
 }
 

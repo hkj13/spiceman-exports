@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { play } from "@/components/motion/bus";
 import { loadGsap } from "@/components/motion/gsap";
+import { claimStage } from "@/components/motion/liveStage";
 import { setStage } from "@/lib/journey";
 import { PALETTE } from "./palette";
 import { homeScenes, type HomeSceneName } from "./scenes";
@@ -46,7 +47,8 @@ export function SceneSection({ scene, stage, night, nightPalette, id, className,
       setStage(stage);
       const anchor = el.querySelector("[data-scene-anchor]");
       const extra = el.querySelector("[data-scene-extra]");
-      play(homeScenes[scene](anchor, extra, nightPalette ? PALETTE.night : undefined));
+      const settled = claimStage(el);
+      play({ ...homeScenes[scene](anchor, extra, nightPalette ? PALETTE.night : undefined), onSettled: settled });
     };
 
     loadGsap().then(({ ScrollTrigger }) => {

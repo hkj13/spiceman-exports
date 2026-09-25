@@ -3,6 +3,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { play, setTint } from "@/components/motion/bus";
 import { loadGsap } from "@/components/motion/gsap";
+import { claimStage } from "@/components/motion/liveStage";
 import { setStage } from "@/lib/journey";
 import { homeScenes, type HomeSceneName } from "./scenes";
 
@@ -39,7 +40,8 @@ export function HorizontalChapters({ children, labelledBy }: { children: ReactNo
       setStage(Number(p.dataset.stage));
       const name = p.dataset.scene as HomeSceneName;
       if (name !== "sun") setTint("#2B2420", 0);
-      play(homeScenes[name](p.querySelector("[data-scene-anchor]")));
+      const settled = claimStage(p);
+      play({ ...homeScenes[name](p.querySelector("[data-scene-anchor]")), onSettled: settled });
     };
     const sunIndex = panels.findIndex((p) => p.dataset.scene === "sun");
 

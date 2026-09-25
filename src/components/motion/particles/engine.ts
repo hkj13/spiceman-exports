@@ -39,6 +39,7 @@ uniform float uJitter;
 uniform float uAlpha;
 uniform vec4 uTint;
 uniform vec2 uOff[${MAX_PARTS}];
+uniform float uBloom;
 out vec3 vCol;
 out float vAlpha;
 out float vKind;
@@ -48,7 +49,9 @@ void main() {
   float t = clamp((uT - delay) / ${(1 - DELAY_SPREAD).toFixed(2)}, 0.0, 1.0);
   float e = 1.0 - pow(1.0 - t, 3.0);
   vec2 b = aTo.xy + uOff[int(aPart)];
-  vec2 p = mix(aFrom.xy, b, e);
+  // A bloom starts from inside its own section, so it scrolls with it.
+  vec2 a = aFrom.xy + uOff[int(aPart)] * uBloom;
+  vec2 p = mix(a, b, e);
   float arc = sin(3.14159265 * t);
   float ang = aSeed.x * 6.2831853;
   p += vec2(cos(ang), sin(ang)) * arc * uScatter * (0.35 + aSeed.y);
@@ -123,6 +126,7 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
   let duration = 1100;
   let scatterPx = 0;
   let jitter = 0;
+  let bloomOn = 0;
   let alphaMul = 1;
   let fadeStart = 0;
   let settled = true;
@@ -174,7 +178,7 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
     attr("aToCol", 3, toCol, gl.DYNAMIC_DRAW);
     attr("aSeed", 4, seed, gl.STATIC_DRAW);
     attr("aPart", 1, partIdx, gl.DYNAMIC_DRAW);
-    for (const u of ["uRes", "uDpr", "uT", "uScatter", "uTime", "uJitter", "uAlpha", "uTint", "uOff"]) {
+    for (const u of ["uRes", "uDpr", "uT", "uScatter", "uTime", "uJitter", "uAlpha", "uTint", "uOff", "uBloom"]) {
       uni[u] = gl.getUniformLocation(prog, u);
     }
     gl.enable(gl.BLEND);
@@ -227,8 +231,10 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
     const by = to[i * 4 + 1] + offsets[p * 2 + 1];
     const arc = Math.sin(Math.PI * t);
     const ang = seed[i * 4] * Math.PI * 2;
-    let x = from[i * 4] + (bx - from[i * 4]) * e;
-    let y = from[i * 4 + 1] + (by - from[i * 4 + 1]) * e;
+    const ax = from[i * 4] + offsets[p * 2] * bloomOn;
+    const ay = from[i * 4 + 1] + offsets[p * 2 + 1] * bloomOn;
+    let x = ax + (bx - ax) * e;
+    let y = ay + (by - ay) * e;
     x += Math.cos(ang) * arc * scatterPx * (0.35 + seed[i * 4 + 1]);
     y += Math.sin(ang) * arc * scatterPx * (0.35 + seed[i * 4 + 1]);
     y -= arc * scatterPx * 0.6 * seed[i * 4 + 3];
@@ -337,6 +343,30 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
       partIdx[i] = 0;
     }
 
+    // Phones: instead of flying across the page (and across the text), the
+    // old shape hands back to its drawn still and the new one blooms outward
+    // from its own centre. Clean on a small screen, still alive.
+    const small = W < 768;
+    const bloom = small && !instant && !s.from;
+    if (bloom) {
+      for (let i = 0; i < N; i++) {
+        if (i < o) {
+          const rc = parts[partIdx[i] | 0].sample;
+          const cx = rc.x + rc.w / 2;
+          const cy = rc.y + rc.h / 2;
+          const k = 0.1 + 0.2 * seed[i * 4 + 2];
+          from[i * 4] = cx + (to[i * 4] - cx) * k;
+          from[i * 4 + 1] = cy + (to[i * 4 + 1] - cy) * k;
+          from[i * 4 + 3] = to[i * 4 + 3] * 0.4;
+        } else {
+          to[i * 4] = from[i * 4];
+          to[i * 4 + 1] = from[i * 4 + 1];
+        }
+        from[i * 4 + 2] = 0;
+        fromCol.set(toCol.subarray(i * 3, i * 3 + 3), i * 3);
+      }
+    }
+
     if (instant) {
       from.set(to);
       fromCol.set(toCol);
@@ -344,9 +374,11 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
 
     upload();
     scene = s;
-    duration = s.duration ?? 1100;
-    scatterPx = s.scatter ?? Math.min(W, 1200) * 0.08;
-    jitter = s.live ? (W < 640 ? 1.5 : 2.5) : 0;
+    duration = bloom ? Math.min(s.duration ?? 1100, 850) : (s.duration ?? 1100);
+    scatterPx = bloom ? 0 : (s.scatter ?? Math.min(W, 1200) * 0.08);
+    bloomOn = bloom ? 1 : 0;
+    // No idle drift on phones.
+    jitter = s.live && !small ? 2.5 : 0;
     start = now;
     settled = instant;
     handedOff = false;
@@ -376,6 +408,7 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
       gl.uniform1f(uni.uAlpha, alphaMul);
       gl.uniform4f(uni.uTint, tint[0], tint[1], tint[2], tint[3]);
       gl.uniform2fv(uni.uOff, offsets);
+      gl.uniform1f(uni.uBloom, bloomOn);
       gl.drawArrays(gl.POINTS, 0, drawCount);
     } else if (ctx2d) {
       ctx2d.setTransform(dpr, 0, 0, dpr, 0, 0);

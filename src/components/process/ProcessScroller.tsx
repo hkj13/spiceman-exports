@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { play } from "@/components/motion/bus";
 import { loadGsap } from "@/components/motion/gsap";
+import { claimStage } from "@/components/motion/liveStage";
 import { homeScenes, type HomeSceneName } from "@/components/home/scenes";
 import { PALETTE } from "@/components/home/palette";
 import { setStage } from "@/lib/journey";
@@ -34,7 +35,9 @@ export function ProcessScroller({ stages, children }: { stages: StageMeta[]; chi
       const name = stages[i].scene;
       // Paper-tone palettes for the scenes that are drawn in night colours on Home.
       const palette = name === "container" || name === "port" ? PALETTE.dried : undefined;
-      play(homeScenes[name](anchor ?? null, null, palette));
+      const owner = (wide.matches ? sticky.current : article) as HTMLElement | null;
+      const settled = owner ? claimStage(owner) : undefined;
+      play({ ...homeScenes[name](anchor ?? null, null, palette), onSettled: settled });
     };
 
     loadGsap().then(({ ScrollTrigger }) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { bed, combine, furrows, heap, line, loupe, scatter, sieve, strands } from "@/components/motion/particles/shapes";
+import { bed, combine, furrows, heap, line, loupe, sieve, strands } from "@/components/motion/particles/shapes";
 import { containerShape, sackShape, shipShape } from "@/components/motion/particles/silhouettes";
 import type { Scene } from "@/components/motion/particles/types";
 import { PALETTE } from "./palette";
@@ -12,7 +12,6 @@ export type HomeSceneName =
   | "harvest"
   | "sun"
   | "sort"
-  | "table"
   | "check"
   | "pack"
   | "container"
@@ -32,12 +31,6 @@ export const homeScenes: Record<HomeSceneName, Build> = {
   harvest: (a) => ({ id: "home-harvest", parts: [{ anchor: a, shape: strands(7), colors: PALETTE.vine }], live: true }),
   sun: (a) => ({ id: "home-sun", parts: [{ anchor: a, shape: bed(), colors: PALETTE.greenPepper }], scatter: 60 }),
   sort: (a) => ({ id: "home-sort", parts: [{ anchor: a, shape: sieve(), colors: PALETTE.dried }], scatter: 60 }),
-  table: (a) => ({
-    id: "home-table",
-    parts: [{ anchor: a, shape: scatter(), colors: PALETTE.spice, alpha: 0.4, size: 0.75 }],
-    density: 0.22,
-    scatter: 40,
-  }),
   check: (a) => ({ id: "home-check", parts: [{ anchor: a, shape: loupe(), colors: PALETTE.dried }], scatter: 80 }),
   pack: (a, _x, palette) => ({
     id: palette ? "home-pack-night" : "home-pack",

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { particlesLive, play } from "./bus";
+import { releaseStage } from "./liveStage";
 import type { Scene } from "./particles/types";
 
 /**
@@ -24,6 +25,7 @@ export function useParticleScene(build: () => Scene | null, key: string) {
     let alive = true;
     const scene = buildRef.current();
     if (!scene) return;
+    releaseStage();
     play({
       ...scene,
       onSettled: () => {
