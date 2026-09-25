@@ -63,9 +63,10 @@ export function ProcessScroller({ stages, children }: { stages: StageMeta[]; chi
       <div className="col-span-5 hidden lg:block">
         <div className="sticky top-[calc(var(--header-h)+2rem)] flex h-[calc(100svh-var(--header-h)-4rem)] flex-col justify-between">
           <div aria-hidden>
-            <p className="font-display text-[clamp(8rem,16vw,15rem)] leading-[0.8] tracking-[-0.05em] text-rule [font-variation-settings:'opsz'_144]">
-              {s.n}
-            </p>
+            <p
+              data-n={s.n}
+              className="font-display text-[clamp(8rem,16vw,15rem)] leading-[0.8] tracking-[-0.05em] text-rule [font-variation-settings:'opsz'_144] before:content-[attr(data-n)]"
+            />
             <p className="mono-label mt-4 text-brown">{s.label}</p>
           </div>
           <div ref={sticky} className="relative aspect-[4/3] w-full max-w-[520px]">

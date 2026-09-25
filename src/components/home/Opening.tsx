@@ -138,7 +138,7 @@ export function Opening() {
         <div className="col-span-4 mt-8 flex items-center gap-6 md:col-span-4 lg:absolute lg:bottom-[5vh] lg:left-[var(--margin)] lg:mt-0">
           <Link
             href="/contact"
-            className="mono-label group inline-flex items-center gap-3 rounded-full bg-ink px-5 py-3.5 text-paper transition-colors hover:bg-green"
+            className="mono-label group inline-flex items-center gap-3 whitespace-nowrap rounded-full bg-ink px-5 py-3.5 text-paper transition-colors hover:bg-green"
             data-cursor="Quote"
           >
             Request a quote
@@ -146,7 +146,7 @@ export function Opening() {
               →
             </span>
           </Link>
-          <a href="#soil" className="mono-label link-draw text-brown">
+          <a href="#soil" className="mono-label link-draw whitespace-nowrap text-brown">
             Follow the route
           </a>
         </div>

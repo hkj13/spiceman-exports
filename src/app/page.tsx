@@ -130,9 +130,7 @@ export default function Home() {
             <div
               className={`col-span-4 md:col-span-4 xl:col-span-5 ${i % 2 ? "md:order-2 md:col-start-5 xl:col-start-7" : ""}`}
             >
-              <p aria-hidden className="display-xxl text-rule">
-                {c.n}
-              </p>
+              <p aria-hidden data-n={c.n} className="display-xxl text-rule before:content-[attr(data-n)]" />
               <ChapterLabel n={c.n} label={c.label} />
               <h2 id={c.id} className="display-l mt-5 max-w-[14ch]">
                 {c.title}
@@ -180,9 +178,7 @@ export default function Home() {
                     {p.name}
                   </Link>
                   {i < products.length - 1 && (
-                    <span aria-hidden className="text-rule">
-                      /
-                    </span>
+                    <span aria-hidden className="text-rule before:content-['/']" />
                   )}
                 </li>
               ))}
@@ -275,7 +271,7 @@ export default function Home() {
         stage={6}
         night
         labelledBy="container-title"
-        className="on-dark night-bg wrap grid-12 relative gap-y-12 py-[clamp(7rem,20vh,14rem)] text-paper"
+        className="on-dark night-bg bg-green-900 wrap grid-12 relative gap-y-12 py-[clamp(7rem,20vh,14rem)] text-paper"
       >
         <div
           data-scene-anchor
@@ -301,7 +297,7 @@ export default function Home() {
         stage={7}
         night
         labelledBy="port-title"
-        className="on-dark night-bg relative overflow-x-clip pb-10 pt-[clamp(6rem,14vh,10rem)] text-paper"
+        className="on-dark night-bg bg-green-900 relative overflow-x-clip pb-10 pt-[clamp(6rem,14vh,10rem)] text-paper"
       >
         <div className="wrap relative">
           <div data-scene-extra aria-hidden className="absolute inset-x-0 top-[clamp(9rem,26vw,22rem)] h-4" />

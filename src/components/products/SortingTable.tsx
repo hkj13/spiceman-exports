@@ -119,7 +119,7 @@ export function SortingTable({ products }: { products: Product[] }) {
               className="mono-label rounded-full px-4 py-2.5 text-brown transition-colors duration-300 aria-pressed:bg-ink aria-pressed:text-paper hover:text-ink aria-pressed:hover:text-paper"
             >
               {f.label}
-              <span className="ml-1.5 opacity-60">
+              <span className="ml-1.5">
                 {f.id === "all" ? products.length : products.filter((p) => p.category === f.id).length}
               </span>
             </button>
@@ -161,7 +161,7 @@ export function SortingTable({ products }: { products: Product[] }) {
                   key={p.slug}
                   data-out={out}
                   data-open={isOpen}
-                  className="group relative border-b border-rule data-[out=true]:hidden md:absolute md:left-[var(--x)] md:top-[var(--y)] md:w-[200px] md:-translate-x-1/2 md:border-0 md:transition-[left,top,opacity,transform] md:duration-700 md:ease-(--ease-settle) md:data-[out=true]:invisible md:data-[out=true]:block md:data-[out=true]:translate-x-[40vw] md:data-[out=true]:opacity-0 md:data-[open=true]:z-20 md:hover:z-20 md:focus-within:z-20"
+                  className="group relative border-b border-rule data-[out=true]:hidden md:absolute md:left-[clamp(100px,var(--x),calc(100%-100px))] md:top-[var(--y)] md:w-[200px] md:-translate-x-1/2 md:border-0 md:transition-[left,top,opacity,transform] md:duration-700 md:ease-(--ease-settle) md:data-[out=true]:invisible md:data-[out=true]:block md:data-[out=true]:translate-x-[40vw] md:data-[out=true]:opacity-0 md:data-[open=true]:z-20 md:hover:z-20 md:focus-within:z-20"
                   style={{ "--x": `${pos?.x}%`, "--y": `${pos?.y}px`, "--s": pos?.scale } as React.CSSProperties}
                 >
                   <button
