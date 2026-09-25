@@ -68,7 +68,10 @@ export function SiteFooter() {
 
         <div className="col-span-4 flex items-end justify-between gap-6 md:col-span-8 xl:col-span-12">
           <p className="mono-label text-[0.65rem] text-paper/60">
-            © {year} {site.legalName} · Proprietor {site.proprietor.name}
+            © {year} {site.legalName} · Proprietor {site.proprietor.name} ·{" "}
+            <Link href="/credits" className="underline-offset-4 hover:text-paper hover:underline">
+              Photo credits
+            </Link>
           </p>
           <LogoMark className="h-14 w-14 opacity-90" />
         </div>

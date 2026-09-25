@@ -2,7 +2,7 @@
 
 Website for Spiceman Exports, wholesale trading and export of spices and pulses from Lawspet, Pondicherry. Built with Next.js (App Router), TypeScript and Tailwind CSS v4, deployed on Vercel at https://spicemanexports.com.
 
-The site is one journey, from soil to shipment. A persistent particle layer (grains, seeds, peppercorns) lives in the root layout and regroups into each page's shape as you scroll and navigate.
+The site is built around one journey, from soil to shipment. Home introduces the business and its goods; **Journey** (`/journey`) walks through the eight stops in full. A persistent particle layer (grains, seeds, peppercorns) lives in the root layout and regroups into each page's shape as you scroll and navigate. Photographs sit inside organic masks (leaf, seed, pod, pebble, arch) with a light colour grade so they belong to the same world.
 
 ## Local setup
 
@@ -28,6 +28,8 @@ None are required. The quote form doesn't send email from the server. Once the f
 | Products: names, origins, grades, forms, packing, MOQ, colours | `src/data/products.ts` |
 | Process page stages | `src/content/process.ts` |
 | Home page copy | `src/app/page.tsx` |
+| Journey page copy | `src/app/journey/page.tsx` |
+| Photographs and their credits | `src/assets/photos/`, `src/data/photos.ts` |
 | Colours, type scale, motion easing | `src/app/globals.css` (`@theme` block) |
 
 ### Products
@@ -46,11 +48,12 @@ certifications: [{ name: "Spices Board of India registration (CRES)", issuer: "S
 
 ## TODO: replace with the client's own material
 
-The site uses no stock photography. Every visual is generated SVG or canvas, so nothing is pretending to be the business's own premises. Replace these once real material is available:
+Illustrations are generated in code. The photographs in `src/assets/photos` are openly licensed stock (credited in `CREDITS.md`) and are illustrative only. Replace these once real material is available:
 
 - [ ] **Logo**: `public/logo.svg`, `src/app/icon.svg` and `src/components/brand/LogoMark.tsx` hold a placeholder mortar-and-pestle drawn from the business card. Keep the `pestle` group class in `LogoMark` if the opening grind animation should still move it. Also update `src/app/apple-icon.tsx`.
 - [ ] **Proprietor portrait** (About page): a leaf with the monogram "SK" (`src/components/about/LeafStage.tsx`). Swap in a photo with `next/image` if one is supplied.
-- [ ] **Product photography** (optional): product pages use drawn silhouettes (`src/components/art/ProductArt.tsx`). Real close-up photos of the actual stock can go beside or instead of them.
+- [ ] **Product photographs**: `src/assets/photos/<product-slug>.jpg` (15 files: sorting-table tags, product pages, Home collage). Replace each with a close-up of the business's own stock, keeping the file name; then update or remove its credit in `src/data/photos.ts` and `CREDITS.md`. Full-frame close-ups (the goods filling the picture) suit the masks best.
+- [ ] **Journey photographs**: `src/assets/photos/stage-*.jpg` (soil, harvest, sun, sort, pack, container, port), used on Home, Journey and Process. Swap in the business's own photos of drying, sorting, packing and loading when available.
 - [ ] **Open Graph images**: generated from `src/og/render.tsx`. Replace with photography later if you like.
 - [ ] **Product data** marked `confirm: true` in `src/data/products.ts`.
 - [ ] **Map**: the contact page links to a Google Maps search for the street address. If the business has a Google Business Profile, use its share link in `site.mapQuery` / `MapFacade.tsx`.
