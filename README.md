@@ -1,36 +1,102 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Spiceman Exports
 
-## Getting Started
+Website for Spiceman Exports, wholesale trading and export of spices and pulses from Lawspet, Pondicherry. Built with Next.js (App Router), TypeScript and Tailwind CSS v4, deployed on Vercel at https://spicemanexports.com.
 
-First, run the development server:
+The site is one journey, from soil to shipment. A persistent particle layer (grains, seeds, peppercorns) lives in the root layout and regroups into each page's shape as you scroll and navigate.
+
+## Local setup
+
+Requirements: Node.js 20.9 or newer, npm.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run lint
+npm run build && npm start   # production build locally
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+None are required. The quote form doesn't send email from the server. Once the fields are valid, it opens the message in WhatsApp (either number) or the visitor's email app, and the text can always be copied. Without JavaScript the form falls back to a plain `mailto:` post.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Editing content
 
-## Learn More
+| What | Where |
+|---|---|
+| Business facts: name, tagline, proprietor, address, phones, email | `src/config/site.ts` |
+| Trust content: certifications, testimonials, clients, stats | `src/config/site.ts` (arrays, empty by default) |
+| Products: names, origins, grades, forms, packing, MOQ, colours | `src/data/products.ts` |
+| Process page stages | `src/content/process.ts` |
+| Home page copy | `src/app/page.tsx` |
+| Colours, type scale, motion easing | `src/app/globals.css` (`@theme` block) |
 
-To learn more about Next.js, take a look at the following resources:
+### Products
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Each product in `src/data/products.ts` is a typed object. Change any string and the product page, sorting table, spec list, quote form, sitemap and Open Graph image all update. To add a product, copy an entry, give it a unique `slug`, and pick a `silhouette` for its particle shape. `accent` is the spice's own colour. `ink` is a darker version of it that stays readable as text on the cream background (aim for at least 4.5:1 contrast).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Every product currently has `confirm: true`. Origins and grades are the usual Indian trade values (typical growing regions and standard grade names) and still need the business to confirm them. MOQ is "On request" everywhere. HS codes are left out; add `hsCode` to show one on the product page.
 
-## Deploy on Vercel
+### Trust content (certifications, testimonials, clients, stats)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+These lists are deliberately empty. While a list is empty, its section is hidden on the live site; in development it shows as a dashed "Placeholder" box so you can see where it will go. Add only entries the business can document, for example:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```ts
+certifications: [{ name: "Spices Board of India registration (CRES)", issuer: "Spices Board", id: "…" }],
+```
+
+## TODO: replace with the client's own material
+
+The site uses no stock photography. Every visual is generated SVG or canvas, so nothing is pretending to be the business's own premises. Replace these once real material is available:
+
+- [ ] **Logo**: `public/logo.svg`, `src/app/icon.svg` and `src/components/brand/LogoMark.tsx` hold a placeholder mortar-and-pestle drawn from the business card. Keep the `pestle` group class in `LogoMark` if the opening grind animation should still move it. Also update `src/app/apple-icon.tsx`.
+- [ ] **Proprietor portrait** (About page): a leaf with the monogram "SK" (`src/components/about/LeafStage.tsx`). Swap in a photo with `next/image` if one is supplied.
+- [ ] **Product photography** (optional): product pages use drawn silhouettes (`src/components/art/ProductArt.tsx`). Real close-up photos of the actual stock can go beside or instead of them.
+- [ ] **Open Graph images**: generated from `src/og/render.tsx`. Replace with photography later if you like.
+- [ ] **Product data** marked `confirm: true` in `src/data/products.ts`.
+- [ ] **Map**: the contact page links to a Google Maps search for the street address. If the business has a Google Business Profile, use its share link in `site.mapQuery` / `MapFacade.tsx`.
+
+## Motion, accessibility and performance notes
+
+- **Particles** (`src/components/motion/particles/engine.ts`): a small custom WebGL2 point renderer with a Canvas2D fallback. It picks a quality tier from the device (cores, memory, data saver, screen size) and halves the particle count if early frames are slow. It stops rendering when a scene has settled or handed off, and when the tab is hidden.
+- **Handoff**: particles form a shape, then fade while the crisp SVG version appears. On first load the SVG is already there (server-rendered); after client-side navigation it waits for the particles.
+- **Reduced motion**: particles, smooth scroll, pinned and horizontal scenes, and the custom cursor are all switched off. Pages show static SVG stills of each scene, and transitions become short fades.
+- **Page transitions** use React's `<ViewTransition>` (built into the Next.js App Router). The particle canvas, header, route line and WhatsApp button have their own transition names, so they stay live and don't cross-fade.
+- **Scroll choreography** uses GSAP ScrollTrigger and Lenis, both loaded after the first paint. Pinned elements are always an inner wrapper, never a component's root node, so React can unmount pages cleanly.
+
+## Deploying on Vercel
+
+1. Push this repository to GitHub (it lives at `hkj13/spiceman-exports`).
+2. In Vercel, choose **Add New → Project**, import the repository, keep the detected **Next.js** preset, and click **Deploy**. No environment variables or `vercel.json` are needed.
+3. Every push to `main` deploys to production; pull requests get preview URLs.
+
+### Pointing spicemanexports.com to Vercel
+
+1. In the Vercel project, open **Settings → Domains** and add `spicemanexports.com` and `www.spicemanexports.com`. Set one to redirect to the other (the site's canonical URLs use `https://spicemanexports.com`, so redirect `www` to the apex).
+2. At your domain registrar, create the DNS records Vercel shows. Typically:
+   - `A` record for `@` → `76.76.21.21`
+   - `CNAME` record for `www` → `cname.vercel-dns.com`
+
+   Or switch the domain's nameservers to Vercel's if you prefer Vercel to manage DNS.
+3. Wait for DNS to propagate (minutes to a few hours). Vercel issues the HTTPS certificate automatically.
+4. Afterwards, submit `https://spicemanexports.com/sitemap.xml` in Google Search Console.
+
+If the canonical domain ever changes, update `site.url` in `src/config/site.ts`.
+
+## Project structure
+
+```
+src/
+  app/                 routes, metadata, OG images, sitemap, robots, manifest
+  components/
+    motion/            particle engine, scene bus, smooth scroll, cursor, reveals
+    home/              journey chapters and scenes
+    products/          sorting table, pulse pour, product stage, quote CTA
+    process/ about/ contact/ layout/ art/ brand/ seo/ placeholder/
+  config/site.ts       business facts and trust-content slots
+  data/products.ts     product catalogue
+  content/process.ts   process stages
+  lib/                 quote schema, colour helpers, SEO helper
+  og/                  Open Graph renderer and its fonts
+```
+
+See `CREDITS.md` for fonts and licences.
