@@ -41,7 +41,7 @@ export function HorizontalChapters({ children, labelledBy }: { children: ReactNo
       const name = p.dataset.scene as HomeSceneName;
       if (name !== "sun") setTint("#2B2420", 0);
       const settled = claimStage(p);
-      play({ ...homeScenes[name](p.querySelector("[data-scene-anchor]")), onSettled: settled });
+      play({ ...homeScenes[name](p.querySelector("[data-scene-anchor]")), flow: true, onSettled: settled });
     };
     const sunIndex = panels.findIndex((p) => p.dataset.scene === "sun");
 

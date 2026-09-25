@@ -23,6 +23,8 @@ type Props = {
   night?: boolean;
   /** Draw the scene in the night palette (for scenes that are paper-toned by default) */
   nightPalette?: boolean;
+  /** Grains fly here from the previous shape, on phones too */
+  flow?: boolean;
   id?: string;
   className?: string;
   labelledBy?: string;
@@ -34,7 +36,7 @@ type Props = {
  * the particles form its scene inside the element marked
  * `data-scene-anchor` (and `data-scene-extra`, if present).
  */
-export function SceneSection({ scene, stage, night, nightPalette, id, className, labelledBy, children }: Props) {
+export function SceneSection({ scene, stage, night, nightPalette, flow, id, className, labelledBy, children }: Props) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -48,7 +50,7 @@ export function SceneSection({ scene, stage, night, nightPalette, id, className,
       const anchor = el.querySelector("[data-scene-anchor]");
       const extra = el.querySelector("[data-scene-extra]");
       const settled = claimStage(el);
-      play({ ...homeScenes[scene](anchor, extra, nightPalette ? PALETTE.night : undefined), onSettled: settled });
+      play({ ...homeScenes[scene](anchor, extra, nightPalette ? PALETTE.night : undefined), flow, onSettled: settled });
     };
 
     loadGsap().then(({ ScrollTrigger }) => {
@@ -85,7 +87,7 @@ export function SceneSection({ scene, stage, night, nightPalette, id, className,
       cancelled = true;
       kill();
     };
-  }, [scene, stage, night, nightPalette]);
+  }, [scene, stage, night, nightPalette, flow]);
 
   return (
     <section ref={ref} id={id} className={className} aria-labelledby={labelledBy}>

@@ -35,9 +35,10 @@ const SPEC_PARAMETERS = [
 
 export default function JourneyPage() {
   return (
-    <>
+    <div className="journey-flow">
       {/* Opening: title, the eight stops, and two scenes from the road */}
       <SceneSection
+        flow
         scene="rail"
         stage={0}
         labelledBy="journey-title"
@@ -52,7 +53,8 @@ export default function JourneyPage() {
             Eight stops between a field in India and a port abroad. Scroll to follow a spice along the way.
           </p>
           <nav aria-label="Stops on the journey" className="mt-10">
-            <ol className="flex flex-wrap gap-x-5 gap-y-2">
+            {/* A fixed grid on phones: its height can't change when the label font arrives */}
+            <ol className="grid grid-cols-2 gap-x-5 gap-y-2 md:flex md:flex-wrap">
               {stages.map((st) => (
                 <li key={st.id}>
                   <a href={`#${st.id}`} className="mono-label link-draw text-brown hover:text-ink">
@@ -64,13 +66,13 @@ export default function JourneyPage() {
             <div data-scene-anchor aria-hidden className="mt-6 h-3 w-full max-w-[640px]" />
           </nav>
         </div>
-        {/* First on phones, so the heading rewrapping when fonts arrive can't push it around */}
-        <div className="order-first col-span-4 md:order-none md:col-span-3 xl:col-span-5">
+        {/* Photos are for larger screens; on phones the journey is text and particles */}
+        <div className="hidden md:col-span-3 md:block xl:col-span-5">
           <PhotoFrame
             photo={photos["stage-harvest"]}
             priority
             sizes="(min-width: 1280px) 38vw, (min-width: 768px) 36vw, 92vw"
-            className="aspect-[4/3] w-full md:aspect-[4/5]"
+            className="hidden md:block aspect-[4/3] w-full md:aspect-[4/5]"
           />
           <p className="mono-label mt-3 text-[0.65rem] text-brown">Pepper spikes on the vine</p>
         </div>
@@ -78,6 +80,7 @@ export default function JourneyPage() {
 
       {/* 01 Soil */}
       <SceneSection
+        flow
         scene="soil"
         stage={0}
         id="soil"
@@ -107,7 +110,7 @@ export default function JourneyPage() {
           <PhotoFrame
             photo={photos["stage-soil"]}
             sizes="(min-width: 1280px) 22vw, 60vw"
-            className="mt-12 aspect-[4/5] w-[min(62%,320px)] md:ml-[18%]"
+            className="hidden md:block mt-12 aspect-[4/5] w-[min(62%,320px)] md:ml-[18%]"
           />
         </div>
       </SceneSection>
@@ -181,7 +184,7 @@ export default function JourneyPage() {
                 <PhotoFrame
                   photo={c.photo}
                   sizes="(min-width: 1024px) 14vw, 36vw"
-                  className="mb-3 aspect-[5/4] w-[clamp(120px,14vw,220px)]"
+                  className="hidden md:block mb-3 aspect-[5/4] w-[clamp(120px,14vw,220px)]"
                 />
               </div>
               <ChapterLabel n={c.n} label={c.label} />
@@ -243,6 +246,7 @@ export default function JourneyPage() {
 
       {/* 05 Check */}
       <SceneSection
+        flow
         scene="check"
         stage={4}
         id="check"
@@ -265,7 +269,7 @@ export default function JourneyPage() {
             <PhotoFrame
               photo={photos["black-pepper"]}
               sizes="160px"
-              className="mb-4 aspect-square w-[clamp(84px,10vw,150px)]"
+              className="hidden md:block mb-4 aspect-square w-[clamp(84px,10vw,150px)]"
             />
           </div>
         </div>
@@ -296,6 +300,7 @@ export default function JourneyPage() {
 
       {/* 06 Pack */}
       <SceneSection
+        flow
         scene="pack"
         stage={5}
         id="pack"
@@ -315,7 +320,7 @@ export default function JourneyPage() {
           <PhotoFrame
             photo={photos["stage-pack"]}
             sizes="(min-width: 1280px) 26vw, 70vw"
-            className="mt-12 aspect-[5/4] w-[min(80%,380px)]"
+            className="hidden md:block mt-12 aspect-[5/4] w-[min(80%,380px)]"
           />
         </div>
         <div
@@ -328,6 +333,7 @@ export default function JourneyPage() {
 
       {/* 07 Container (night) */}
       <SceneSection
+        flow
         scene="container"
         stage={6}
         id="container"
@@ -344,7 +350,7 @@ export default function JourneyPage() {
         <PhotoFrame
           photo={photos["stage-container"]}
           sizes="(min-width: 1280px) 24vw, (min-width: 768px) 30vw, 70vw"
-          className="col-span-3 aspect-[4/5] w-full max-w-[340px] md:col-span-3 xl:col-span-4 xl:col-start-1 xl:max-w-[360px]"
+          className="hidden md:block col-span-3 aspect-[4/5] w-full max-w-[340px] md:col-span-3 xl:col-span-4 xl:col-start-1 xl:max-w-[360px]"
         />
         <div className="col-span-4 self-end md:col-span-5 md:col-start-4 xl:col-span-5 xl:col-start-6">
           <ChapterLabel n="07" label="Container" dark />
@@ -360,6 +366,7 @@ export default function JourneyPage() {
 
       {/* 08 Port (night) + quote */}
       <SceneSection
+        flow
         scene="port"
         stage={7}
         id="port"
@@ -382,7 +389,7 @@ export default function JourneyPage() {
             <PhotoFrame
               photo={photos["stage-port"]}
               sizes="(min-width: 1280px) 22vw, 60vw"
-              className="mt-12 aspect-[3/2] w-[min(80%,380px)]"
+              className="hidden md:block mt-12 aspect-[3/2] w-[min(80%,380px)]"
             />
             <div className="mt-12 space-y-3 text-paper/85">
               <p className="mono-label text-turmeric">Or talk to us directly</p>
@@ -405,6 +412,6 @@ export default function JourneyPage() {
           </div>
         </div>
       </SceneSection>
-    </>
+    </div>
   );
 }

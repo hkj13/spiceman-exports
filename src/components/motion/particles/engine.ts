@@ -347,7 +347,7 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
     // old shape hands back to its drawn still and the new one blooms outward
     // from its own centre. Clean on a small screen, still alive.
     const small = W < 768;
-    const bloom = small && !instant && !s.from;
+    const bloom = small && !instant && !s.from && !s.flow;
     if (bloom) {
       for (let i = 0; i < N; i++) {
         if (i < o) {
@@ -375,7 +375,8 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
     upload();
     scene = s;
     duration = bloom ? Math.min(s.duration ?? 1100, 850) : (s.duration ?? 1100);
-    scatterPx = bloom ? 0 : (s.scatter ?? Math.min(W, 1200) * 0.08);
+    // Flowing scenes on phones travel as a slightly tighter stream.
+    scatterPx = bloom ? 0 : (s.scatter ?? Math.min(W, 1200) * 0.08) * (small ? 0.5 : 1);
     bloomOn = bloom ? 1 : 0;
     // No idle drift on phones.
     jitter = s.live && !small ? 2.5 : 0;

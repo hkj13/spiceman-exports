@@ -423,6 +423,13 @@ html[data-tone="night"] .cursor-dot {
   height: 100%;
   transition: opacity 0.5s var(--ease-settle);
 }
+/* On phones the Journey flows as it originally did: the particles are the
+   shapes, and the drawn stills stay out of the way. */
+@media (max-width: 767px) {
+  html[data-particles="on"] .journey-flow .stage-art {
+    opacity: 0;
+  }
+}
 html[data-particles="on"] :is([data-live="true"], [data-live="pending"]) .stage-art {
   opacity: 0;
 }

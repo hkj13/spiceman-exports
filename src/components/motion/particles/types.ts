@@ -41,6 +41,8 @@ export type Scene = {
   handoff?: boolean;
   /** Keep a gentle drift going after settling */
   live?: boolean;
+  /** Keep the flowing flight between shapes on phones too (no in-place bloom) */
+  flow?: boolean;
   /** Skip the morph (used when the layer boots onto an already-rendered page) */
   instant?: boolean;
   onSettled?: () => void;
