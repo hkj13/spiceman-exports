@@ -34,8 +34,10 @@ export function MaskedPhoto({
   priority,
   decorative,
 }: Props) {
+  // Positioned by the caller (absolute/fixed) or as a normal relative box.
+  const position_ = /\b(absolute|fixed)\b/.test(className) ? "" : "relative";
   return (
-    <figure className={`relative ${className}`}>
+    <figure className={`${position_} ${className}`}>
       {echo && (
         <span
           aria-hidden
