@@ -146,9 +146,9 @@ export function Opening() {
               →
             </span>
           </Link>
-          <a href="#soil" className="mono-label link-draw whitespace-nowrap text-brown">
+          <Link href="/journey" className="mono-label link-draw whitespace-nowrap text-brown" data-cursor="Go">
             Follow the route
-          </a>
+          </Link>
         </div>
       </div>
 

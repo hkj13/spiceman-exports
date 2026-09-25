@@ -62,11 +62,12 @@ export const site = {
 } as const;
 
 export const nav = [
-  { href: "/", label: "Journey", stage: "01" },
-  { href: "/products", label: "Products", stage: "02" },
-  { href: "/process", label: "Process", stage: "03" },
-  { href: "/about", label: "About", stage: "04" },
-  { href: "/contact", label: "Get a quote", stage: "05" },
+  { href: "/", label: "Home", stage: "01" },
+  { href: "/journey", label: "Journey", stage: "02" },
+  { href: "/products", label: "Products", stage: "03" },
+  { href: "/process", label: "Process", stage: "04" },
+  { href: "/about", label: "About", stage: "05" },
+  { href: "/contact", label: "Get a quote", stage: "06" },
 ] as const;
 
 /** The eight stages of the soil-to-shipment journey, shared by Home and Process. */

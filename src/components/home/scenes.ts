@@ -16,7 +16,8 @@ export type HomeSceneName =
   | "check"
   | "pack"
   | "container"
-  | "port";
+  | "port"
+  | "rail";
 
 type Build = (anchor: Element | null, extra?: Element | null, palette?: readonly string[]) => Scene;
 
@@ -33,12 +34,22 @@ export const homeScenes: Record<HomeSceneName, Build> = {
   sort: (a) => ({ id: "home-sort", parts: [{ anchor: a, shape: sieve(), colors: PALETTE.dried }], scatter: 60 }),
   table: (a) => ({
     id: "home-table",
-    parts: [{ anchor: a, shape: scatter(), colors: PALETTE.spice, alpha: 0.55, size: 0.8 }],
-    density: 0.35,
+    parts: [{ anchor: a, shape: scatter(), colors: PALETTE.spice, alpha: 0.4, size: 0.75 }],
+    density: 0.22,
     scatter: 40,
   }),
   check: (a) => ({ id: "home-check", parts: [{ anchor: a, shape: loupe(), colors: PALETTE.dried }], scatter: 80 }),
-  pack: (a) => ({ id: "home-pack", parts: [{ anchor: a, shape: sackShape, colors: PALETTE.dried }], scatter: 120 }),
+  pack: (a, _x, palette) => ({
+    id: palette ? "home-pack-night" : "home-pack",
+    parts: [{ anchor: a, shape: sackShape, colors: palette ?? PALETTE.dried }],
+    scatter: 120,
+  }),
+  rail: (a) => ({
+    id: "home-rail",
+    parts: [{ anchor: a, shape: line(3), colors: PALETTE.spice, size: 0.9 }],
+    density: 0.55,
+    scatter: 80,
+  }),
   container: (a, _x, palette) => ({
     id: "home-container",
     parts: [{ anchor: a, shape: containerShape, colors: palette ?? PALETTE.night }],

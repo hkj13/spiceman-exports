@@ -59,7 +59,7 @@ export function SiteHeader() {
           <span className="sr-only">, home</span>
         </Link>
 
-        <nav aria-label="Primary" className="hidden md:block">
+        <nav aria-label="Primary" className="hidden lg:block">
           <ul className="flex items-center gap-1 rounded-full bg-paper/80 px-2 py-1.5 backdrop-blur-md night:bg-green-900/70">
             {nav.map((item) => {
               const active = isActive(item.href);
@@ -92,7 +92,7 @@ export function SiteHeader() {
         <button
           ref={toggleRef}
           type="button"
-          className="mono-label relative z-10 flex items-center gap-2 rounded-full bg-paper/85 px-4 py-2.5 text-ink backdrop-blur-md md:hidden"
+          className="mono-label relative z-10 flex items-center gap-2 rounded-full bg-paper/85 px-4 py-2.5 text-ink backdrop-blur-md lg:hidden"
           aria-expanded={open}
           aria-controls={menuId}
           onClick={() => setOpen((v) => !v)}
@@ -113,7 +113,7 @@ export function SiteHeader() {
       <div
         id={menuId}
         hidden={!open}
-        className="fixed inset-0 bg-paper px-[var(--margin)] pt-[calc(var(--header-h)+2rem)] md:hidden"
+        className="fixed inset-0 bg-paper px-[var(--margin)] pt-[calc(var(--header-h)+2rem)] lg:hidden"
       >
         <nav aria-label="Mobile">
           <ol className="flex flex-col gap-1">

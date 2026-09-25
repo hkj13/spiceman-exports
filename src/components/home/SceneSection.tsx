@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { play } from "@/components/motion/bus";
 import { loadGsap } from "@/components/motion/gsap";
 import { setStage } from "@/lib/journey";
+import { PALETTE } from "./palette";
 import { homeScenes, type HomeSceneName } from "./scenes";
 
 // The page is in its night tone while any night chapter is on screen.
@@ -19,6 +20,8 @@ type Props = {
   stage: number;
   /** Switch the page to its night tone while this section is active */
   night?: boolean;
+  /** Draw the scene in the night palette (for scenes that are paper-toned by default) */
+  nightPalette?: boolean;
   id?: string;
   className?: string;
   labelledBy?: string;
@@ -30,7 +33,7 @@ type Props = {
  * the particles form its scene inside the element marked
  * `data-scene-anchor` (and `data-scene-extra`, if present).
  */
-export function SceneSection({ scene, stage, night, id, className, labelledBy, children }: Props) {
+export function SceneSection({ scene, stage, night, nightPalette, id, className, labelledBy, children }: Props) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -43,7 +46,7 @@ export function SceneSection({ scene, stage, night, id, className, labelledBy, c
       setStage(stage);
       const anchor = el.querySelector("[data-scene-anchor]");
       const extra = el.querySelector("[data-scene-extra]");
-      play(homeScenes[scene](anchor, extra));
+      play(homeScenes[scene](anchor, extra, nightPalette ? PALETTE.night : undefined));
     };
 
     loadGsap().then(({ ScrollTrigger }) => {
@@ -80,7 +83,7 @@ export function SceneSection({ scene, stage, night, id, className, labelledBy, c
       cancelled = true;
       kill();
     };
-  }, [scene, stage, night]);
+  }, [scene, stage, night, nightPalette]);
 
   return (
     <section ref={ref} id={id} className={className} aria-labelledby={labelledBy}>

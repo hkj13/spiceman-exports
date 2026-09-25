@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const pages = [
     { path: "", priority: 1 },
+    { path: "/journey", priority: 0.8 },
     { path: "/products", priority: 0.9 },
     { path: "/process", priority: 0.7 },
     { path: "/about", priority: 0.6 },
