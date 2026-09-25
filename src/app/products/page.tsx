@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { LazyPour } from "@/components/products/LazyPour";
 import { SortingTable } from "@/components/products/SortingTable";
 import { Reveal } from "@/components/motion/Reveal";
 import { products } from "@/data/products";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Products: spices and pulses",
   description:
     "Black pepper, turmeric, red chilli, cardamom, coriander, cumin, fenugreek, mustard, cloves and cinnamon; toor, moong, urad, chana and masoor. Origins, grades, packing and MOQ for each.",
-  alternates: { canonical: "/products" },
-};
+  path: "/products",
+});
 
 export default function ProductsPage() {
   return (

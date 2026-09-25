@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { StageArt } from "@/components/art/StageArt";
 import { SampleTag } from "@/components/art/SampleTag";
@@ -12,9 +13,7 @@ import { Slot } from "@/components/placeholder/Slot";
 import { site, whatsappLink } from "@/config/site";
 import { products } from "@/data/products";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+export const metadata: Metadata = pageMeta({ description: site.description, path: "/" });
 
 const SPEC_PARAMETERS = [
   ["Moisture", "% max"],

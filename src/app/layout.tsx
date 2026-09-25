@@ -8,6 +8,8 @@ import { RouteLine } from "@/components/layout/RouteLine";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { MotionRoot } from "@/components/motion/MotionRoot";
 import { NavigationWatcher } from "@/components/motion/navigation";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pageMeta } from "@/lib/seo";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -38,13 +40,8 @@ export const metadata: Metadata = {
     default: `${site.name}: spices and pulses, wholesale and export from Pondicherry`,
     template: `%s · ${site.name}`,
   },
-  description: site.description,
+  ...pageMeta({ description: site.description, path: "/" }),
   applicationName: site.name,
-  openGraph: {
-    type: "website",
-    siteName: site.name,
-    locale: site.locale,
-  },
   formatDetection: { telephone: false, email: false, address: false },
 };
 
@@ -61,6 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${fraunces.variable} ${schibsted.variable} ${plexMono.variable}`}
     >
       <body className="min-h-dvh">
+        <JsonLd />
         <a
           href="#main"
           className="sr-only-focusable fixed left-4 top-4 z-[70] rounded-sm bg-ink px-4 py-3 text-paper"

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { StageArt, type StageKind } from "@/components/art/StageArt";
 import { PALETTE } from "@/components/home/palette";
@@ -8,12 +9,12 @@ import { ProcessScroller } from "@/components/process/ProcessScroller";
 import { site } from "@/config/site";
 import { processStages } from "@/content/process";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Process and quality: from soil to shipment",
   description:
     "How spices and pulses move from the field to the port: sourcing regions, harvest, drying, cleaning and grading, checking against your specification, packing, container loading and export documents.",
-  alternates: { canonical: "/process" },
-};
+  path: "/process",
+});
 
 const ART_COLORS: Record<StageKind, readonly string[]> = {
   heap: PALETTE.spice,

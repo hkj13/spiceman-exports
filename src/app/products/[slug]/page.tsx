@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductArt } from "@/components/art/ProductArt";
@@ -17,11 +18,11 @@ export async function generateMetadata({ params }: PageProps<"/products/[slug]">
   const { slug } = await params;
   const p = getProduct(slug);
   if (!p) return {};
-  return {
+  return pageMeta({
     title: `${p.name}: wholesale and export`,
     description: `${p.name} (${p.botanical}) from India. ${p.summary} Grades: ${p.grades.join(", ")}. Packing and MOQ on request.`,
-    alternates: { canonical: `/products/${p.slug}` },
-  };
+    path: `/products/${p.slug}`,
+  });
 }
 
 export default async function ProductPage({ params }: PageProps<"/products/[slug]">) {

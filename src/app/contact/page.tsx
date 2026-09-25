@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import { Suspense } from "react";
 import { WhatsAppGlyph } from "@/components/brand/WhatsAppGlyph";
 import { MapFacade } from "@/components/contact/MapFacade";
@@ -7,12 +8,12 @@ import { QuoteForm } from "@/components/contact/QuoteForm";
 import { Reveal } from "@/components/motion/Reveal";
 import { site, whatsappLink } from "@/config/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "Get a quote",
   description:
     "Request a quote for spices and pulses from Spiceman Exports, Pondicherry. WhatsApp +91 98945 21812 or +91 87782 62010, or email spicemanexports@gmail.com.",
-  alternates: { canonical: "/contact" },
-};
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

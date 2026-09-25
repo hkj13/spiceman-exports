@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { LeafStage } from "@/components/about/LeafStage";
 import { Reveal } from "@/components/motion/Reveal";
 import { Slot } from "@/components/placeholder/Slot";
 import { site, whatsappLink } from "@/config/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMeta({
   title: "About: Shanthi Krishnamurthy, Lawspet, Pondicherry",
   description:
     "Spiceman Exports is a proprietorship run by Shanthi Krishnamurthy from Lawspet, Pondicherry, trading spices and pulses wholesale and for export.",
-  alternates: { canonical: "/about" },
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   const { proprietor, address } = site;
