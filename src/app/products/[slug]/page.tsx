@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { MaskedPhoto, type MaskShape } from "@/components/art/MaskedPhoto";
+import { PhotoFrame } from "@/components/art/PhotoFrame";
 import { ProductArt } from "@/components/art/ProductArt";
 import { productPhoto } from "@/data/photos";
 import { ProductStage } from "@/components/products/ProductStage";
@@ -34,7 +34,6 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
 
   const i = products.indexOf(product);
   const photo = productPhoto(product.slug);
-  const shape = (["seed", "pebble", "pod", "arch", "leaf"] as MaskShape[])[i % 5];
   const prev = products[(i - 1 + products.length) % products.length];
   const next = products[(i + 1) % products.length];
 
@@ -93,10 +92,8 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
           {/* The goods photographed, with the drawn silhouette the particles form beside it */}
           <div className="relative col-span-4 aspect-[6/5] w-full md:col-span-4 md:col-start-5 xl:col-span-6 xl:col-start-7">
             {photo && (
-              <MaskedPhoto
+              <PhotoFrame
                 photo={photo}
-                shape={shape}
-                echo={product.accent}
                 priority
                 sizes="(min-width: 1280px) 34vw, (min-width: 768px) 38vw, 64vw"
                 className="absolute right-0 top-0 h-full w-[58%]"

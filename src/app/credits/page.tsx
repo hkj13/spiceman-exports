@@ -24,12 +24,12 @@ export default function CreditsPage() {
       <p className="body-l mt-6 max-w-[56ch] text-brown">
         Photographs on this site are openly licensed and used with thanks to their authors. They illustrate the goods
         and the trade in general; they are not photographs of Spiceman Exports&apos; own stock or premises. Each has
-        been resized, cropped to a shape and lightly colour-graded.
+        been resized, cropped and lightly colour-graded.
       </p>
       <ul className="mt-12 grid gap-x-10 gap-y-6 md:grid-cols-2">
         {list.map(([key, p]) => (
           <li key={key} className="flex gap-4 border-t border-rule pt-5">
-            <span className="relative h-16 w-16 flex-none overflow-hidden rounded-full bg-paper-2">
+            <span className="relative h-16 w-16 flex-none overflow-hidden rounded-[4px] bg-paper-2">
               <Image src={p.src} alt="" fill sizes="64px" className="object-cover" />
             </span>
             <div className="min-w-0 text-sm">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MaskedPhoto } from "@/components/art/MaskedPhoto";
+import { PhotoFrame } from "@/components/art/PhotoFrame";
 import { ProductHeapArt } from "@/components/art/ProductArt";
 import { productPhoto } from "@/data/photos";
 import { SampleTag } from "@/components/art/SampleTag";
@@ -204,9 +204,8 @@ export function SortingTable({ products }: { products: Product[] }) {
                   >
                     <SampleTag title={`${p.name} · ${p.botanical}`} swing={false} className="md:pt-12">
                       {productPhoto(p.slug) && (
-                        <MaskedPhoto
+                        <PhotoFrame
                           photo={productPhoto(p.slug)!}
-                          shape="circle"
                           decorative
                           sizes="72px"
                           className="absolute right-4 top-4 aspect-square w-14"

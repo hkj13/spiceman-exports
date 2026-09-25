@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
-import { MaskedPhoto, type MaskShape } from "@/components/art/MaskedPhoto";
+import { PhotoFrame } from "@/components/art/PhotoFrame";
 import { StageArt, type StageKind } from "@/components/art/StageArt";
 import { photos, type PhotoKey } from "@/data/photos";
 import { PALETTE } from "@/components/home/palette";
@@ -30,15 +30,15 @@ const ART_COLORS: Record<StageKind, readonly string[]> = {
   ship: ["#5A2E1A", "#B99459"],
 };
 
-const STAGE_PHOTO: Record<string, { key: PhotoKey; shape: MaskShape }> = {
-  soil: { key: "stage-soil", shape: "pebble" },
-  harvest: { key: "stage-harvest", shape: "leaf" },
-  sun: { key: "stage-sun", shape: "seed" },
-  sort: { key: "stage-sort", shape: "arch" },
-  check: { key: "black-pepper", shape: "circle" },
-  pack: { key: "stage-pack", shape: "pebble" },
-  container: { key: "stage-container", shape: "arch" },
-  port: { key: "stage-port", shape: "seed" },
+const STAGE_PHOTO: Record<string, PhotoKey> = {
+  soil: "stage-soil",
+  harvest: "stage-harvest",
+  sun: "stage-sun",
+  sort: "stage-sort",
+  check: "black-pepper",
+  pack: "stage-pack",
+  container: "stage-container",
+  port: "stage-port",
 };
 
 function Art({ kind }: { kind: StageKind }) {
@@ -96,11 +96,10 @@ export default function ProcessPage() {
                       <p key={p.slice(0, 24)}>{p}</p>
                     ))}
                   </div>
-                  <MaskedPhoto
-                    photo={photos[STAGE_PHOTO[s.id].key]}
-                    shape={STAGE_PHOTO[s.id].shape}
+                  <PhotoFrame
+                    photo={photos[STAGE_PHOTO[s.id]]}
                     sizes="(min-width: 1024px) 18vw, 70vw"
-                    className={`w-[min(70%,280px)] lg:w-full ${STAGE_PHOTO[s.id].shape === "circle" ? "aspect-square" : "aspect-[4/5]"}`}
+                    className="aspect-[4/3] w-full max-w-[420px] lg:aspect-[4/5]"
                   />
                 </div>
                 <div className="mt-10 max-w-[58ch] border-l-2 border-turmeric pl-5">

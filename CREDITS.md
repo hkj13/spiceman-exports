@@ -2,7 +2,7 @@
 
 ## Photographs
 
-Photographs in `src/assets/photos` are openly licensed for commercial use and come from Wikimedia Commons and Openverse (Flickr). Each is resized, and on the site cropped to an organic mask shape with a light colour grade. Photos under CC BY-SA remain under that licence.
+Photographs in `src/assets/photos` are openly licensed for commercial use and come from Wikimedia Commons and Openverse (Flickr). Each is resized, and on the site shown in a plain rectangular frame with a light colour grade. Photos under CC BY-SA remain under that licence.
 
 They are **illustrative**: they show the goods and the general trade, not Spiceman Exports' own stock, people or premises. Replace them with the business's own photographs when available (see the README).
 

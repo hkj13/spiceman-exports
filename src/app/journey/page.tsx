@@ -3,7 +3,7 @@ import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { StageArt } from "@/components/art/StageArt";
 import { SampleTag } from "@/components/art/SampleTag";
-import { MaskedPhoto } from "@/components/art/MaskedPhoto";
+import { PhotoFrame } from "@/components/art/PhotoFrame";
 import { ChapterLabel } from "@/components/home/ChapterLabel";
 import { HorizontalChapters } from "@/components/home/HorizontalChapters";
 import { QuoteStarter } from "@/components/home/QuoteStarter";
@@ -65,22 +65,14 @@ export default function JourneyPage() {
           </nav>
         </div>
         {/* First on phones, so the heading rewrapping when fonts arrive can't push it around */}
-        <div className="relative order-first col-span-4 mb-6 h-[min(70vw,520px)] md:order-none md:mb-0 md:col-span-3 md:h-[440px] xl:col-span-5 xl:h-[560px]">
-          <MaskedPhoto
+        <div className="order-first col-span-4 md:order-none md:col-span-3 xl:col-span-5">
+          <PhotoFrame
             photo={photos["stage-harvest"]}
-            shape="leaf"
-            echo="#7C8F48"
             priority
-            sizes="(min-width: 1280px) 26vw, (min-width: 768px) 30vw, 60vw"
-            className="absolute right-[4%] top-0 h-[78%] w-[58%]"
+            sizes="(min-width: 1280px) 38vw, (min-width: 768px) 36vw, 92vw"
+            className="aspect-[4/3] w-full md:aspect-[4/5]"
           />
-          <MaskedPhoto
-            photo={photos["stage-sun"]}
-            shape="pebble"
-            echo="#E3A21A"
-            sizes="(min-width: 1280px) 22vw, (min-width: 768px) 26vw, 50vw"
-            className="absolute bottom-0 left-0 h-[46%] w-[56%]"
-          />
+          <p className="mono-label mt-3 text-[0.65rem] text-brown">Pepper spikes on the vine</p>
         </div>
       </SceneSection>
 
@@ -112,10 +104,8 @@ export default function JourneyPage() {
             Where a spice comes from is the first thing worth asking about, so every product page lists the
             regions it is sourced from.
           </Reveal>
-          <MaskedPhoto
+          <PhotoFrame
             photo={photos["stage-soil"]}
-            shape="arch"
-            echo="#B99459"
             sizes="(min-width: 1280px) 22vw, 60vw"
             className="mt-12 aspect-[4/5] w-[min(62%,320px)] md:ml-[18%]"
           />
@@ -139,7 +129,6 @@ export default function JourneyPage() {
             body: "Pepper spikes are picked as the first berries on them turn red. Chillies are left on the plant to colour. Turmeric is lifted once its leaves dry back, eight or nine months after planting.",
             art: <StageArt kind="strands" colors={PALETTE.vine} count={220} w={400} h={420} />,
             photo: photos["stage-harvest"],
-            shape: "pebble" as const,
             aspect: "aspect-[40/42]",
           },
           {
@@ -156,7 +145,6 @@ export default function JourneyPage() {
             body: "Spread thin on drying yards, green pepper darkens and wrinkles over several days as the skin oxidises. Drying brings moisture down far enough for the crop to keep through a sea voyage.",
             art: <StageArt kind="bed" colors={PALETTE.dried} count={240} w={480} h={300} />,
             photo: photos["stage-sun"],
-            shape: "seed" as const,
             aspect: "aspect-[48/30]",
           },
           {
@@ -173,7 +161,6 @@ export default function JourneyPage() {
             body: "Stones, stalks and light berries come out. Seed spices are machine-cleaned or run through a sortex. Pepper is graded by density in grams per litre, cardamom by pod size in millimetres.",
             art: <StageArt kind="sieve" colors={PALETTE.dried} count={220} w={400} h={320} />,
             photo: photos["stage-sort"],
-            shape: "pod" as const,
             aspect: "aspect-[40/32]",
           },
         ].map((c, i) => (
@@ -191,9 +178,8 @@ export default function JourneyPage() {
             >
               <div className="flex items-end gap-5">
                 <p aria-hidden data-n={c.n} className="display-xxl text-rule before:content-[attr(data-n)]" />
-                <MaskedPhoto
+                <PhotoFrame
                   photo={c.photo}
-                  shape={c.shape}
                   sizes="(min-width: 1024px) 14vw, 36vw"
                   className="mb-3 aspect-[5/4] w-[clamp(120px,14vw,220px)]"
                 />
@@ -276,10 +262,8 @@ export default function JourneyPage() {
             <div data-scene-anchor className="relative aspect-square w-[min(58vw,340px)] flex-none">
               <StageArt kind="loupe" colors={PALETTE.dried} count={200} w={300} h={300} />
             </div>
-            <MaskedPhoto
+            <PhotoFrame
               photo={photos["black-pepper"]}
-              shape="circle"
-              echo="#DDCFB4"
               sizes="160px"
               className="mb-4 aspect-square w-[clamp(84px,10vw,150px)]"
             />
@@ -328,10 +312,8 @@ export default function JourneyPage() {
             Bag weight, marking and labels follow your instructions, and private label is available on
             request.
           </Reveal>
-          <MaskedPhoto
+          <PhotoFrame
             photo={photos["stage-pack"]}
-            shape="pebble"
-            echo="#B99459"
             sizes="(min-width: 1280px) 26vw, 70vw"
             className="mt-12 aspect-[5/4] w-[min(80%,380px)]"
           />
@@ -359,10 +341,8 @@ export default function JourneyPage() {
         >
           <StageArt kind="container" colors={["#E3A21A", "#FBF7EE"]} />
         </div>
-        <MaskedPhoto
+        <PhotoFrame
           photo={photos["stage-container"]}
-          shape="arch"
-          echo="#E3A21A"
           sizes="(min-width: 1280px) 24vw, (min-width: 768px) 30vw, 70vw"
           className="col-span-3 aspect-[4/5] w-full max-w-[340px] md:col-span-3 xl:col-span-4 xl:col-start-1 xl:max-w-[360px]"
         />
@@ -399,10 +379,8 @@ export default function JourneyPage() {
             <Reveal as="h2" id="port-title" className="display-xxl mt-6">
               Tell us what you need to <em className="display-em text-turmeric">ship</em>.
             </Reveal>
-            <MaskedPhoto
+            <PhotoFrame
               photo={photos["stage-port"]}
-              shape="seed"
-              echo="#E3A21A"
               sizes="(min-width: 1280px) 22vw, 60vw"
               className="mt-12 aspect-[3/2] w-[min(80%,380px)]"
             />
