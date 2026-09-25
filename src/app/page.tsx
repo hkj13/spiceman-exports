@@ -1,330 +1,259 @@
 import type { Metadata } from "next";
-import { pageMeta } from "@/lib/seo";
+import Image from "next/image";
 import Link from "next/link";
+import { MaskedPhoto, type MaskShape } from "@/components/art/MaskedPhoto";
 import { StageArt } from "@/components/art/StageArt";
-import { SampleTag } from "@/components/art/SampleTag";
-import { HorizontalChapters } from "@/components/home/HorizontalChapters";
+import { ChapterLabel } from "@/components/home/ChapterLabel";
 import { Opening } from "@/components/home/Opening";
 import { QuoteStarter } from "@/components/home/QuoteStarter";
 import { SceneSection } from "@/components/home/SceneSection";
-import { PALETTE } from "@/components/home/palette";
+import { Parallax } from "@/components/motion/Parallax";
 import { Reveal } from "@/components/motion/Reveal";
-import { Slot } from "@/components/placeholder/Slot";
-import { site, whatsappLink } from "@/config/site";
-import { products } from "@/data/products";
+import { site, stages, whatsappLink } from "@/config/site";
+import { photos, type Photo, type PhotoKey } from "@/data/photos";
+import { getProduct, products, pulses, spices } from "@/data/products";
+import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({ description: site.description, path: "/" });
 
-const SPEC_PARAMETERS = [
-  ["Moisture", "% max"],
-  ["Extraneous matter", "% max"],
-  ["Grade or size", "e.g. 550 g/l, 8 mm"],
-  ["Colour value", "ASTA, for chilli"],
-  ["Curcumin", "%, for turmeric"],
-  ["Volatile oil", "ml/100 g"],
-  ["Packing and marking", "bag, weight, label"],
-] as const;
-
-function ChapterLabel({ n, label, dark = false }: { n?: string; label: string; dark?: boolean }) {
+/** A photo set inline with display type, like a word. */
+function Pill({ photo, shape = "pebble" }: { photo: Photo; shape?: MaskShape }) {
   return (
-    <p className={`mono-label flex items-center gap-3 ${dark ? "text-turmeric" : "text-brown"}`}>
-      <span className={`inline-block h-px w-8 ${dark ? "bg-turmeric" : "bg-brown"}`} aria-hidden />
-      {n ? `${n} · ${label}` : label}
-    </p>
+    <span
+      aria-hidden
+      className={`mask-${shape} relative mx-[0.12em] inline-block h-[0.74em] w-[1.7em] -translate-y-[0.06em] overflow-hidden align-baseline`}
+    >
+      <Image src={photo.src} alt="" fill sizes="160px" className="photo-grade object-cover" />
+    </span>
   );
 }
+
+/** The collage: placement, shape and drift for each featured product. */
+const FEATURED: { slug: string; shape: MaskShape; box: string; aspect: string; speed: number; echo?: string }[] = [
+  { slug: "black-pepper", shape: "seed", box: "col-span-4 md:col-span-4 xl:col-span-4 xl:col-start-1", aspect: "aspect-[4/5]", speed: 0.4, echo: "#5A2E1A" },
+  { slug: "turmeric", shape: "pod", box: "col-span-2 md:col-span-2 md:mt-40 xl:col-span-2 xl:col-start-6", aspect: "aspect-[3/5]", speed: -0.5 },
+  { slug: "red-chilli", shape: "pebble", box: "col-span-2 mt-16 md:col-span-2 md:mt-10 xl:col-span-3 xl:col-start-9", aspect: "aspect-[5/4]", speed: 0.7, echo: "#E3A21A" },
+  { slug: "cardamom", shape: "circle", box: "col-span-2 md:col-span-2 md:col-start-2 xl:col-span-2 xl:col-start-2", aspect: "aspect-square", speed: -0.3 },
+  { slug: "cumin", shape: "leaf", box: "col-span-2 mt-10 md:col-span-2 md:mt-24 xl:col-span-3 xl:col-start-5", aspect: "aspect-[4/5]", speed: 0.5, echo: "#B99459" },
+  { slug: "masoor", shape: "arch", box: "col-span-4 md:col-span-3 md:col-start-6 xl:col-span-3 xl:col-start-10", aspect: "aspect-[5/4]", speed: -0.6 },
+];
+
+/** A photograph for each stop on the route (Check shows a close-up under inspection). */
+const STOP_PHOTO: Record<string, PhotoKey> = {
+  soil: "stage-soil",
+  harvest: "stage-harvest",
+  sun: "stage-sun",
+  sort: "stage-sort",
+  check: "black-pepper",
+  pack: "stage-pack",
+  container: "stage-container",
+  port: "stage-port",
+};
 
 export default function Home() {
   return (
     <>
       <Opening />
 
-      {/* 01 Soil */}
-      <SceneSection
-        scene="soil"
-        stage={0}
-        id="soil"
-        labelledBy="soil-title"
-        className="wrap grid-12 relative scroll-mt-24 items-center gap-y-10 py-[clamp(6rem,16vh,12rem)]"
-      >
-        <div
-          data-scene-anchor
-          className="relative col-span-4 aspect-[4/3] md:col-span-5 xl:col-span-6 xl:-ml-[4vw]"
-        >
-          <StageArt kind="furrows" colors={PALETTE.soil} count={260} />
-        </div>
-        <div className="col-span-4 md:col-span-3 xl:col-span-5 xl:col-start-8">
-          <ChapterLabel n="01" label="Soil" />
-          <Reveal as="h2" id="soil-title" className="display-xl mt-6">
-            It starts in the <em className="display-em">ground</em>.
-          </Reveal>
-          <Reveal as="p" by="fade" className="body-l mt-8 max-w-[46ch] text-brown">
-            Pepper vines on the wet slopes of Wayanad and Kodagu. Turmeric in the red soils around Erode.
-            Cumin in the dry fields of north Gujarat. Each crop has a region it grows best in and a season
-            when it is ready.
-          </Reveal>
-          <Reveal as="p" by="fade" delay={0.1} className="mt-5 max-w-[46ch] text-brown">
-            Where a spice comes from is the first thing worth asking about, so every product page lists the
-            regions it is sourced from.
-          </Reveal>
-        </div>
-      </SceneSection>
-
-      {/* 02–04 Harvest, Sun, Sort */}
-      <HorizontalChapters labelledBy="harvest-title">
-        {[
-          {
-            scene: "harvest",
-            stage: 1,
-            n: "02",
-            label: "Harvest",
-            id: "harvest-title",
-            title: (
-              <>
-                Picked when it is <em className="display-em">ready</em>.
-              </>
-            ),
-            body: "Pepper spikes are picked as the first berries on them turn red. Chillies are left on the plant to colour. Turmeric is lifted once its leaves dry back, eight or nine months after planting.",
-            art: <StageArt kind="strands" colors={PALETTE.vine} count={220} w={400} h={420} />,
-            aspect: "aspect-[40/42]",
-          },
-          {
-            scene: "sun",
-            stage: 2,
-            n: "03",
-            label: "Sun",
-            id: "sun-title",
-            title: (
-              <>
-                Green turns <em className="display-em">black</em> in the sun.
-              </>
-            ),
-            body: "Spread thin on drying yards, green pepper darkens and wrinkles over several days as the skin oxidises. Drying brings moisture down far enough for the crop to keep through a sea voyage.",
-            art: <StageArt kind="bed" colors={PALETTE.dried} count={240} w={480} h={300} />,
-            aspect: "aspect-[48/30]",
-          },
-          {
-            scene: "sort",
-            stage: 3,
-            n: "04",
-            label: "Sort",
-            id: "sort-title",
-            title: (
-              <>
-                Sieved, cleaned, <em className="display-em">graded</em>.
-              </>
-            ),
-            body: "Stones, stalks and light berries come out. Seed spices are machine-cleaned or run through a sortex. Pepper is graded by density in grams per litre, cardamom by pod size in millimetres.",
-            art: <StageArt kind="sieve" colors={PALETTE.dried} count={220} w={400} h={320} />,
-            aspect: "aspect-[40/32]",
-          },
-        ].map((c, i) => (
-          <article
-            key={c.scene}
-            data-panel
-            data-scene={c.scene}
-            data-stage={c.stage}
-            aria-labelledby={c.id}
-            className="wrap grid-12 relative flex-none items-center gap-y-10 py-[clamp(5rem,12vh,9rem)] group-data-[hscroll=on]/h:h-full group-data-[hscroll=on]/h:w-[86vw] group-data-[hscroll=on]/h:max-w-none group-data-[hscroll=on]/h:py-0"
-          >
-            <div
-              className={`col-span-4 md:col-span-4 xl:col-span-5 ${i % 2 ? "md:order-2 md:col-start-5 xl:col-start-7" : ""}`}
-            >
-              <p aria-hidden data-n={c.n} className="display-xxl text-rule before:content-[attr(data-n)]" />
-              <ChapterLabel n={c.n} label={c.label} />
-              <h2 id={c.id} className="display-l mt-5 max-w-[14ch]">
-                {c.title}
-              </h2>
-              <p className="mt-6 max-w-[44ch] text-brown">{c.body}</p>
-            </div>
-            <div
-              data-scene-anchor
-              className={`relative col-span-4 w-full ${c.aspect} md:col-span-4 xl:col-span-6 ${i % 2 ? "md:order-1 xl:col-start-1" : "xl:col-start-7"}`}
-            >
-              {c.art}
-            </div>
-          </article>
-        ))}
-      </HorizontalChapters>
-
-      {/* The table: what is traded */}
+      {/* What we do, in one sentence with the goods set into it */}
       <SceneSection
         scene="table"
-        stage={3}
-        labelledBy="table-title"
-        className="relative py-[clamp(6rem,18vh,14rem)]"
+        stage={0}
+        labelledBy="intro-title"
+        className="relative py-[clamp(6rem,18vh,13rem)]"
       >
         <div data-scene-anchor aria-hidden className="absolute inset-0" />
-        <div className="wrap grid-12 relative">
-          <div className="col-span-4 md:col-span-7 xl:col-span-10 xl:col-start-2">
-            <ChapterLabel label="What we trade" />
-            <Reveal as="h2" id="table-title" className="display-l mt-6 max-w-[18ch]">
-              Ten spices and five pulses, traded whole, split or ground.
-            </Reveal>
-            <ul className="mt-12 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-display text-[clamp(1.75rem,4.2vw,4rem)] leading-[1.12] tracking-[-0.02em] [font-variation-settings:'opsz'_120]">
-              {products.map((p, i) => (
-                <li key={p.slug} className="flex items-baseline gap-2">
-                  <Link
-                    href={`/products/${p.slug}`}
-                    className="group relative inline-flex items-baseline gap-2 transition-colors duration-300 hover:text-[var(--ink)] focus-visible:text-[var(--ink)]"
-                    style={{ "--ink": p.ink } as React.CSSProperties}
-                    data-cursor="Open"
-                  >
-                    <span
-                      aria-hidden
-                      className="inline-block h-[0.32em] w-[0.32em] -translate-y-[0.12em] rounded-full transition-transform duration-500 ease-(--ease-settle) group-hover:scale-150"
-                      style={{ background: p.accent }}
-                    />
-                    {p.name}
-                  </Link>
-                  {i < products.length - 1 && (
-                    <span aria-hidden className="text-rule before:content-['/']" />
-                  )}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/products"
-              className="mono-label link-draw mt-12 inline-block text-green"
-              data-cursor="Open"
-            >
+        <div className="wrap grid-12 relative gap-y-12">
+          <div className="col-span-4 md:col-span-8 xl:col-span-10 xl:col-start-2">
+            <ChapterLabel label="What we do" />
+            <h2 id="intro-title" className="display-l mt-8 max-w-[22ch] leading-[1.12]">
+              We trade <Pill photo={photos["black-pepper"]} /> spices and <Pill photo={photos.moong} shape="seed" />{" "}
+              pulses in wholesale lots, and prepare them for buyers{" "}
+              <em className="display-em text-green">abroad</em>
+              <Pill photo={photos["stage-port"]} shape="arch" />.
+            </h2>
+          </div>
+          <div className="col-span-4 md:col-span-4 md:col-start-5 xl:col-span-4 xl:col-start-8">
+            <p className="text-brown">
+              {spices.map((p) => p.name).join(", ")}. {pulses.map((p) => p.name).join(", ")}. Whole, split or
+              ground, each with its own spec sheet.
+            </p>
+            <Link href="/products" className="mono-label link-draw mt-6 inline-block text-green" data-cursor="Open">
               Open the sorting table →
             </Link>
           </div>
         </div>
       </SceneSection>
 
-      {/* 05 Check */}
-      <SceneSection
-        scene="check"
-        stage={4}
-        labelledBy="check-title"
-        className="wrap grid-12 relative items-center gap-y-16 py-[clamp(6rem,16vh,12rem)]"
-      >
-        <div className="col-span-4 md:col-span-4 xl:col-span-5 xl:col-start-2">
-          <ChapterLabel n="05" label="Check" />
-          <Reveal as="h2" id="check-title" className="display-xl mt-6">
-            Your spec, <em className="display-em">written down</em>.
-          </Reveal>
-          <Reveal as="p" by="fade" className="body-l mt-8 max-w-[42ch] text-brown">
-            Buyers in different markets ask for different limits. Send the specification you buy to, and the
-            quote is made against it, parameter by parameter.
-          </Reveal>
-          <div data-scene-anchor className="relative mt-10 aspect-square w-[min(72vw,340px)]">
-            <StageArt kind="loupe" colors={PALETTE.dried} count={200} w={300} h={300} />
+      {/* From the table: a collage of the goods themselves */}
+      <section aria-labelledby="table-title" className="relative py-[clamp(4rem,10vh,8rem)]">
+        <div className="wrap flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <ChapterLabel label="From the table" />
+            <Reveal as="h2" id="table-title" className="display-xl mt-6">
+              The goods, <em className="display-em">up close</em>.
+            </Reveal>
           </div>
+          <Link href="/products" className="mono-label link-draw text-green" data-cursor="Open">
+            All {products.length} products →
+          </Link>
         </div>
-        <div className="col-span-4 md:col-span-4 md:col-start-5 xl:col-span-4 xl:col-start-8">
-          <SampleTag title="Specification · to be filled by the buyer">
-            <dl className="divide-y divide-rule font-mono text-[0.8125rem]">
-              {SPEC_PARAMETERS.map(([k, v]) => (
-                <div key={k} className="flex items-baseline justify-between gap-6 py-2.5">
-                  <dt>{k}</dt>
-                  <dd className="text-right text-brown">{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </SampleTag>
-          <Slot label="certifications" source="site.certifications in src/config/site.ts" items={site.certifications}>
-            {(items) => (
-              <ul className="mt-10 space-y-2">
-                {items.map((c) => (
-                  <li key={c.name} className="mono-label text-brown">
-                    {c.name} · {c.issuer}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Slot>
+
+        <Parallax className="wrap grid-12 mt-16 items-start gap-y-14 md:mt-24">
+          {FEATURED.map((f) => {
+            const p = getProduct(f.slug)!;
+            return (
+              <Link
+                key={f.slug}
+                href={`/products/${p.slug}`}
+                data-speed={f.speed}
+                data-cursor="Open"
+                className={`group block ${f.box}`}
+              >
+                <MaskedPhoto
+                  photo={photos[f.slug as PhotoKey]}
+                  shape={f.shape}
+                  echo={f.echo}
+                  sizes="(min-width: 1280px) 30vw, (min-width: 768px) 40vw, 50vw"
+                  className={`w-full ${f.aspect}`}
+                />
+                <span className="mt-4 flex items-baseline justify-between gap-3">
+                  <span className="h3 transition-colors duration-300 group-hover:text-[var(--ink)]" style={{ "--ink": p.ink } as React.CSSProperties}>
+                    {p.name}
+                  </span>
+                  <span aria-hidden className="mono-label text-brown transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
+                <span className="mono-label mt-1 block text-[0.65rem] text-brown">
+                  {p.category === "spice" ? "Spice" : "Pulse"} · {p.origin[0].split(" (")[0]}
+                </span>
+              </Link>
+            );
+          })}
+        </Parallax>
+      </section>
+
+      {/* The route, in eight stops: a teaser for the journey page */}
+      <SceneSection
+        scene="rail"
+        stage={3}
+        labelledBy="route-title"
+        className="relative py-[clamp(6rem,16vh,12rem)]"
+      >
+        <div className="wrap grid-12 gap-y-8">
+          <div className="col-span-4 md:col-span-5 xl:col-span-6">
+            <ChapterLabel label="The journey" />
+            <Reveal as="h2" id="route-title" className="display-xl mt-6">
+              The route, in <em className="display-em">eight</em> stops.
+            </Reveal>
+          </div>
+          <p className="col-span-4 max-w-[40ch] self-end text-brown md:col-span-3 md:col-start-6 xl:col-span-4 xl:col-start-9">
+            From a field in India to a port abroad: what happens to a spice at each stop, and what you can ask
+            for along the way.
+          </p>
+        </div>
+
+        <div className="relative mt-16">
+          <div data-scene-anchor aria-hidden className="absolute inset-x-0 top-[calc(clamp(88px,9vw,132px)/2)] h-3" />
+          <span aria-hidden className="absolute inset-x-0 top-[calc(clamp(88px,9vw,132px)/2)] h-px bg-rule" />
+          <ol
+            className="wrap relative flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:none] lg:grid lg:grid-cols-8 lg:overflow-visible"
+            aria-label="Stops on the journey"
+          >
+            {stages.map((st) => (
+              <li key={st.id} className="w-[clamp(88px,9vw,132px)] flex-none snap-start lg:w-auto">
+                <Link href={`/journey#${st.id}`} className="group block" data-cursor="Go">
+                  <MaskedPhoto
+                    photo={photos[STOP_PHOTO[st.id]]}
+                    shape="circle"
+                    decorative
+                    sizes="140px"
+                    className="aspect-square w-[clamp(88px,9vw,132px)] ring-0"
+                  />
+                  <span className="mono-label mt-4 block text-chilli">{st.n}</span>
+                  <span className="h3 mt-1 block transition-colors group-hover:text-green">{st.label}</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="wrap mt-14">
+          <Link
+            href="/journey"
+            data-cursor="Go"
+            className="mono-label group inline-flex items-center gap-3 rounded-full bg-ink px-6 py-4 text-paper transition-colors hover:bg-green"
+          >
+            Follow the whole route
+            <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">
+              →
+            </span>
+          </Link>
         </div>
       </SceneSection>
 
-      {/* 06 Pack */}
+      {/* A word from Pondicherry */}
+      <section aria-labelledby="note-title" className="wrap grid-12 gap-y-10 py-[clamp(5rem,14vh,10rem)]">
+        <div className="col-span-4 md:col-span-3 xl:col-span-3 xl:col-start-2">
+          <p className="mono-label text-brown">From Lawspet, Pondicherry</p>
+          <p className="mt-4 font-display text-2xl italic text-green [font-variation-settings:'opsz'_36]">
+            {site.tagline.replace("|", "·")}
+          </p>
+        </div>
+        <div className="col-span-4 md:col-span-5 md:col-start-4 xl:col-span-6 xl:col-start-6">
+          <h2 id="note-title" className="display-l">
+            Run by {site.proprietor.name}, and answered directly.
+          </h2>
+          <p className="body-l mt-6 max-w-[48ch] text-brown">
+            Spiceman Exports is a proprietorship. Inquiries go straight to the proprietor by phone, WhatsApp or
+            email, with a straight answer on what can be supplied.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+            <Link href="/about" className="mono-label link-draw text-green">
+              About the business →
+            </Link>
+            <Link href="/process" className="mono-label link-draw text-green">
+              How quality is specified →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Quote (night) */}
       <SceneSection
         scene="pack"
-        stage={5}
-        labelledBy="pack-title"
-        className="wrap grid-12 relative items-end gap-y-12 py-[clamp(6rem,16vh,12rem)]"
-      >
-        <div className="col-span-4 md:col-span-5 xl:col-span-5 xl:col-start-3">
-          <ChapterLabel n="06" label="Pack" />
-          <Reveal as="h2" id="pack-title" className="display-xl mt-6">
-            Bagged the way your market <em className="display-em">expects</em>.
-          </Reveal>
-          <Reveal as="p" by="fade" className="body-l mt-8 max-w-[44ch] text-brown">
-            PP woven or jute bags for most spices and pulses, cartons with liners for cardamom and cinnamon.
-            Bag weight, marking and labels follow your instructions, and private label is available on
-            request.
-          </Reveal>
-        </div>
-        <div
-          data-scene-anchor
-          className="relative col-span-3 aspect-[100/120] w-full max-w-[320px] md:col-span-3 md:col-start-6 xl:col-span-3 xl:col-start-9"
-        >
-          <StageArt kind="sack" colors={["#5A2E1A", "#B99459"]} />
-        </div>
-      </SceneSection>
-
-      {/* 07 Container (night) */}
-      <SceneSection
-        scene="container"
-        stage={6}
-        night
-        labelledBy="container-title"
-        className="on-dark night-bg bg-green-900 wrap grid-12 relative gap-y-12 py-[clamp(7rem,20vh,14rem)] text-paper"
-      >
-        <div
-          data-scene-anchor
-          className="relative col-span-4 aspect-[200/90] w-full md:col-span-8 xl:col-span-9"
-        >
-          <StageArt kind="container" colors={["#E3A21A", "#FBF7EE"]} />
-        </div>
-        <div className="col-span-4 md:col-span-5 md:col-start-4 xl:col-span-5 xl:col-start-6">
-          <ChapterLabel n="07" label="Container" dark />
-          <Reveal as="h2" id="container-title" className="display-xl mt-6">
-            By the kilo, the tonne or the <em className="display-em text-turmeric">box</em>.
-          </Reveal>
-          <Reveal as="p" by="fade" className="body-l mt-8 max-w-[44ch] text-paper/80">
-            Quote in kilograms, metric tonnes, bags, or a full 20 ft or 40 ft container. Tell us the port it is
-            going to and the incoterm you work with.
-          </Reveal>
-        </div>
-      </SceneSection>
-
-      {/* 08 Port (night) + quote */}
-      <SceneSection
-        scene="port"
         stage={7}
         night
-        labelledBy="port-title"
-        className="on-dark night-bg bg-green-900 relative overflow-x-clip pb-10 pt-[clamp(6rem,14vh,10rem)] text-paper"
+        nightPalette
+        labelledBy="quote-title"
+        className="on-dark night-bg bg-green-900 relative overflow-x-clip py-[clamp(6rem,16vh,12rem)] text-paper"
       >
-        <div className="wrap relative">
-          <div data-scene-extra aria-hidden className="absolute inset-x-0 top-[clamp(9rem,26vw,22rem)] h-4" />
-          <div data-scene-anchor className="relative ml-auto aspect-[240/100] w-[min(92%,760px)]">
-            <StageArt kind="ship" colors={["#E3A21A", "#FBF7EE"]} />
-          </div>
-        </div>
-        <div className="wrap grid-12 mt-16 gap-y-14">
+        <div className="wrap grid-12 gap-y-14">
           <div className="col-span-4 md:col-span-8 xl:col-span-6">
-            <ChapterLabel n="08" label="Port" dark />
-            <Reveal as="h2" id="port-title" className="display-xxl mt-6">
+            <ChapterLabel label="Get a quote" dark />
+            <Reveal as="h2" id="quote-title" className="display-xxl mt-6">
               Tell us what you need to <em className="display-em text-turmeric">ship</em>.
             </Reveal>
-            <div className="mt-12 space-y-3 text-paper/85">
-              <p className="mono-label text-turmeric">Or talk to us directly</p>
-              {site.phones.map((p) => (
-                <p key={p.e164} className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
-                  <a href={whatsappLink(p)} target="_blank" rel="noopener noreferrer" className="link-draw text-xl">
-                    WhatsApp {p.display}
+            <div className="mt-12 flex items-end gap-8">
+              <div data-scene-anchor className="relative aspect-[100/120] w-[min(34vw,180px)] flex-none">
+                <StageArt kind="sack" colors={["#E3A21A", "#FBF7EE"]} />
+              </div>
+              <div className="space-y-3 text-paper/85">
+                <p className="mono-label text-turmeric">Or talk directly</p>
+                {site.phones.map((p) => (
+                  <p key={p.e164}>
+                    <a href={whatsappLink(p)} target="_blank" rel="noopener noreferrer" className="link-draw text-lg">
+                      WhatsApp {p.display}
+                    </a>
+                  </p>
+                ))}
+                <p>
+                  <a href={`mailto:${site.email}`} className="link-draw break-all text-lg">
+                    {site.email}
                   </a>
                 </p>
-              ))}
-              <p>
-                <a href={`mailto:${site.email}`} className="link-draw text-xl break-all">
-                  {site.email}
-                </a>
-              </p>
+              </div>
             </div>
           </div>
           <div className="col-span-4 md:col-span-6 md:col-start-2 xl:col-span-5 xl:col-start-8 xl:pt-24">
