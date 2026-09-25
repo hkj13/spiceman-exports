@@ -55,7 +55,8 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
     <article className="overflow-x-clip" style={{ "--accent": product.accent, "--accent-ink": product.ink } as React.CSSProperties}>
       <div className="wrap pt-[calc(var(--header-h)+3rem)]">
         <nav aria-label="Breadcrumb">
-          <ol className="mono-label flex flex-wrap gap-2 text-brown">
+          {/* One line always, so the label font arriving can't reflow the page below */}
+          <ol className="mono-label flex min-w-0 flex-nowrap gap-2 whitespace-nowrap text-brown">
             <li>
               <Link href="/products" className="link-draw">
                 Products
@@ -64,7 +65,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
             <li aria-hidden>/</li>
             <li>{product.category === "spice" ? "Spices" : "Pulses"}</li>
             <li aria-hidden>/</li>
-            <li aria-current="page" className="text-ink">
+            <li aria-current="page" className="min-w-0 truncate text-ink">
               {product.name}
             </li>
           </ol>

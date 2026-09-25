@@ -65,7 +65,7 @@ export default function JourneyPage() {
           </nav>
         </div>
         {/* First on phones, so the heading rewrapping when fonts arrive can't push it around */}
-        <div className="relative order-first col-span-4 h-[min(62vw,520px)] md:order-none md:col-span-3 md:h-[440px] xl:col-span-5 xl:h-[560px]">
+        <div className="relative order-first col-span-4 mb-6 h-[min(70vw,520px)] md:order-none md:mb-0 md:col-span-3 md:h-[440px] xl:col-span-5 xl:h-[560px]">
           <MaskedPhoto
             photo={photos["stage-harvest"]}
             shape="leaf"
@@ -215,13 +215,7 @@ export default function JourneyPage() {
       </HorizontalChapters>
 
       {/* The table: what is traded */}
-      <SceneSection
-        scene="table"
-        stage={3}
-        labelledBy="table-title"
-        className="relative py-[clamp(6rem,18vh,14rem)]"
-      >
-        <div data-scene-anchor aria-hidden className="absolute inset-0" />
+      <section aria-labelledby="table-title" className="relative py-[clamp(6rem,18vh,14rem)]">
         <div className="wrap grid-12 relative">
           <div className="col-span-4 md:col-span-7 xl:col-span-10 xl:col-start-2">
             <ChapterLabel label="What we trade" />
@@ -259,7 +253,7 @@ export default function JourneyPage() {
             </Link>
           </div>
         </div>
-      </SceneSection>
+      </section>
 
       {/* 05 Check */}
       <SceneSection
@@ -422,7 +416,7 @@ export default function JourneyPage() {
                 </p>
               ))}
               <p>
-                <a href={`mailto:${site.email}`} className="link-draw text-xl break-all">
+                <a href={`mailto:${site.email}`} className="link-draw text-xl [overflow-wrap:anywhere]">
                   {site.email}
                 </a>
               </p>

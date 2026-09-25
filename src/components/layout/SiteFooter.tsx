@@ -16,7 +16,7 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <address className="col-span-2 not-italic md:col-span-3 xl:col-span-3 xl:col-start-8">
+        <address className="col-span-4 not-italic sm:col-span-2 md:col-span-3 xl:col-span-3 xl:col-start-8">
           <p className="mono-label mb-4 text-turmeric">Write or visit</p>
           <p className="leading-relaxed text-paper/85">
             {site.address.lines.map((l) => (
@@ -28,12 +28,12 @@ export function SiteFooter() {
             <br />
             {site.address.country}
           </p>
-          <a href={`mailto:${site.email}`} className="link-draw mt-4 inline-block break-all">
+          <a href={`mailto:${site.email}`} className="link-draw mt-4 inline-block [overflow-wrap:anywhere]">
             {site.email}
           </a>
         </address>
 
-        <div className="col-span-2 md:col-span-3 md:col-start-6 xl:col-span-2 xl:col-start-11">
+        <div className="col-span-4 sm:col-span-2 md:col-span-3 md:col-start-6 xl:col-span-2 xl:col-start-11">
           <p className="mono-label mb-4 text-turmeric">Call or WhatsApp</p>
           <ul className="space-y-3">
             {site.phones.map((p) => (

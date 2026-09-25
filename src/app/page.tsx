@@ -56,21 +56,23 @@ export default function Home() {
       <Opening />
 
       {/* What we do, in one sentence with the goods set into it */}
-      <SceneSection
-        scene="table"
-        stage={0}
-        labelledBy="intro-title"
-        className="relative py-[clamp(6rem,18vh,13rem)]"
-      >
-        <div data-scene-anchor aria-hidden className="absolute inset-0" />
+      <section aria-labelledby="intro-title" className="relative py-[clamp(5rem,14vh,11rem)]">
         <div className="wrap grid-12 relative gap-y-12">
           <div className="col-span-4 md:col-span-8 xl:col-span-10 xl:col-start-2">
             <ChapterLabel label="What we do" />
             <h2 id="intro-title" className="display-l mt-8 max-w-[22ch] leading-[1.12]">
-              We trade <Pill photo={photos["black-pepper"]} /> spices and <Pill photo={photos.moong} shape="seed" />{" "}
+              {/* Each photo is bound to a word so it can never wrap onto a line of its own */}
+              <span className="whitespace-nowrap">
+                We trade <Pill photo={photos["black-pepper"]} />
+              </span>{" "}
+              <span className="whitespace-nowrap">
+                spices and <Pill photo={photos.moong} shape="seed" />
+              </span>{" "}
               pulses in wholesale lots, and prepare them for buyers{" "}
-              <em className="display-em text-green">abroad</em>
-              <Pill photo={photos["stage-port"]} shape="arch" />.
+              <span className="whitespace-nowrap">
+                <em className="display-em text-green">abroad</em>
+                <Pill photo={photos["stage-port"]} shape="arch" />.
+              </span>
             </h2>
           </div>
           <div className="col-span-4 md:col-span-4 md:col-start-5 xl:col-span-4 xl:col-start-8">
@@ -83,7 +85,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </SceneSection>
+      </section>
 
       {/* From the table: a collage of the goods themselves */}
       <section aria-labelledby="table-title" className="relative py-[clamp(4rem,10vh,8rem)]">
@@ -158,7 +160,7 @@ export default function Home() {
           <div data-scene-anchor aria-hidden className="absolute inset-x-0 top-[calc(clamp(88px,9vw,132px)/2)] h-3" />
           <span aria-hidden className="absolute inset-x-0 top-[calc(clamp(88px,9vw,132px)/2)] h-px bg-rule" />
           <ol
-            className="wrap relative flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 [scrollbar-width:none] lg:grid lg:grid-cols-8 lg:overflow-visible"
+            className="wrap relative flex snap-x snap-mandatory scroll-px-[var(--margin)] gap-6 overflow-x-auto pb-4 [scrollbar-width:none] lg:grid lg:grid-cols-8 lg:overflow-visible"
             aria-label="Stops on the journey"
           >
             {stages.map((st) => (
@@ -235,7 +237,7 @@ export default function Home() {
             <Reveal as="h2" id="quote-title" className="display-xxl mt-6">
               Tell us what you need to <em className="display-em text-turmeric">ship</em>.
             </Reveal>
-            <div className="mt-12 flex items-end gap-8">
+            <div className="mt-12 flex flex-col items-start gap-8 sm:flex-row sm:items-end">
               <div data-scene-anchor className="relative aspect-[100/120] w-[min(34vw,180px)] flex-none">
                 <StageArt kind="sack" colors={["#E3A21A", "#FBF7EE"]} />
               </div>
@@ -249,7 +251,7 @@ export default function Home() {
                   </p>
                 ))}
                 <p>
-                  <a href={`mailto:${site.email}`} className="link-draw break-all text-lg">
+                  <a href={`mailto:${site.email}`} className="link-draw break-words text-lg">
                     {site.email}
                   </a>
                 </p>

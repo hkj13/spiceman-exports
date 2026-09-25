@@ -67,7 +67,7 @@ export default function ContactPage() {
             ))}
           </ul>
           <p className="mt-6">
-            <a href={`mailto:${site.email}`} className="link-draw break-all text-lg">
+            <a href={`mailto:${site.email}`} className="link-draw [overflow-wrap:anywhere] text-lg">
               {site.email}
             </a>
           </p>
