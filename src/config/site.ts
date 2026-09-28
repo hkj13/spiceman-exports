@@ -25,7 +25,7 @@ export const site = {
   legalName: "Spiceman Exports",
   tagline: "Pure Spices | Better Tomorrow",
   description:
-    "Wholesale trading and export of spices and pulses from Pondicherry, India. Black pepper, turmeric, red chilli, cardamom, cumin, toor dal, moong, urad, chana, masoor and more.",
+    "Wholesale trading and export of spices, rice, pulses and onions from Pondicherry, India. Turmeric, Guntur red chilli, black pepper, green cardamom, basmati and Tanjore ponni rice, toor, masoor, urad and moong dal, and onions.",
   url: "https://spicemanexports.com",
   locale: "en_IN",
 

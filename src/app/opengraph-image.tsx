@@ -5,5 +5,5 @@ export const size = ogSize;
 export const contentType = "image/png";
 
 export default function Image() {
-  return renderOg({ eyebrow: "Wholesale trade and export · Spices and pulses", title: "Pure spices, from the soil to the", accent: "ship." });
+  return renderOg({ eyebrow: "Wholesale trade and export · Spices, rice, pulses", title: "Pure spices, from the soil to the", accent: "ship." });
 }

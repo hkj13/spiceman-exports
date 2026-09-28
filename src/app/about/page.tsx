@@ -9,7 +9,7 @@ import { site, whatsappLink } from "@/config/site";
 export const metadata: Metadata = pageMeta({
   title: "About: Shanthi Krishnamurthy, Lawspet, Pondicherry",
   description:
-    "Spiceman Exports is a proprietorship run by Shanthi Krishnamurthy from Lawspet, Pondicherry, trading spices and pulses wholesale and for export.",
+    "Spiceman Exports is a proprietorship run by Shanthi Krishnamurthy from Lawspet, Pondicherry, trading spices, rice, pulses and onions wholesale and for export.",
   path: "/about",
 });
 
@@ -29,7 +29,7 @@ export default function AboutPage() {
             About
           </p>
           <Reveal as="h1" className="display-xl mt-6">
-            Spices and pulses, traded from <em className="display-em">Pondicherry</em>.
+            Spices, rice and pulses, traded from <em className="display-em">Pondicherry</em>.
           </Reveal>
         </div>
       </header>
@@ -46,8 +46,8 @@ export default function AboutPage() {
           </h2>
           <div className="body-l mt-8 max-w-[44ch] space-y-5 text-ink">
             <p>
-              Spiceman Exports is a proprietorship run by {proprietor.name}. The business buys and sells spices and
-              pulses in wholesale quantities and prepares them for export.
+              Spiceman Exports is a proprietorship run by {proprietor.name}. The business buys and sells spices, rice,
+              pulses and onions in wholesale quantities and prepares them for export.
             </p>
             <p>
               Inquiries go straight to the proprietor, by phone, WhatsApp or email. Say what you buy, the

@@ -100,8 +100,8 @@ export default function JourneyPage() {
           </Reveal>
           <Reveal as="p" by="fade" className="body-l mt-8 max-w-[46ch] text-brown">
             Pepper vines on the wet slopes of Wayanad and Kodagu. Turmeric in the red soils around Erode.
-            Cumin in the dry fields of north Gujarat. Each crop has a region it grows best in and a season
-            when it is ready.
+            Ponni rice in the Kaveri delta around Thanjavur. Each crop has a region it grows best in and a
+            season when it is ready.
           </Reveal>
           <Reveal as="p" by="fade" delay={0.1} className="mt-5 max-w-[46ch] text-brown">
             Where a spice comes from is the first thing worth asking about, so every product page lists the
@@ -209,7 +209,7 @@ export default function JourneyPage() {
           <div className="col-span-4 md:col-span-7 xl:col-span-10 xl:col-start-2">
             <ChapterLabel label="What we trade" />
             <Reveal as="h2" id="table-title" className="display-l mt-6 max-w-[18ch]">
-              Ten spices and five pulses, traded whole, split or ground.
+              Spices, rice, pulses and onions, traded whole, split or ground.
             </Reveal>
             <ul className="mt-12 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-display text-[clamp(1.75rem,4.2vw,4rem)] leading-[1.12] tracking-[-0.02em] [font-variation-settings:'opsz'_120]">
               {products.map((p, i) => (
@@ -313,9 +313,9 @@ export default function JourneyPage() {
             Bagged the way your market <em className="display-em">expects</em>.
           </Reveal>
           <Reveal as="p" by="fade" className="body-l mt-8 max-w-[44ch] text-brown">
-            PP woven or jute bags for most spices and pulses, cartons with liners for cardamom and cinnamon.
-            Bag weight, marking and labels follow your instructions, and private label is available on
-            request.
+            PP woven or jute bags for spices, rice and pulses, cartons with liners for cardamom, mesh bags
+            for onions. Bag weight, marking and labels follow your instructions, and private label is
+            available on request.
           </Reveal>
           <PhotoFrame
             photo={photos["stage-pack"]}

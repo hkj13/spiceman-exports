@@ -66,8 +66,21 @@ export function ProductArt({ product, className = "" }: { product: Product; clas
       </g>
     ));
   } else {
-    const d = PATHS[silhouette as "chilli" | "pod" | "clove"];
-    body = <path d={d} fill={`url(#g-${id})`} />;
+    const d = PATHS[silhouette as "chilli" | "pod" | "clove" | "bulb"];
+    body = (
+      <>
+        <path d={d} fill={`url(#g-${id})`} />
+        {silhouette === "bulb" && (
+          // the fine lines that run down an onion's skin
+          <g fill="none" stroke={light} strokeWidth=".8" opacity=".55">
+            <path d="M50 28c-10 12-12 36-6 62" />
+            <path d="M50 28c10 12 12 36 6 62" />
+            <path d="M44 30c-18 12-24 34-14 56" />
+            <path d="M56 30c18 12 24 34 14 56" />
+          </g>
+        )}
+      </>
+    );
   }
 
   return (

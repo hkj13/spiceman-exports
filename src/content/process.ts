@@ -24,7 +24,7 @@ export const processStages: ProcessStage[] = [
     title: "Where it grows",
     body: [
       "Most spices have a home. Black pepper and cardamom come from the wet hills of the Western Ghats in Kerala, Karnataka and Tamil Nadu. Turmeric is traded out of Erode, Salem, Nizamabad and Sangli. Red chilli centres on Guntur and Byadgi. Cumin, coriander and fenugreek come from the dry fields of Gujarat, Rajasthan and Madhya Pradesh.",
-      "Pulses grow across the Deccan and the plains of central India, with Maharashtra, Karnataka and Madhya Pradesh supplying much of the toor and chana.",
+      "Basmati comes from the plains of Punjab and Haryana, and ponni from the Kaveri delta around Thanjavur. Pulses grow across the Deccan and central India, with Maharashtra, Karnataka and Madhya Pradesh supplying much of the toor. Big onions come largely from Nashik in Maharashtra, small onions from Tamil Nadu.",
       "Each product page lists the regions it is typically sourced from. For a specific lot, ask for its origin when you request a quote.",
     ],
     specify: ["Origin region or district", "Crop year: new crop or old crop"],
@@ -38,7 +38,7 @@ export const processStages: ProcessStage[] = [
     title: "When it is picked",
     body: [
       "Harvests follow the season, and so does price. Pepper in Kerala is picked from around December into February. Cardamom is picked in rounds from late monsoon into winter. Turmeric is lifted from January to March, chilli through the winter into spring, and cumin in February and March.",
-      "Pulses are largely rabi or kharif crops, so availability and quality shift through the year. If timing matters for your market, say so early.",
+      "Basmati is harvested in October and November, and the delta's main ponni crop around January. Pulses are rabi or kharif crops, and onions come in more than one crop a year, so availability and quality shift through the year. If timing matters for your market, say so early.",
     ],
     specify: ["Shipment window", "New crop only, or blends acceptable"],
     scene: "harvest",
@@ -50,7 +50,7 @@ export const processStages: ProcessStage[] = [
     label: "Sun",
     title: "How it is dried",
     body: [
-      "Pepper is spread on drying yards for several days and turns from green to black as it dries. Turmeric is boiled before drying, which sets its colour. Chillies are dried whole, often on the field. Cardamom is the exception: it is cured in heated drying houses so the pods keep their green.",
+      "Pepper is spread on drying yards for several days and turns from green to black as it dries. Turmeric is boiled before drying, which sets its colour. Chillies are dried whole, often on the field. Cardamom is the exception: it is cured in heated drying houses so the pods keep their green. Paddy is dried before milling, and parboiled first for boiled rice. Onions are cured until the skins are dry and the necks close.",
       "Drying decides how well a crop survives a sea voyage. Moisture is brought down to the limit the contract sets, commonly around 11 to 12 percent for pepper.",
     ],
     specify: ["Moisture, % max", "Colour expectations (e.g. green cardamom, bright red chilli)"],
@@ -64,7 +64,7 @@ export const processStages: ProcessStage[] = [
     title: "Cleaning and grading",
     body: [
       "Cleaning takes out stones, stalks, dust and light or broken grains, by sieving, destoning, gravity separation and, for many seed spices and pulses, a sortex colour sorter.",
-      "Grading follows the conventions of each crop: pepper by bulk density in grams per litre, cardamom by pod size in millimetres, chilli by variety and whether the stem is on, pulses by size and polish.",
+      "Grading follows the conventions of each crop: pepper by bulk density in grams per litre, cardamom by pod size in millimetres, chilli by variety and whether the stem is on, rice by grain length and broken percentage, pulses by size and polish, onions by bulb diameter.",
     ],
     specify: ["Grade", "Extraneous matter, % max", "Machine-cleaned or sortex"],
     scene: "sort",
@@ -76,7 +76,7 @@ export const processStages: ProcessStage[] = [
     label: "Check",
     title: "Checking against your spec",
     body: [
-      "A quote is only as good as the specification it is made against. Send the one you buy to: moisture, extraneous matter, grade, and any product-specific values such as colour value for chilli, curcumin for turmeric or volatile oil for pepper and cardamom.",
+      "A quote is only as good as the specification it is made against. Send the one you buy to: moisture, extraneous matter, grade, and any product-specific values such as colour value for chilli, curcumin for turmeric, volatile oil for pepper and cardamom, or grain length and broken percentage for rice.",
       "If your market needs laboratory reports, for example on pesticide residues, aflatoxin or microbiology, mention it with the inquiry. Testing affects both lead time and price.",
     ],
     specify: ["Full specification sheet", "Laboratory reports your importer requires", "Pre-shipment samples"],
@@ -89,7 +89,7 @@ export const processStages: ProcessStage[] = [
     label: "Pack",
     title: "Packing and marking",
     body: [
-      "Most spices and pulses travel in PP woven or jute bags of 25 or 50 kg. Cardamom and cinnamon usually go in cartons with poly liners to protect colour and aroma.",
+      "Most spices, rice and pulses travel in PP woven or jute bags of 25 or 50 kg, and rice can also be packed in smaller consumer packs. Cardamom goes in cartons with poly liners to protect colour and aroma. Onions go in mesh bags so they can breathe.",
       "Bag marking follows your instructions: product, grade, lot, net and gross weight, origin, and your brand if you are buying under private label.",
     ],
     specify: ["Bag type and weight", "Marking and labels", "Private label artwork"],
@@ -103,7 +103,7 @@ export const processStages: ProcessStage[] = [
     title: "Loading the container",
     body: [
       "Larger orders are quoted by the 20 ft or 40 ft container, smaller ones by the tonne or by the bag. How much fits depends on the product and bag size, so the quote states the loadable quantity.",
-      "Some destinations require fumigation or particular treatment before loading. Name your destination early so these are included.",
+      "Some destinations require fumigation or particular treatment before loading, and onions need ventilated or temperature-controlled containers. Name your destination early so these are included.",
     ],
     specify: ["Container size or quantity", "Incoterm (for example FOB or CIF)", "Fumigation or treatment requirements"],
     scene: "container",

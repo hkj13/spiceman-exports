@@ -8,7 +8,7 @@ import { productPhoto } from "@/data/photos";
 import { ProductStage } from "@/components/products/ProductStage";
 import { QuoteForProduct } from "@/components/products/QuoteForProduct";
 import { Reveal } from "@/components/motion/Reveal";
-import { getProduct, products } from "@/data/products";
+import { categoryPlural, getProduct, products } from "@/data/products";
 
 export const dynamicParams = false;
 
@@ -41,7 +41,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
     ["Also known as", product.alsoKnownAs.join(", ")],
     ["Botanical name", product.botanical],
     ["Colour", product.colour],
-    [product.category === "pulse" ? "Character" : "Aroma", product.aroma.join(", ")],
+    [product.category === "spice" ? "Aroma" : "Character", product.aroma.join(", ")],
     ["Origin", product.origin.join("; ")],
     ["Forms", product.forms.join(", ")],
     ["Grades", product.grades.join(", ")],
@@ -62,7 +62,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
               </Link>
             </li>
             <li aria-hidden>/</li>
-            <li>{product.category === "spice" ? "Spices" : "Pulses"}</li>
+            <li>{categoryPlural(product.category)}</li>
             <li aria-hidden>/</li>
             <li aria-current="page" className="min-w-0 truncate text-ink">
               {product.name}
@@ -74,7 +74,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
       {/* Name bleeding off the left edge, silhouette beside it */}
       <header className="relative mt-6">
         <h1
-          className="font-display -ml-[0.06em] whitespace-nowrap pl-[var(--margin)] leading-[0.85] tracking-[-0.045em] text-[var(--accent-ink)] [font-variation-settings:'opsz'_144]"
+          className="font-display -ml-[0.06em] pl-[var(--margin)] pr-[var(--margin)] leading-[0.9] md:whitespace-nowrap md:pr-0 md:leading-[0.85] tracking-[-0.045em] text-[var(--accent-ink)] [font-variation-settings:'opsz'_144]"
           // Size to the name so long names still fit the width.
           style={{ fontSize: `clamp(2.75rem, ${Math.min(15, 160 / product.name.length).toFixed(2)}vw, 15rem)` }}
         >

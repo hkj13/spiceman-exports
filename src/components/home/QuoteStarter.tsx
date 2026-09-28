@@ -1,4 +1,4 @@
-import { products, productUnits } from "@/data/products";
+import { CATEGORIES, products, productUnits } from "@/data/products";
 
 /**
  * Three questions that start a quote. A plain GET form to /contact, so it
@@ -24,24 +24,17 @@ export function QuoteStarter({ tone = "light" }: { tone?: "light" | "dark" }) {
           <option value="" className={option}>
             Choose a product
           </option>
-          <optgroup label="Spices" className={option}>
-            {products
-              .filter((p) => p.category === "spice")
-              .map((p) => (
-                <option key={p.slug} value={p.slug} className={option}>
-                  {p.name}
-                </option>
-              ))}
-          </optgroup>
-          <optgroup label="Pulses" className={option}>
-            {products
-              .filter((p) => p.category === "pulse")
-              .map((p) => (
-                <option key={p.slug} value={p.slug} className={option}>
-                  {p.name}
-                </option>
-              ))}
-          </optgroup>
+          {CATEGORIES.map((c) => (
+            <optgroup key={c.id} label={c.many} className={option}>
+              {products
+                .filter((p) => p.category === c.id)
+                .map((p) => (
+                  <option key={p.slug} value={p.slug} className={option}>
+                    {p.name}
+                  </option>
+                ))}
+            </optgroup>
+          ))}
         </select>
       </div>
       <div className="grid grid-cols-[1fr_auto] gap-4">

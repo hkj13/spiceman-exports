@@ -13,13 +13,14 @@ import corianderSeeds from "@/assets/photos/coriander-seeds.jpg";
 import cumin from "@/assets/photos/cumin.jpg";
 import fenugreek from "@/assets/photos/fenugreek.jpg";
 import mustardSeeds from "@/assets/photos/mustard-seeds.jpg";
-import cloves from "@/assets/photos/cloves.jpg";
-import cinnamon from "@/assets/photos/cinnamon.jpg";
+import basmatiRice from "@/assets/photos/basmati-rice.jpg";
+import ponniRice from "@/assets/photos/ponni-rice.jpg";
 import toorDal from "@/assets/photos/toor-dal.jpg";
 import moong from "@/assets/photos/moong.jpg";
 import urad from "@/assets/photos/urad.jpg";
-import chana from "@/assets/photos/chana.jpg";
 import masoor from "@/assets/photos/masoor.jpg";
+import smallOnion from "@/assets/photos/small-onion.jpg";
+import bigOnion from "@/assets/photos/big-onion.jpg";
 import stageSoil from "@/assets/photos/stage-soil.jpg";
 import stageHarvest from "@/assets/photos/stage-harvest.jpg";
 import stageSun from "@/assets/photos/stage-sun.jpg";
@@ -30,6 +31,15 @@ import stagePort from "@/assets/photos/stage-port.jpg";
 
 export type Credit = { title: string; author: string; license: string; license_url: string; source: string };
 export type Photo = { src: StaticImageData; alt: string; credit: Credit };
+
+/** Photos the client sent for use on the site. */
+const SUPPLIED: Credit = {
+  title: "Supplied by Spiceman Exports",
+  author: "Spiceman Exports",
+  license: "Used with the client's permission",
+  license_url: "",
+  source: "",
+};
 
 export const photos = {
   "black-pepper": {
@@ -58,14 +68,8 @@ export const photos = {
   },
   "red-chilli": {
     src: redChilli,
-    alt: "A bunch of dried red chillies on a wooden board",
-    credit: {
-      title: "Bouquet of Dried Chili Peppers",
-      author: "qubodup",
-      license: "CC0 1.0",
-      license_url: "https://creativecommons.org/publicdomain/zero/1.0/",
-      source: "https://www.flickr.com/photos/21051491@N02/7698346604",
-    },
+    alt: "Dried Guntur red chillies heaped in a wooden bowl",
+    credit: SUPPLIED,
   },
   cardamom: {
     src: cardamom,
@@ -91,14 +95,8 @@ export const photos = {
   },
   cumin: {
     src: cumin,
-    alt: "Close-up of cumin seeds",
-    credit: {
-      title: "Dried cumin seeds.jpg",
-      author: "Fumikas Sagisavas",
-      license: "CC0",
-      license_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-      source: "https://commons.wikimedia.org/wiki/File:Dried_cumin_seeds.jpg",
-    },
+    alt: "A heap of cumin seeds",
+    credit: SUPPLIED,
   },
   fenugreek: {
     src: fenugreek,
@@ -122,26 +120,20 @@ export const photos = {
       source: "https://commons.wikimedia.org/wiki/File:Black_mustard_seeds.jpg",
     },
   },
-  cloves: {
-    src: cloves,
-    alt: "Close-up of dried cloves",
-    credit: {
-      title: "Dried clove sticks.jpg",
-      author: "Fumikas Sagisavas",
-      license: "CC0",
-      license_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-      source: "https://commons.wikimedia.org/wiki/File:Dried_clove_sticks.jpg",
-    },
+  "basmati-rice": {
+    src: basmatiRice,
+    alt: "Long-grain basmati rice spilling from a jute sack",
+    credit: SUPPLIED,
   },
-  cinnamon: {
-    src: cinnamon,
-    alt: "A stack of cinnamon quills",
+  "ponni-rice": {
+    src: ponniRice,
+    alt: "Close-up of white ponni rice",
     credit: {
-      title: "Cinnamon sticks (3).jpg",
-      author: "Fumikas Sagisavas",
-      license: "CC0",
-      license_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-      source: "https://commons.wikimedia.org/wiki/File:Cinnamon_sticks_(3).jpg",
+      title: "A closeup of white Ponni Rice.JPG",
+      author: "Thamizhpparithi Maari",
+      license: "CC BY-SA 3.0",
+      license_url: "https://creativecommons.org/licenses/by-sa/3.0",
+      source: "https://commons.wikimedia.org/wiki/File:A_closeup_of_white_Ponni_Rice.JPG",
     },
   },
   "toor-dal": {
@@ -177,17 +169,6 @@ export const photos = {
       source: "https://commons.wikimedia.org/wiki/File:Black_gram.jpg",
     },
   },
-  chana: {
-    src: chana,
-    alt: "A heap of dried chickpeas",
-    credit: {
-      title: "Cicer arietinum (seeds).jpg",
-      author: "Judgefloro",
-      license: "CC0",
-      license_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-      source: "https://commons.wikimedia.org/wiki/File:Cicer_arietinum_(seeds).jpg",
-    },
-  },
   masoor: {
     src: masoor,
     alt: "Close-up of split red masoor",
@@ -198,6 +179,22 @@ export const photos = {
       license_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       source: "https://commons.wikimedia.org/wiki/File:Red_lentils_(1).jpg",
     },
+  },
+  "small-onion": {
+    src: smallOnion,
+    alt: "A heap of small red sambar onions",
+    credit: {
+      title: "Shallot (Sambar Onion) (2).JPG",
+      author: "Ask27",
+      license: "CC BY-SA 3.0",
+      license_url: "https://creativecommons.org/licenses/by-sa/3.0",
+      source: "https://commons.wikimedia.org/wiki/File:Shallot_(Sambar_Onion)_(2).JPG",
+    },
+  },
+  "big-onion": {
+    src: bigOnion,
+    alt: "Large red onions piled together",
+    credit: SUPPLIED,
   },
   "stage-soil": {
     src: stageSoil,
@@ -245,14 +242,8 @@ export const photos = {
   },
   "stage-pack": {
     src: stagePack,
-    alt: "An open jute sack filled with chickpeas",
-    credit: {
-      title: "3Cicer arietinum (seeds).jpg",
-      author: "Judgefloro",
-      license: "CC0",
-      license_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-      source: "https://commons.wikimedia.org/wiki/File:3Cicer_arietinum_(seeds).jpg",
-    },
+    alt: "Rice in an open jute sack",
+    credit: SUPPLIED,
   },
   "stage-container": {
     src: stageContainer,

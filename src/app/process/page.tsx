@@ -14,7 +14,7 @@ import { processStages } from "@/content/process";
 export const metadata: Metadata = pageMeta({
   title: "Process and quality: from soil to shipment",
   description:
-    "How spices and pulses move from the field to the port: sourcing regions, harvest, drying, cleaning and grading, checking against your specification, packing, container loading and export documents.",
+    "How spices, rice, pulses and onions move from the field to the port: sourcing regions, harvest, drying, cleaning and grading, checking against your specification, packing, container loading and export documents.",
   path: "/process",
 });
 

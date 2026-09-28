@@ -8,7 +8,7 @@ import { productPhoto } from "@/data/photos";
 import { SampleTag } from "@/components/art/SampleTag";
 import { particlesLive, play } from "@/components/motion/bus";
 import { heap } from "@/components/motion/particles/shapes";
-import type { Category, Product } from "@/data/products";
+import { CATEGORIES, categoryLabel, categoryPlural, type Category, type Product } from "@/data/products";
 import { accentPalette } from "@/lib/color";
 
 type Filter = "all" | Category;
@@ -16,11 +16,10 @@ type View = "table" | "list";
 
 const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "All" },
-  { id: "spice", label: "Spices" },
-  { id: "pulse", label: "Pulses" },
+  ...CATEGORIES.map((c) => ({ id: c.id, label: c.many })),
 ];
 
-const COLS = 5;
+const COLS = 4;
 const ROW_H = 300;
 
 /** Deterministic, slightly irregular placement: a grid that looks hand-set. */
@@ -38,7 +37,7 @@ function layout(items: Product[]) {
       x: offset + ((col + 0.5) / COLS) * 100 + jx,
       y: row * ROW_H + (col % 2 ? 56 : 0) + jy + 64,
       scale: 0.86 + ((h >> 3) % 30) / 100,
-      right: col >= 3,
+      right: col >= COLS / 2,
     };
   });
 }
@@ -111,14 +110,19 @@ export function SortingTable({ products }: { products: Product[] }) {
     <div>
       {/* Controls */}
       <div className="wrap flex flex-wrap items-center justify-between gap-4">
-        <div role="group" aria-label="Filter products" className="flex rounded-full bg-paper-2 p-1">
+        <div
+          role="group"
+          aria-label="Filter products"
+          className="-mx-[var(--margin)] max-w-[100vw] overflow-x-auto px-[var(--margin)] [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden"
+        >
+          <div className="flex w-max rounded-full bg-paper-2 p-1">
           {FILTERS.map((f) => (
             <button
               key={f.id}
               type="button"
               aria-pressed={filter === f.id}
               onClick={() => choose(f.id)}
-              className="mono-label rounded-full px-4 py-2.5 text-brown transition-colors duration-300 aria-pressed:bg-ink aria-pressed:text-paper hover:text-ink aria-pressed:hover:text-paper"
+              className="mono-label whitespace-nowrap rounded-full px-3.5 py-2.5 text-brown transition-colors duration-300 aria-pressed:bg-ink aria-pressed:text-paper hover:text-ink aria-pressed:hover:text-paper"
             >
               {f.label}
               <span className="ml-1.5">
@@ -126,6 +130,7 @@ export function SortingTable({ products }: { products: Product[] }) {
               </span>
             </button>
           ))}
+          </div>
         </div>
         <div role="group" aria-label="Display" className="flex items-center gap-4">
           {(["table", "list"] as const).map((v) => (
@@ -143,7 +148,7 @@ export function SortingTable({ products }: { products: Product[] }) {
       </div>
 
       <p className="sr-only" aria-live="polite">
-        Showing {visible.length} {filter === "all" ? "products" : filter === "spice" ? "spices" : "pulses"}.
+        Showing {visible.length} {filter === "all" ? "products" : categoryPlural(filter).toLowerCase()}.
       </p>
 
       {view === "table" ? (
@@ -187,7 +192,7 @@ export function SortingTable({ products }: { products: Product[] }) {
                     <span className="flex flex-1 flex-col md:items-center">
                       <span className="h3">{p.name}</span>
                       <span className="mono-label mt-1 text-[0.65rem] text-brown">
-                        {p.category === "spice" ? "Spice" : "Pulse"} · {p.forms.slice(0, 2).join(", ")}
+                        {categoryLabel(p.category)} · {p.forms.slice(0, 2).join(", ")}
                       </span>
                     </span>
                     <span aria-hidden className="mono-label text-brown md:hidden">
@@ -217,7 +222,7 @@ export function SortingTable({ products }: { products: Product[] }) {
                           <span aria-hidden className="h-3 w-3 flex-none rounded-full" style={{ background: p.accent }} />
                           <dd>{p.colour}</dd>
                         </div>
-                        <TagRow k="Aroma" v={p.aroma.join(", ")} />
+                        <TagRow k={p.category === "spice" ? "Aroma" : "Notes"} v={p.aroma.join(", ")} />
                         <TagRow k="Origin" v={p.origin.join("; ")} />
                         <TagRow k="Grades" v={p.grades.join(", ")} />
                         <TagRow k="Packing" v={p.packaging.slice(0, 3).join(", ")} />

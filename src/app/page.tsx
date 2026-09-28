@@ -9,7 +9,7 @@ import { SceneSection } from "@/components/home/SceneSection";
 import { Reveal } from "@/components/motion/Reveal";
 import { site, stages, whatsappLink } from "@/config/site";
 import { photos, type PhotoKey } from "@/data/photos";
-import { products, pulses, spices } from "@/data/products";
+import { CATEGORIES, categoryLabel, products } from "@/data/products";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata: Metadata = pageMeta({ description: site.description, path: "/" });
@@ -19,7 +19,7 @@ const PRODUCT_SLIDES: SlideItem[] = products.map((p) => ({
   key: p.slug,
   photo: photos[p.slug as PhotoKey],
   title: p.name,
-  eyebrow: p.category === "spice" ? "Spice" : "Pulse",
+  eyebrow: categoryLabel(p.category),
   meta: p.origin[0].split(" (")[0],
   href: `/products/${p.slug}`,
 }));
@@ -56,15 +56,25 @@ export default function Home() {
           <div className="col-span-4 md:col-span-8 xl:col-span-10 xl:col-start-2">
             <ChapterLabel label="What we do" />
             <h2 id="intro-title" className="display-l mt-8 max-w-[22ch] leading-[1.12]">
-              We trade spices and pulses in wholesale lots, and prepare them for buyers{" "}
+              We trade spices, rice, pulses and onions in wholesale lots, and prepare them for buyers{" "}
               <em className="display-em text-green">abroad</em>.
             </h2>
           </div>
           <div className="col-span-4 md:col-span-4 md:col-start-5 xl:col-span-4 xl:col-start-8">
-            <p className="text-brown">
-              {spices.map((p) => p.name).join(", ")}. {pulses.map((p) => p.name).join(", ")}. Whole, split or
-              ground, each with its own spec sheet.
-            </p>
+            <dl className="space-y-3 text-brown">
+              {CATEGORIES.map((c) => (
+                <div key={c.id}>
+                  <dt className="mono-label text-[0.65rem] text-ink">{c.many}</dt>
+                  <dd>
+                    {products
+                      .filter((p) => p.category === c.id)
+                      .map((p) => p.name)
+                      .join(", ")}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-4 text-brown">Each with its own spec sheet.</p>
             <Link href="/products" className="mono-label link-draw mt-6 inline-block text-green" data-cursor="Open">
               Open the sorting table →
             </Link>

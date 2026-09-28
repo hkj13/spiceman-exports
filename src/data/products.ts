@@ -1,17 +1,28 @@
 /**
- * Product catalogue.
+ * Product catalogue: the client's list (spices, rice, pulses and onions).
  *
  * Edit freely: names, origins, grades, packaging and MOQ are plain strings.
  * Fields marked `confirm: true` hold typical Indian trade values (common
  * growing regions and standard grade names) that should be checked with the
  * business before launch. MOQ defaults to "On request" everywhere.
  *
- * `accent` is the colour of the spice itself and drives the particles,
+ * `accent` is the colour of the goods themselves and drives the particles,
  * heaps and detail-page tint. `ink` is a darker version of it that passes
  * AA contrast as text on the cream background.
  */
 
-export type Category = "spice" | "pulse";
+export type Category = "spice" | "rice" | "pulse" | "onion";
+
+/** Display order and labels for each category. */
+export const CATEGORIES: { id: Category; one: string; many: string }[] = [
+  { id: "spice", one: "Spice", many: "Spices" },
+  { id: "rice", one: "Rice", many: "Rice" },
+  { id: "pulse", one: "Pulse", many: "Pulses" },
+  { id: "onion", one: "Onion", many: "Onions" },
+];
+
+export const categoryLabel = (c: Category) => CATEGORIES.find((x) => x.id === c)!.one;
+export const categoryPlural = (c: Category) => CATEGORIES.find((x) => x.id === c)!.many;
 
 /** Silhouette the particle layer forms on the product page. */
 export type Silhouette =
@@ -23,7 +34,8 @@ export type Silhouette =
   | "long-seeds"
   | "clove"
   | "quill"
-  | "lentils";
+  | "lentils"
+  | "bulb";
 
 export type Product = {
   slug: string;
@@ -38,6 +50,7 @@ export type Product = {
   /** One restrained line for lists and meta descriptions */
   summary: string;
   colour: string;
+  /** Aroma for spices; character (texture, cooking) for everything else */
   aroma: string[];
   origin: string[];
   forms: string[];
@@ -63,28 +76,20 @@ const PULSE_PACKING = [
   "Custom or private-label packing on request",
 ];
 
+const RICE_PACKING = [
+  "25 kg PP bags",
+  "50 kg PP bags",
+  "Jute bags",
+  "1, 5 or 10 kg consumer packs on request",
+  "Custom or private-label packing on request",
+];
+
+const ONION_PACKING = ["Mesh (leno) bags of 5, 10 or 25 kg", "Jute bags", "Ventilated cartons on request"];
+
 const ON_REQUEST = "On request";
 
 export const products: Product[] = [
-  {
-    slug: "black-pepper",
-    name: "Black Pepper",
-    alsoKnownAs: ["Milagu", "Kali mirch"],
-    botanical: "Piper nigrum",
-    category: "spice",
-    accent: "#2B2420",
-    ink: "#2B2420",
-    silhouette: "peppercorns",
-    summary: "Whole Malabar and Tellicherry-type peppercorns, sun-dried from green to black.",
-    colour: "Black to deep brown, wrinkled skin",
-    aroma: ["Pungent", "Woody", "Pine resin", "Lingering warmth"],
-    origin: ["Kerala (Wayanad, Idukki)", "Karnataka (Kodagu)"],
-    forms: ["Whole", "Crushed", "Powder"],
-    grades: ["MG1", "TGSEB", "500 g/l", "550 g/l", "570 g/l"],
-    packaging: SPICE_PACKING,
-    moq: ON_REQUEST,
-    confirm: true,
-  },
+  /* ---------------- Spices ---------------- */
   {
     slug: "turmeric",
     name: "Turmeric",
@@ -106,19 +111,38 @@ export const products: Product[] = [
   },
   {
     slug: "red-chilli",
-    name: "Red Chilli",
-    alsoKnownAs: ["Milagai", "Lal mirch"],
+    name: "Guntur Red Chilli",
+    alsoKnownAs: ["Guntur chilli", "Milagai", "Lal mirch"],
     botanical: "Capsicum annuum",
     category: "spice",
     accent: "#B3201B",
     ink: "#A11C18",
     silhouette: "chilli",
-    summary: "Dried whole chillies with or without stem, flakes and powder across heat levels.",
+    summary: "Dried Guntur chillies with or without stem, flakes and powder across heat levels.",
     colour: "Bright to deep red",
     aroma: ["Fruity", "Smoky", "Sharp heat"],
-    origin: ["Andhra Pradesh (Guntur)", "Karnataka (Byadgi)", "Tamil Nadu (Ramanathapuram)"],
+    origin: ["Andhra Pradesh (Guntur)"],
     forms: ["Whole with stem", "Stemless", "Flakes", "Powder"],
-    grades: ["Teja S17", "Sannam S4 (334)", "Byadgi", "Wrinkle 273", "Ramnad Mundu"],
+    grades: ["Teja S17", "Sannam S4 (334)", "Wrinkle 273", "341"],
+    packaging: SPICE_PACKING,
+    moq: ON_REQUEST,
+    confirm: true,
+  },
+  {
+    slug: "black-pepper",
+    name: "Black Pepper",
+    alsoKnownAs: ["Milagu", "Kali mirch"],
+    botanical: "Piper nigrum",
+    category: "spice",
+    accent: "#2B2420",
+    ink: "#2B2420",
+    silhouette: "peppercorns",
+    summary: "Whole Malabar and Tellicherry-type peppercorns, sun-dried from green to black.",
+    colour: "Black to deep brown, wrinkled skin",
+    aroma: ["Pungent", "Woody", "Pine resin", "Lingering warmth"],
+    origin: ["Kerala (Wayanad, Idukki)", "Karnataka (Kodagu)"],
+    forms: ["Whole", "Crushed", "Powder"],
+    grades: ["MG1", "TGSEB", "500 g/l", "550 g/l", "570 g/l"],
     packaging: SPICE_PACKING,
     moq: ON_REQUEST,
     confirm: true,
@@ -218,44 +242,48 @@ export const products: Product[] = [
     moq: ON_REQUEST,
     confirm: true,
   },
+
+  /* ---------------- Rice ---------------- */
   {
-    slug: "cloves",
-    name: "Cloves",
-    alsoKnownAs: ["Kirambu", "Laung"],
-    botanical: "Syzygium aromaticum",
-    category: "spice",
-    accent: "#5B3424",
-    ink: "#5B3424",
-    silhouette: "clove",
-    summary: "Hand-picked dried flower buds with heads intact.",
-    colour: "Dark reddish-brown",
-    aroma: ["Sweet", "Numbing", "Warm", "Medicinal"],
-    origin: ["Tamil Nadu (Kanyakumari, Nilgiris)", "Kerala"],
-    forms: ["Whole", "Powder"],
-    grades: ["Hand-picked", "Headless (on request)"],
-    packaging: SPICE_PACKING,
+    slug: "basmati-rice",
+    name: "Basmati Rice",
+    alsoKnownAs: ["Basmati", "Basmati chawal"],
+    botanical: "Oryza sativa",
+    category: "rice",
+    accent: "#C9B27E",
+    ink: "#6B5526",
+    silhouette: "long-seeds",
+    summary: "Long-grain aromatic basmati, raw, steam or sella, graded by grain length.",
+    colour: "Creamy white to golden (sella), slender long grains",
+    aroma: ["Floral", "Nutty", "Grains lengthen on cooking"],
+    origin: ["Punjab", "Haryana", "Western Uttar Pradesh"],
+    forms: ["Raw (white)", "Steam", "Sella (parboiled)", "Golden sella"],
+    grades: ["1121", "1509", "Pusa basmati", "Traditional basmati", "Grain length to buyer spec"],
+    packaging: RICE_PACKING,
     moq: ON_REQUEST,
     confirm: true,
   },
   {
-    slug: "cinnamon",
-    name: "Cinnamon",
-    alsoKnownAs: ["Pattai", "Dalchini"],
-    botanical: "Cinnamomum verum",
-    category: "spice",
-    accent: "#9A5A2F",
-    ink: "#7E4521",
-    silhouette: "quill",
-    summary: "Thin-bark quills, quillings and pieces.",
-    colour: "Light tan to warm brown",
-    aroma: ["Sweet", "Woody", "Delicate", "Citrus hint"],
-    origin: ["Kerala", "Other origins on request"],
-    forms: ["Quills", "Quillings", "Pieces", "Powder"],
-    grades: ["Quills", "Quillings", "Broken pieces"],
-    packaging: ["Cartons with poly liner", ...SPICE_PACKING],
+    slug: "ponni-rice",
+    name: "Tanjore Ponni Rice",
+    alsoKnownAs: ["Ponni", "Ponni arisi"],
+    botanical: "Oryza sativa",
+    category: "rice",
+    accent: "#BFA877",
+    ink: "#6B5526",
+    silhouette: "long-seeds",
+    summary: "Medium-grain ponni from the Kaveri delta around Thanjavur, raw or boiled.",
+    colour: "Off-white, medium grain",
+    aroma: ["Mild", "Soft", "Light and separate when cooked"],
+    origin: ["Tamil Nadu (Thanjavur, Kaveri delta)"],
+    forms: ["Raw", "Boiled (parboiled)"],
+    grades: ["Raw ponni", "Boiled ponni", "New crop or aged, to buyer spec"],
+    packaging: RICE_PACKING,
     moq: ON_REQUEST,
     confirm: true,
   },
+
+  /* ---------------- Pulses ---------------- */
   {
     slug: "toor-dal",
     name: "Toor Dal",
@@ -276,27 +304,27 @@ export const products: Product[] = [
     confirm: true,
   },
   {
-    slug: "moong",
-    name: "Moong",
-    alsoKnownAs: ["Pachai payaru", "Green gram", "Mung bean"],
-    botanical: "Vigna radiata",
+    slug: "masoor",
+    name: "Masoor Dal",
+    alsoKnownAs: ["Mysore paruppu", "Red lentil"],
+    botanical: "Lens culinaris",
     category: "pulse",
-    accent: "#6E8B3D",
-    ink: "#4B6225",
+    accent: "#CF5F39",
+    ink: "#A0401D",
     silhouette: "lentils",
-    summary: "Whole green gram, split, and split-washed yellow moong.",
-    colour: "Glossy green whole, pale yellow washed",
-    aroma: ["Light", "Sweet", "Grassy"],
-    origin: ["Rajasthan", "Madhya Pradesh", "Maharashtra"],
-    forms: ["Whole", "Split", "Split washed"],
-    grades: ["Bold", "Medium", "Sortex-cleaned"],
+    summary: "Split red (malka) masoor, and whole brown lentils on request.",
+    colour: "Coral-red split, brown whole",
+    aroma: ["Mild", "Earthy", "Cooks soft quickly"],
+    origin: ["Madhya Pradesh", "Uttar Pradesh"],
+    forms: ["Split red (malka)", "Whole"],
+    grades: ["Bold", "Small", "Sortex-cleaned"],
     packaging: PULSE_PACKING,
     moq: ON_REQUEST,
     confirm: true,
   },
   {
     slug: "urad",
-    name: "Urad",
+    name: "Urad Dal",
     alsoKnownAs: ["Ulundhu", "Black gram"],
     botanical: "Vigna mungo",
     category: "pulse",
@@ -314,40 +342,61 @@ export const products: Product[] = [
     confirm: true,
   },
   {
-    slug: "chana",
-    name: "Chana",
-    alsoKnownAs: ["Kadalai", "Bengal gram", "Desi chickpea"],
-    botanical: "Cicer arietinum",
+    slug: "moong",
+    name: "Moong Dal",
+    alsoKnownAs: ["Pachai payaru", "Green gram", "Mung bean"],
+    botanical: "Vigna radiata",
     category: "pulse",
-    accent: "#B98A4B",
-    ink: "#7A5520",
+    accent: "#6E8B3D",
+    ink: "#4B6225",
     silhouette: "lentils",
-    summary: "Whole desi chickpeas and split chana dal.",
-    colour: "Tan to brown whole, yellow split",
-    aroma: ["Nutty", "Dense", "Sweet when roasted"],
-    origin: ["Madhya Pradesh", "Maharashtra", "Rajasthan"],
-    forms: ["Whole", "Split (chana dal)"],
+    summary: "Whole green gram, split, and split-washed yellow moong.",
+    colour: "Glossy green whole, pale yellow washed",
+    aroma: ["Light", "Sweet", "Grassy"],
+    origin: ["Rajasthan", "Madhya Pradesh", "Maharashtra"],
+    forms: ["Whole", "Split", "Split washed"],
     grades: ["Bold", "Medium", "Sortex-cleaned"],
     packaging: PULSE_PACKING,
     moq: ON_REQUEST,
     confirm: true,
   },
+
+  /* ---------------- Onions ---------------- */
   {
-    slug: "masoor",
-    name: "Masoor",
-    alsoKnownAs: ["Mysore paruppu", "Red lentil"],
-    botanical: "Lens culinaris",
-    category: "pulse",
-    accent: "#CF5F39",
-    ink: "#A0401D",
-    silhouette: "lentils",
-    summary: "Whole brown lentils and split red (malka) masoor.",
-    colour: "Brown whole, coral-red split",
-    aroma: ["Mild", "Earthy", "Cooks soft quickly"],
-    origin: ["Madhya Pradesh", "Uttar Pradesh"],
-    forms: ["Whole", "Split red (malka)"],
-    grades: ["Bold", "Small", "Sortex-cleaned"],
-    packaging: PULSE_PACKING,
+    slug: "small-onion",
+    name: "Small Onion",
+    alsoKnownAs: ["Sambar onion", "Shallot", "Chinna vengayam"],
+    botanical: "Allium cepa var. aggregatum",
+    category: "onion",
+    accent: "#A8455E",
+    ink: "#8A3148",
+    silhouette: "bulb",
+    summary: "Small red sambar onions, sorted by bulb size, dry-skinned and cleaned.",
+    colour: "Pinkish-red to purple skin",
+    aroma: ["Pungent", "Sweet when cooked"],
+    origin: ["Tamil Nadu (Perambalur, Dindigul)", "Karnataka"],
+    forms: ["Whole, dry-skinned"],
+    grades: ["Sorted by bulb diameter", "Cleaned and topped"],
+    packaging: ONION_PACKING,
+    moq: ON_REQUEST,
+    confirm: true,
+  },
+  {
+    slug: "big-onion",
+    name: "Big Onion",
+    alsoKnownAs: ["Bellary onion", "Red onion", "Nashik onion", "Periya vengayam"],
+    botanical: "Allium cepa",
+    category: "onion",
+    accent: "#8E2F4A",
+    ink: "#7A2440",
+    silhouette: "bulb",
+    summary: "Firm red onions graded by size and packed in mesh bags.",
+    colour: "Deep red to pink",
+    aroma: ["Sharp", "Pungent", "Sweet when cooked"],
+    origin: ["Maharashtra (Nashik)", "Karnataka"],
+    forms: ["Whole, dry-skinned"],
+    grades: ["25–40 mm", "40–55 mm", "55 mm and above"],
+    packaging: ONION_PACKING,
     moq: ON_REQUEST,
     confirm: true,
   },
@@ -355,6 +404,8 @@ export const products: Product[] = [
 
 export const spices = products.filter((p) => p.category === "spice");
 export const pulses = products.filter((p) => p.category === "pulse");
+export const rices = products.filter((p) => p.category === "rice");
+export const onions = products.filter((p) => p.category === "onion");
 
 export const getProduct = (slug: string) => products.find((p) => p.slug === slug);
 

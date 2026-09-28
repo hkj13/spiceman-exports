@@ -125,7 +125,7 @@ export function Opening() {
     >
       <div className="wrap grid-12 relative z-10 lg:min-h-[calc(100svh-var(--header-h)-2.5rem)]">
         <p className="body-l col-span-4 max-w-[30ch] text-brown md:col-span-4 md:col-start-5 lg:col-span-4 lg:col-start-9 xl:col-span-3 xl:col-start-10">
-          Wholesale trade and export of spices and pulses, from Lawspet in Pondicherry to ports abroad.
+          Wholesale trade and export of spices, rice, pulses and onions, from Lawspet in Pondicherry to ports abroad.
         </p>
 
         <h1

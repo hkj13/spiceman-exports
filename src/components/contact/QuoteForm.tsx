@@ -2,7 +2,7 @@
 
 import { useId, useRef, useState, type ReactNode } from "react";
 import { mailtoLink, site, whatsappLink, type Phone } from "@/config/site";
-import { productUnits, products } from "@/data/products";
+import { CATEGORIES, productUnits, products } from "@/data/products";
 import { quoteMessage, quoteSchema, quoteSubject, type Quote } from "@/lib/quote";
 import { WhatsAppGlyph } from "@/components/brand/WhatsAppGlyph";
 
@@ -214,9 +214,9 @@ export function QuoteForm({ initial = {} }: { initial?: QuoteInitial }) {
           <p aria-hidden className="mono-label text-brown">
             06 · Product(s) <span className="text-chilli">*</span>
           </p>
-          {(["spice", "pulse"] as const).map((cat, ci) => (
+          {CATEGORIES.map(({ id: cat, many }, ci) => (
             <div key={cat} className="mt-3">
-              <p className="mono-label mb-2 text-[0.65rem] text-brown/80">{cat === "spice" ? "Spices" : "Pulses"}</p>
+              <p className="mono-label mb-2 text-[0.65rem] text-brown/80">{many}</p>
               <div className="flex flex-wrap gap-2">
                 {products
                   .filter((p) => p.category === cat)

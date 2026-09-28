@@ -1,6 +1,6 @@
 # Spiceman Exports
 
-Website for Spiceman Exports, wholesale trading and export of spices and pulses from Lawspet, Pondicherry. Built with Next.js (App Router), TypeScript and Tailwind CSS v4, deployed on Vercel at https://spicemanexports.com.
+Website for Spiceman Exports, wholesale trading and export of spices, rice, pulses and onions from Lawspet, Pondicherry. Built with Next.js (App Router), TypeScript and Tailwind CSS v4, deployed on Vercel at https://spicemanexports.com.
 
 The site is built around one journey, from soil to shipment. Home introduces the business and its goods; **Journey** (`/journey`) walks through the eight stops in full. A persistent particle layer (grains, seeds, peppercorns) lives in the root layout and regroups into each page's shape as you scroll and navigate. Photographs are shown in plain frames with a light colour grade; where there are several (products on Home, the eight stops), they sit in a swipeable slider (`src/components/art/PhotoSlider.tsx`).
 
@@ -52,7 +52,7 @@ Illustrations are generated in code. The photographs in `src/assets/photos` are 
 
 - [ ] **Logo**: `public/logo.svg`, `src/app/icon.svg` and `src/components/brand/LogoMark.tsx` hold a placeholder mortar-and-pestle drawn from the business card. Keep the `pestle` group class in `LogoMark` if the opening grind animation should still move it. Also update `src/app/apple-icon.tsx`.
 - [ ] **Proprietor portrait** (About page): a leaf with the monogram "SK" (`src/components/about/LeafStage.tsx`). Swap in a photo with `next/image` if one is supplied.
-- [ ] **Product photographs**: `src/assets/photos/<product-slug>.jpg` (15 files: sorting-table tags, product pages, the Home product slider). Replace each with a close-up of the business's own stock, keeping the file name; then update or remove its credit in `src/data/photos.ts` and `CREDITS.md`. Full-frame close-ups (the goods filling the picture) look best.
+- [ ] **Product photographs**: `src/assets/photos/<product-slug>.jpg` (16 files: sorting-table tags, product pages, the Home product slider; red chilli, cumin, basmati and big onion are already the client's own photos). Replace each with a close-up of the business's own stock, keeping the file name; then update or remove its credit in `src/data/photos.ts` and `CREDITS.md`. Full-frame close-ups (the goods filling the picture) look best.
 - [ ] **Journey photographs**: `src/assets/photos/stage-*.jpg` (soil, harvest, sun, sort, pack, container, port), used on Home, Journey and Process. Swap in the business's own photos of drying, sorting, packing and loading when available.
 - [ ] **Open Graph images**: generated from `src/og/render.tsx`. Replace with photography later if you like.
 - [ ] **Product data** marked `confirm: true` in `src/data/products.ts`.

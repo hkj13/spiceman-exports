@@ -22,9 +22,9 @@ export default function CreditsPage() {
       </p>
       <h1 className="display-l mt-6">Photo credits</h1>
       <p className="body-l mt-6 max-w-[56ch] text-brown">
-        Photographs on this site are openly licensed and used with thanks to their authors. They illustrate the goods
-        and the trade in general; they are not photographs of Spiceman Exports&apos; own stock or premises. Each has
-        been resized, cropped and lightly colour-graded.
+        Some photographs were supplied by Spiceman Exports. The rest are openly licensed and used with thanks to
+        their authors; they illustrate the goods and the trade in general, not Spiceman Exports&apos; own stock or
+        premises. Each has been resized, cropped and lightly colour-graded.
       </p>
       <ul className="mt-12 grid gap-x-10 gap-y-6 md:grid-cols-2">
         {list.map(([key, p]) => (
@@ -35,6 +35,10 @@ export default function CreditsPage() {
             <div className="min-w-0 text-sm">
               <p className="font-medium">{p.alt}</p>
               <p className="mt-1 text-brown">
+                {!p.credit.source ? (
+                  p.credit.title
+                ) : (
+                  <>
                 <a href={p.credit.source} className="link-draw break-words" target="_blank" rel="noopener noreferrer">
                   {p.credit.title.length > 80 ? `${p.credit.title.slice(0, 77)}…` : p.credit.title}
                 </a>{" "}
@@ -45,6 +49,8 @@ export default function CreditsPage() {
                   </a>
                 ) : (
                   p.credit.license
+                )}
+                  </>
                 )}
               </p>
             </div>

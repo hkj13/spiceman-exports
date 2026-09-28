@@ -7,9 +7,9 @@ import { Reveal } from "@/components/motion/Reveal";
 import { products } from "@/data/products";
 
 export const metadata: Metadata = pageMeta({
-  title: "Products: spices and pulses",
+  title: "Products: spices, rice, pulses and onions",
   description:
-    "Black pepper, turmeric, red chilli, cardamom, coriander, cumin, fenugreek, mustard, cloves and cinnamon; toor, moong, urad, chana and masoor. Origins, grades, packing and MOQ for each.",
+    "Turmeric, Guntur red chilli, black pepper, green cardamom, coriander, cumin, fenugreek and mustard; basmati and Tanjore ponni rice; toor, masoor, urad and moong dal; small and big onions. Origins, grades, packing and MOQ for each.",
   path: "/products",
 });
 
@@ -27,8 +27,8 @@ export default function ProductsPage() {
           </Reveal>
         </div>
         <p className="body-l col-span-4 max-w-[40ch] self-end text-brown md:col-span-4 md:col-start-5 xl:col-span-4 xl:col-start-9">
-          Ten spices and five pulses. Hover or tap a heap to read its sample tag: colour, aroma, where it
-          grows, grades, packing and minimum order.
+          Spices, rice, pulses and onions. Hover or tap a heap to read its sample tag: colour, character,
+          where it grows, grades, packing and minimum order.
         </p>
       </header>
 
@@ -36,13 +36,14 @@ export default function ProductsPage() {
 
       <section aria-labelledby="pour-title" className="wrap grid-12 mt-32 gap-y-10">
         <div className="col-span-4 md:col-span-3 xl:col-span-4">
-          <p className="mono-label text-brown">Pulses</p>
+          <p className="mono-label text-brown">Pulses and rice</p>
           <h2 id="pour-title" className="display-l mt-4">
-            Five pulses, <em className="display-em">by the scoop</em>.
+            Grain by grain, <em className="display-em">by the scoop</em>.
           </h2>
           <p className="mt-6 max-w-[36ch] text-brown">
-            Toor, moong, urad, chana and masoor, whole or split. Press and hold on the tray to pour, or use the
-            button. It won&apos;t fill a container, but it is a fair way to see the difference in size and colour.
+            Toor, moong, urad and masoor, and basmati and ponni rice. Press and hold on the tray to pour, or use
+            the button. It won&apos;t fill a container, but it is a fair way to see the difference in size and
+            colour.
           </p>
           <p className="mt-8 max-w-[36ch] text-brown">
             Looking for something that isn&apos;t listed?{" "}

@@ -17,6 +17,8 @@ export const PATHS = {
     "M21 21c7-4 13 1 15 9 8 26 26 46 54 56 4 2 2 6-4 6-30 0-52-18-60-48-2-8-8-16-5-23ZM19 23c-4-6-4-12 2-16l2 2c-4 4-4 8 0 12Z",
   pod: "M50 6c18 12 22 54 2 88-2 2-4 2-6 0C28 60 32 18 50 6Zm0-4 3 6h-6Z",
   clove: "M46 32h8l-2 62h-4ZM50 10a12 12 0 1 1 0 24 12 12 0 0 1 0-24ZM36 30l10-4v8ZM64 30l-10-4v8Z",
+  /** An onion: round bulb, drawn-up neck, a tuft of root at the base */
+  bulb: "M50 6c2 9 5 15 11 21 17 7 28 21 28 38 0 18-17 28-39 28S11 83 11 65c0-17 11-31 28-38 6-6 9-12 11-21ZM43 92l-5 6 3 1 6-5ZM50 93v7h3v-7ZM57 92l5 6-3 1-6-5Z",
 } as const;
 
 export const leafShape = pathShape("leaf", PATHS.leaf);
@@ -135,6 +137,7 @@ export const productShapes: Record<Silhouette, ShapeFn> = {
   "round-seeds": discs("round-seeds"),
   "long-seeds": discs("long-seeds"),
   clove: pathShape("clove", PATHS.clove),
+  bulb: pathShape("bulb", PATHS.bulb),
   quill,
   lentils: discs("lentils"),
 };

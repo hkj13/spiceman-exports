@@ -29,12 +29,20 @@ const PULSES: Record<string, { label: string; grains: Grain[] }> = {
       { color: "#3D3834", r: 3.1, squash: 0.78 },
     ],
   },
-  chana: {
-    label: "Chana",
+  basmati: {
+    label: "Basmati",
     grains: [
-      { color: "#B98A4B", r: 4.6, squash: 0.92 },
-      { color: "#A47639", r: 4.4, squash: 0.92 },
-      { color: "#C79B5E", r: 4.7, squash: 0.92 },
+      { color: "#EDE3CC", r: 4.4, squash: 0.26 },
+      { color: "#E2D5B6", r: 4.2, squash: 0.26 },
+      { color: "#F3ECDA", r: 4.5, squash: 0.26 },
+    ],
+  },
+  ponni: {
+    label: "Ponni",
+    grains: [
+      { color: "#E8DDC4", r: 3.2, squash: 0.45 },
+      { color: "#DCCDAA", r: 3.1, squash: 0.45 },
+      { color: "#F0E8D6", r: 3.3, squash: 0.45 },
     ],
   },
   masoor: {

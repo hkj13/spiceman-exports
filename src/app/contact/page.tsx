@@ -11,7 +11,7 @@ import { site, whatsappLink } from "@/config/site";
 export const metadata: Metadata = pageMeta({
   title: "Get a quote",
   description:
-    "Request a quote for spices and pulses from Spiceman Exports, Pondicherry. WhatsApp +91 98945 21812 or +91 87782 62010, or email spicemanexports@gmail.com.",
+    "Request a quote for spices, rice, pulses and onions from Spiceman Exports, Pondicherry. WhatsApp +91 98945 21812 or +91 87782 62010, or email spicemanexports@gmail.com.",
   path: "/contact",
 });
 

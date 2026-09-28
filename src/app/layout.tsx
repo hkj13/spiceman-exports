@@ -46,7 +46,7 @@ const plexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name}: spices and pulses, wholesale and export from Pondicherry`,
+    default: `${site.name}: spices, rice, pulses and onions, wholesale and export from Pondicherry`,
     template: `%s · ${site.name}`,
   },
   ...pageMeta({ description: site.description, path: "/" }),
