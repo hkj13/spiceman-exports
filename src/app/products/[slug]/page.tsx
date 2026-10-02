@@ -80,14 +80,46 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         >
           {product.name}
         </h1>
-        <div className="wrap grid-12 mt-8 items-end gap-y-10">
-          <div className="col-span-4 md:col-span-4 xl:col-span-5 xl:self-center">
+        <div className="wrap grid-12 mt-8 items-start gap-y-10">
+          <div className="col-span-4 md:col-span-4 xl:col-span-5">
             <p className="font-display text-2xl italic text-brown [font-variation-settings:'opsz'_36]">
               {product.botanical}
             </p>
             <Reveal as="p" by="fade" className="body-l mt-4 max-w-[38ch]">
               {product.summary}
             </Reveal>
+            {/* At a glance: the facts buyers look for first, plus the sheet itself */}
+            <dl className="mt-8 grid max-w-[460px] grid-cols-2 gap-x-6 gap-y-4 border-t border-rule pt-6">
+              {(
+                [
+                  ["Origin", product.origin[0]],
+                  ["Forms", product.forms.slice(0, 3).join(", ")],
+                  ["Packing", product.packaging[0]],
+                  ["Minimum order", product.moq],
+                ] as const
+              ).map(([k, v]) => (
+                <div key={k}>
+                  <dt className="mono-label text-[0.65rem] text-brown">{k}</dt>
+                  <dd className="mt-1 text-[0.95rem] leading-snug">{v}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <a
+                href={`/products/${product.slug}/spec-sheet.pdf`}
+                download={`spiceman-exports-${product.slug}-spec-sheet.pdf`}
+                data-cursor="Save"
+                className="mono-label inline-flex items-center gap-2.5 rounded-full bg-ink px-5 py-3.5 text-paper transition-colors hover:bg-green"
+              >
+                <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path d="M8 2v8m0 0 3.5-3.5M8 10 4.5 6.5M2.5 13.5h11" />
+                </svg>
+                Spec sheet (PDF)
+              </a>
+              <a href="#quote-title" className="mono-label link-draw text-green">
+                Request a quote ↓
+              </a>
+            </div>
           </div>
           {/* The goods photographed, with the drawn silhouette the particles form beside it */}
           <div className="relative col-span-4 aspect-[6/5] w-full md:col-span-4 md:col-start-5 xl:col-span-6 xl:col-start-7">
@@ -113,10 +145,23 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
 
       <div className="wrap grid-12 mt-20 gap-y-14">
         <section aria-labelledby="spec-title" className="col-span-4 md:col-span-8 xl:col-span-7">
-          <h2 id="spec-title" className="mono-label flex items-center gap-3 text-brown">
-            <span aria-hidden className="inline-block h-px w-8 bg-brown" />
-            Specification sheet
-          </h2>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <h2 id="spec-title" className="mono-label flex items-center gap-3 text-brown">
+              <span aria-hidden className="inline-block h-px w-8 bg-brown" />
+              Specification sheet
+            </h2>
+            <a
+              href={`/products/${product.slug}/spec-sheet.pdf`}
+              download={`spiceman-exports-${product.slug}-spec-sheet.pdf`}
+              data-cursor="Save"
+              className="mono-label group inline-flex items-center gap-2.5 rounded-full border border-ink px-4 py-2.5 text-ink transition-colors hover:bg-ink hover:text-paper"
+            >
+              <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M8 2v8m0 0 3.5-3.5M8 10 4.5 6.5M2.5 13.5h11" />
+              </svg>
+              Download PDF
+            </a>
+          </div>
           <dl className="mt-6 border-t border-ink">
             {rows.map(([k, v]) => (
               <div key={k} className="grid grid-cols-1 gap-1 border-b border-rule py-4 sm:grid-cols-[12rem_1fr] sm:gap-6">

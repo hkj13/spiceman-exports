@@ -85,7 +85,7 @@ export default function JourneyPage() {
         stage={0}
         id="soil"
         labelledBy="soil-title"
-        className="wrap grid-12 relative scroll-mt-24 items-center gap-y-10 py-[clamp(6rem,16vh,12rem)]"
+        className="wrap grid-12 relative scroll-mt-24 items-center gap-y-10 py-14 md:py-[clamp(6rem,16vh,12rem)]"
       >
         <div
           data-scene-anchor
@@ -174,7 +174,7 @@ export default function JourneyPage() {
             data-scene={c.scene}
             data-stage={c.stage}
             aria-labelledby={c.id}
-            className="wrap grid-12 relative flex-none items-center gap-y-10 py-[clamp(5rem,12vh,9rem)] group-data-[hscroll=on]/h:h-full group-data-[hscroll=on]/h:w-[86vw] group-data-[hscroll=on]/h:max-w-none group-data-[hscroll=on]/h:py-0"
+            className="wrap grid-12 relative flex-none items-center gap-y-10 py-14 md:py-[clamp(5rem,12vh,9rem)] group-data-[hscroll=on]/h:h-full group-data-[hscroll=on]/h:w-[86vw] group-data-[hscroll=on]/h:max-w-none group-data-[hscroll=on]/h:py-0"
           >
             <div
               className={`col-span-4 md:col-span-4 xl:col-span-5 ${i % 2 ? "md:order-2 md:col-start-5 xl:col-start-7" : ""}`}
@@ -204,7 +204,7 @@ export default function JourneyPage() {
       </HorizontalChapters>
 
       {/* The table: what is traded */}
-      <section aria-labelledby="table-title" className="relative py-[clamp(6rem,18vh,14rem)]">
+      <section aria-labelledby="table-title" className="relative py-14 md:py-[clamp(6rem,18vh,14rem)]">
         <div className="wrap grid-12 relative">
           <div className="col-span-4 md:col-span-7 xl:col-span-10 xl:col-start-2">
             <ChapterLabel label="What we trade" />
@@ -251,7 +251,7 @@ export default function JourneyPage() {
         stage={4}
         id="check"
         labelledBy="check-title"
-        className="wrap grid-12 relative scroll-mt-24 items-center gap-y-16 py-[clamp(6rem,16vh,12rem)]"
+        className="wrap grid-12 relative scroll-mt-24 items-center gap-y-16 py-14 md:py-[clamp(6rem,16vh,12rem)]"
       >
         <div className="col-span-4 md:col-span-4 xl:col-span-5 xl:col-start-2">
           <ChapterLabel n="05" label="Check" />
@@ -305,7 +305,7 @@ export default function JourneyPage() {
         stage={5}
         id="pack"
         labelledBy="pack-title"
-        className="wrap grid-12 relative items-end gap-y-12 py-[clamp(6rem,16vh,12rem)]"
+        className="wrap grid-12 relative items-end gap-y-12 py-14 md:py-[clamp(6rem,16vh,12rem)]"
       >
         <div className="col-span-4 md:col-span-5 xl:col-span-5 xl:col-start-3">
           <ChapterLabel n="06" label="Pack" />
@@ -339,7 +339,7 @@ export default function JourneyPage() {
         id="container"
         night
         labelledBy="container-title"
-        className="on-dark night-bg bg-green-900 wrap grid-12 relative gap-y-12 py-[clamp(7rem,20vh,14rem)] text-paper"
+        className="on-dark night-bg bg-green-900 wrap grid-12 relative gap-y-12 py-14 md:py-[clamp(7rem,20vh,14rem)] text-paper"
       >
         <div
           data-scene-anchor
@@ -372,7 +372,7 @@ export default function JourneyPage() {
         id="port"
         night
         labelledBy="port-title"
-        className="on-dark night-bg bg-green-900 relative overflow-x-clip pb-10 pt-[clamp(6rem,14vh,10rem)] text-paper"
+        className="on-dark night-bg bg-green-900 relative overflow-x-clip pb-10 pt-14 md:pt-[clamp(6rem,14vh,10rem)] text-paper"
       >
         <div className="wrap relative">
           <div data-scene-extra aria-hidden className="absolute inset-x-0 top-[clamp(9rem,26vw,22rem)] h-4" />

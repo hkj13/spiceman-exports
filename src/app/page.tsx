@@ -50,40 +50,53 @@ export default function Home() {
     <>
       <Opening />
 
-      {/* What we do, in one sentence */}
-      <section aria-labelledby="intro-title" className="relative py-[clamp(5rem,14vh,11rem)]">
-        <div className="wrap grid-12 relative gap-y-12">
-          <div className="col-span-4 md:col-span-8 xl:col-span-10 xl:col-start-2">
-            <ChapterLabel label="What we do" />
-            <h2 id="intro-title" className="display-l mt-8 max-w-[22ch] leading-[1.12]">
-              We trade spices, rice, pulses and onions in wholesale lots, and prepare them for buyers{" "}
-              <em className="display-em text-green">abroad</em>.
-            </h2>
-          </div>
-          <div className="col-span-4 md:col-span-4 md:col-start-5 xl:col-span-4 xl:col-start-8">
-            <dl className="space-y-3 text-brown">
-              {CATEGORIES.map((c) => (
-                <div key={c.id}>
-                  <dt className="mono-label text-[0.65rem] text-ink">{c.many}</dt>
-                  <dd>
-                    {products
-                      .filter((p) => p.category === c.id)
-                      .map((p) => p.name)
-                      .join(", ")}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <p className="mt-4 text-brown">Each with its own spec sheet.</p>
-            <Link href="/products" className="mono-label link-draw mt-6 inline-block text-green" data-cursor="Open">
+      {/* What we do: one sentence, then the four categories across the full width */}
+      <section aria-labelledby="intro-title" className="relative pb-6 pt-14 md:pb-8 md:pt-[clamp(4rem,10vh,8rem)]">
+        <div className="wrap">
+          <ChapterLabel label="What we do" />
+          <h2 id="intro-title" className="display-l mt-8 max-w-[24ch] leading-[1.12]">
+            We trade spices, rice, pulses and onions in wholesale lots, and prepare them for buyers{" "}
+            <em className="display-em text-green">abroad</em>.
+          </h2>
+          <ul className="mt-12 grid grid-cols-1 gap-x-8 gap-y-8 border-t border-rule pt-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
+            {CATEGORIES.map((c) => {
+              const items = products.filter((p) => p.category === c.id);
+              return (
+                <li key={c.id}>
+                  <p className="mono-label flex items-baseline justify-between text-brown">
+                    {c.many}
+                    <span className="text-[0.65rem]">{String(items.length).padStart(2, "0")}</span>
+                  </p>
+                  <ul className="mt-4 space-y-1.5">
+                    {items.map((p) => (
+                      <li key={p.slug}>
+                        <Link
+                          href={`/products/${p.slug}`}
+                          className="group flex items-center gap-2.5 text-lg text-ink transition-colors hover:text-[var(--ink)]"
+                          style={{ "--ink": p.ink } as React.CSSProperties}
+                          data-cursor="Open"
+                        >
+                          <span aria-hidden className="h-2 w-2 flex-none rounded-full" style={{ background: p.accent }} />
+                          {p.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
+          </ul>
+          <p className="mt-10 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-brown">
+            Each with its own downloadable spec sheet.
+            <Link href="/products" className="mono-label link-draw text-green" data-cursor="Open">
               Open the sorting table →
             </Link>
-          </div>
+          </p>
         </div>
       </section>
 
       {/* From the table: every product, in a slider */}
-      <section aria-labelledby="table-title" className="relative py-[clamp(4rem,10vh,8rem)]">
+      <section aria-labelledby="table-title" className="relative py-14 md:py-[clamp(4rem,10vh,8rem)]">
         <div className="wrap flex flex-wrap items-end justify-between gap-6">
           <div>
             <ChapterLabel label="From the table" />
@@ -106,7 +119,7 @@ export default function Home() {
         scene="rail"
         stage={3}
         labelledBy="route-title"
-        className="relative py-[clamp(6rem,16vh,12rem)]"
+        className="relative py-14 md:py-[clamp(6rem,16vh,12rem)]"
       >
         <div className="wrap grid-12 gap-y-8">
           <div className="col-span-4 md:col-span-5 xl:col-span-6">
@@ -148,9 +161,9 @@ export default function Home() {
       </SceneSection>
 
       {/* A word from Pondicherry */}
-      <section aria-labelledby="note-title" className="wrap grid-12 gap-y-10 py-[clamp(5rem,14vh,10rem)]">
+      <section aria-labelledby="note-title" className="wrap grid-12 gap-y-10 py-14 md:py-[clamp(5rem,14vh,10rem)]">
         <div className="col-span-4 md:col-span-3 xl:col-span-3 xl:col-start-2">
-          <p className="mono-label text-brown">From Lawspet, Pondicherry</p>
+          <p className="mono-label text-brown">Pondicherry, India</p>
           <p className="mt-4 font-display text-2xl italic text-green [font-variation-settings:'opsz'_36]">
             {site.tagline.replace("|", "·")}
           </p>
@@ -181,7 +194,7 @@ export default function Home() {
         night
         nightPalette
         labelledBy="quote-title"
-        className="on-dark night-bg bg-green-900 relative overflow-x-clip py-[clamp(6rem,16vh,12rem)] text-paper"
+        className="on-dark night-bg bg-green-900 relative overflow-x-clip py-14 md:py-[clamp(6rem,16vh,12rem)] text-paper"
       >
         <div className="wrap grid-12 gap-y-14">
           <div className="col-span-4 md:col-span-8 xl:col-span-6">

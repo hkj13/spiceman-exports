@@ -41,7 +41,7 @@ export default function ProductsPage() {
             Grain by grain, <em className="display-em">by the scoop</em>.
           </h2>
           <p className="mt-6 max-w-[36ch] text-brown">
-            Toor, moong, urad and masoor, and basmati and ponni rice. Press and hold on the tray to pour, or use
+            Toor, moong, white and black urad and masoor, and basmati and ponni rice. Press and hold on the tray to pour, or use
             the button. It won&apos;t fill a container, but it is a fair way to see the difference in size and
             colour.
           </p>

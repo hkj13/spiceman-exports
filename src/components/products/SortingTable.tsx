@@ -155,7 +155,7 @@ export function SortingTable({ products }: { products: Product[] }) {
         <div className="wrap mt-10">
           <ul
             className="relative md:h-[var(--table-h)] md:rounded-[4px] md:bg-paper-2 md:shadow-[inset_0_0_0_1px_rgb(90_46_26/0.06)] md:transition-[height] md:duration-700 md:ease-(--ease-settle) md:[background-image:repeating-linear-gradient(90deg,rgb(90_46_26/0.035)_0_2px,transparent_2px_6px),repeating-linear-gradient(0deg,rgb(90_46_26/0.03)_0_2px,transparent_2px_7px)]"
-            style={{ "--table-h": `${rows * ROW_H + 140}px` } as React.CSSProperties}
+            style={{ "--table-h": `${rows * ROW_H - 40}px` } as React.CSSProperties}
           >
             {products.map((p) => {
               const out = !positions.has(p.slug);
@@ -244,7 +244,7 @@ export function SortingTable({ products }: { products: Product[] }) {
         </div>
       ) : (
         <div className="wrap mt-10 overflow-x-auto" tabIndex={0} role="region" aria-label="Product specifications">
-          <table className="w-full min-w-[860px] border-collapse text-left text-sm">
+          <table className="w-full min-w-[920px] border-collapse text-left text-sm">
             <caption className="sr-only">Product specifications</caption>
             <thead>
               <tr className="mono-label border-b border-ink text-brown">
@@ -253,7 +253,8 @@ export function SortingTable({ products }: { products: Product[] }) {
                 <th scope="col" className="py-3 pr-4 font-normal">Grades</th>
                 <th scope="col" className="py-3 pr-4 font-normal">Origin</th>
                 <th scope="col" className="py-3 pr-4 font-normal">Packing</th>
-                <th scope="col" className="py-3 font-normal">MOQ</th>
+                <th scope="col" className="py-3 pr-4 font-normal">MOQ</th>
+                <th scope="col" className="py-3 font-normal">Spec sheet</th>
               </tr>
             </thead>
             <tbody>
@@ -269,7 +270,17 @@ export function SortingTable({ products }: { products: Product[] }) {
                   <td className="py-4 pr-4 font-mono text-[0.8rem]">{p.grades.join(", ")}</td>
                   <td className="py-4 pr-4">{p.origin.join("; ")}</td>
                   <td className="py-4 pr-4">{p.packaging.slice(0, 3).join(", ")}</td>
-                  <td className="py-4">{p.moq}</td>
+                  <td className="py-4 pr-4">{p.moq}</td>
+                  <td className="py-4">
+                    <a
+                      href={`/products/${p.slug}/spec-sheet.pdf`}
+                      download
+                      className="mono-label link-draw whitespace-nowrap text-green"
+                      aria-label={`Download the ${p.name} spec sheet (PDF)`}
+                    >
+                      PDF ↓
+                    </a>
+                  </td>
                 </tr>
               ))}
             </tbody>
