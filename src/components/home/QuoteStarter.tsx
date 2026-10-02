@@ -1,7 +1,8 @@
 import { CATEGORIES, products, productUnits } from "@/data/products";
+import { shippingModes } from "@/lib/quote";
 
 /**
- * Three questions that start a quote. A plain GET form to /contact, so it
+ * Four questions that start a quote. A plain GET form to /contact, so it
  * works without JavaScript; the contact form picks the values up.
  */
 export function QuoteStarter({ tone = "light" }: { tone?: "light" | "dark" }) {
@@ -58,10 +59,22 @@ export function QuoteStarter({ tone = "light" }: { tone?: "light" | "dark" }) {
         </div>
       </div>
       <div>
-        <label htmlFor="qs-port" className={label}>
-          03 · Destination port
+        <label htmlFor="qs-shipping" className={label}>
+          03 · Shipping
         </label>
-        <input id="qs-port" name="port" placeholder="e.g. Jebel Ali" className={field} />
+        <select id="qs-shipping" name="shipping" defaultValue="Sea freight" className={field}>
+          {shippingModes.map((m) => (
+            <option key={m} value={m} className={option}>
+              {m}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="sm:col-span-2">
+        <label htmlFor="qs-port" className={label}>
+          04 · Destination port or airport
+        </label>
+        <input id="qs-port" name="port" placeholder="e.g. Jebel Ali, Dubai airport (DXB)" className={field} />
       </div>
       <div className="sm:col-span-2">
         <button

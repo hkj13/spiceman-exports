@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { QuoteForm } from "./QuoteForm";
 
-/** Reads ?product=&quantity=&unit=&port=&packaging= left by the product pages and the home page. */
+/** Reads ?product=&quantity=&unit=&shipping=&port=&packaging= left by the product pages and the home page. */
 export function PrefilledQuoteForm() {
   const params = useSearchParams();
   const product = params.getAll("product").filter(Boolean);
@@ -13,6 +13,7 @@ export function PrefilledQuoteForm() {
         products: product,
         quantity: params.get("quantity") ?? undefined,
         unit: params.get("unit") ?? undefined,
+        shipping: params.get("shipping") ?? undefined,
         port: params.get("port") ?? undefined,
         packaging: params.get("packaging") ?? undefined,
       }}

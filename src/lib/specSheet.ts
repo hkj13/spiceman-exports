@@ -246,11 +246,20 @@ export async function specSheetPdf(p: Product, photoPath?: string) {
   });
   page.drawCircle({ x: tagX + tagW - 26, y: y - 16, size: 4.2, color: C.paper, borderColor: C.brown, borderWidth: 0.6, borderOpacity: 0.5 });
   label(page, "Your specification · to be filled by the buyer", tagX + 16, y - 20, 7, mono, C.brown);
-  const fields = ["Grade or size", "Moisture, % max", "Extraneous matter, % max", "Quantity and unit", "Packing and marking", "Destination port"];
-  const colW = (tagW - 32) / 3;
+  const fields = [
+    "Grade or size",
+    "Moisture, % max",
+    "Extraneous matter, % max",
+    "Quantity and unit",
+    "Packing and marking",
+    "Shipping: sea / air",
+    "Port or airport",
+    "Shipment window",
+  ];
+  const colW = (tagW - 32) / 4;
   fields.forEach((f, i) => {
-    const fx = tagX + 16 + (i % 3) * colW;
-    const fy = y - 42 - Math.floor(i / 3) * 30;
+    const fx = tagX + 16 + (i % 4) * colW;
+    const fy = y - 42 - Math.floor(i / 4) * 30;
     label(page, f, fx, fy, 5.8, mono, C.brown);
     page.drawRectangle({ x: fx, y: fy - 14, width: colW - 14, height: 0.6, color: C.brown, opacity: 0.45 });
   });

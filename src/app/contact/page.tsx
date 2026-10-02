@@ -29,7 +29,7 @@ export default function ContactPage() {
           </Reveal>
         </div>
         <p className="body-l col-span-4 max-w-[40ch] self-end text-brown md:col-span-5 md:col-start-4 xl:col-span-4 xl:col-start-9">
-          Fill in what you know. The more specific the product, quantity and port, the more useful the first reply.
+          Fill in what you know. The more specific the product, quantity, shipping and port, the more useful the first reply.
         </p>
       </header>
 

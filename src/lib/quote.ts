@@ -3,6 +3,9 @@ import { productUnits, products } from "@/data/products";
 
 const slugs = products.map((p) => p.slug) as [string, ...string[]];
 
+/** How a consignment can travel: full or part containers by sea, or air cargo. */
+export const shippingModes = ["Sea freight", "Air cargo", "Not sure yet"] as const;
+
 export const quoteSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name."),
   company: z.string().trim().max(120).optional().default(""),
@@ -14,6 +17,7 @@ export const quoteSchema = z.object({
     .min(1, "Roughly how much do you need?")
     .regex(/^\d+([.,]\d+)?$/, "Enter a number, e.g. 18 or 2.5."),
   unit: z.enum(productUnits),
+  shipping: z.enum(shippingModes).optional().default("Not sure yet"),
   port: z.string().trim().max(120).optional().default(""),
   packaging: z.string().trim().max(160).optional().default(""),
   message: z.string().trim().max(2000).optional().default(""),
@@ -28,7 +32,8 @@ export function quoteMessage(q: Quote) {
   const lines = ["Hello Spiceman Exports,", "", "I would like a quote for:", `Product(s): ${names}`];
   lines.push(`Quantity: ${q.quantity} ${q.unit}`);
   if (q.packaging) lines.push(`Packing: ${q.packaging}`);
-  if (q.port) lines.push(`Destination port: ${q.port}`);
+  lines.push(`Shipping: ${q.shipping}`);
+  if (q.port) lines.push(`Destination port or airport: ${q.port}`);
   if (q.message) lines.push("", q.message);
   lines.push("", `Name: ${q.name}`);
   if (q.company) lines.push(`Company: ${q.company}`);

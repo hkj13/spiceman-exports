@@ -358,8 +358,9 @@ export default function JourneyPage() {
             By the kilo, the tonne or the <em className="display-em text-turmeric">box</em>.
           </Reveal>
           <Reveal as="p" by="fade" className="body-l mt-8 max-w-[44ch] text-paper/80">
-            Quote in kilograms, metric tonnes, bags, or a full 20 ft or 40 ft container. Tell us the port it is
-            going to and the incoterm you work with.
+            Quote in kilograms, metric tonnes, bags, or a full 20 ft or 40 ft container by sea, or as air
+            cargo for smaller and urgent lots. Tell us the port or airport it is going to and the incoterm you
+            work with.
           </Reveal>
         </div>
       </SceneSection>

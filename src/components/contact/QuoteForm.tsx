@@ -3,13 +3,14 @@
 import { useId, useRef, useState, type ReactNode } from "react";
 import { mailtoLink, site, whatsappLink, type Phone } from "@/config/site";
 import { CATEGORIES, productUnits, products } from "@/data/products";
-import { quoteMessage, quoteSchema, quoteSubject, type Quote } from "@/lib/quote";
+import { quoteMessage, quoteSchema, quoteSubject, shippingModes, type Quote } from "@/lib/quote";
 import { WhatsAppGlyph } from "@/components/brand/WhatsAppGlyph";
 
 export type QuoteInitial = Partial<{
   products: string[];
   quantity: string;
   unit: string;
+  shipping: string;
   port: string;
   packaging: string;
 }>;
@@ -21,6 +22,7 @@ type Values = {
   products: string[];
   quantity: string;
   unit: string;
+  shipping: string;
   port: string;
   packaging: string;
   message: string;
@@ -28,7 +30,7 @@ type Values = {
 
 type Errors = Partial<Record<keyof Values, string>>;
 
-const FIELD_ORDER: (keyof Values)[] = ["name", "company", "country", "products", "quantity", "unit", "port", "message"];
+const FIELD_ORDER: (keyof Values)[] = ["name", "company", "country", "products", "quantity", "unit", "shipping", "port", "message"];
 
 /**
  * The quote request, laid out like a bill of lading. Nothing is sent to a
@@ -46,6 +48,9 @@ export function QuoteForm({ initial = {} }: { initial?: QuoteInitial }) {
     products: (initial.products ?? []).filter((s) => products.some((p) => p.slug === s)),
     quantity: initial.quantity ?? "",
     unit: productUnits.includes(initial.unit as (typeof productUnits)[number]) ? (initial.unit as string) : "MT",
+    shipping: shippingModes.includes(initial.shipping as (typeof shippingModes)[number])
+      ? (initial.shipping as string)
+      : "Not sure yet",
     port: initial.port ?? "",
     packaging: initial.packaging ?? "",
     message: "",
@@ -252,18 +257,43 @@ export function QuoteForm({ initial = {} }: { initial?: QuoteInitial }) {
           {err("products")}
         </fieldset>
 
-        <Cell n="07" label="Destination port" htmlFor={id("port")} className="sm:col-span-3">
+        <fieldset className="border-b border-r border-ink/70 px-4 pb-4 pt-3 sm:col-span-3">
+          <legend className="sr-only">Shipping</legend>
+          <p aria-hidden className="mono-label text-brown">
+            07 · Shipping
+          </p>
+          <div className="mt-2.5 flex flex-wrap gap-2">
+            {shippingModes.map((m) => (
+              <label
+                key={m}
+                className="flex cursor-pointer items-center gap-2 rounded-full border border-rule bg-paper px-3 py-1.5 text-sm transition-colors has-checked:border-ink has-checked:bg-ink has-checked:text-paper has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-green"
+              >
+                <input
+                  type="radio"
+                  name="shipping"
+                  value={m}
+                  checked={values.shipping === m}
+                  onChange={() => set("shipping", m)}
+                  className="sr-only"
+                  {...(m === shippingModes[0] ? { "data-field": "shipping" } : {})}
+                />
+                {m}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <Cell n="08" label="Destination port or airport" htmlFor={id("port")} className="sm:col-span-3">
           <input
             id={id("port")}
             name="port"
-            placeholder="e.g. Jebel Ali, Rotterdam"
+            placeholder="e.g. Jebel Ali, Dubai airport (DXB)"
             value={values.port}
             onChange={(e) => set("port", e.target.value)}
             className={input}
             {...a11y("port")}
           />
         </Cell>
-        <Cell n="08" label="Packing" htmlFor={id("packaging")} className="sm:col-span-3">
+        <Cell n="09" label="Packing" htmlFor={id("packaging")} className="sm:col-span-6">
           <input
             id={id("packaging")}
             name="packaging"
@@ -274,7 +304,7 @@ export function QuoteForm({ initial = {} }: { initial?: QuoteInitial }) {
             {...a11y("packaging")}
           />
         </Cell>
-        <Cell n="09" label="Message: grades, specification, timing" htmlFor={id("message")} className="sm:col-span-6">
+        <Cell n="10" label="Message: grades, specification, timing" htmlFor={id("message")} className="sm:col-span-6">
           <textarea
             id={id("message")}
             name="message"
