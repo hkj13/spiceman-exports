@@ -27,10 +27,15 @@ export function SiteHeader() {
         toggleRef.current?.focus();
       }
     };
-    document.documentElement.style.overflow = "hidden";
+    const root = document.documentElement;
+    // The open sheet is always paper-toned: lift any night tone while it's open.
+    const tone = root.dataset.tone;
+    root.removeAttribute("data-tone");
+    root.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
     return () => {
-      document.documentElement.style.overflow = "";
+      root.style.overflow = "";
+      if (tone) root.dataset.tone = tone;
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
@@ -113,7 +118,7 @@ export function SiteHeader() {
       <div
         id={menuId}
         hidden={!open}
-        className="fixed inset-0 bg-paper px-[var(--margin)] pt-[calc(var(--header-h)+2rem)] lg:hidden"
+        className="keep-tone fixed inset-0 bg-paper px-[var(--margin)] pt-[calc(var(--header-h)+2rem)] text-ink lg:hidden"
       >
         <nav aria-label="Mobile">
           <ol className="flex flex-col gap-1">
@@ -125,7 +130,7 @@ export function SiteHeader() {
                   className="flex items-baseline gap-4 py-4"
                 >
                   <span className="mono-label text-brown">{item.stage}</span>
-                  <span className="display-l">{item.label}</span>
+                  <span className="display-l text-ink">{item.label}</span>
                 </Link>
               </li>
             ))}
