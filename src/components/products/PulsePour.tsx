@@ -21,8 +21,16 @@ const PULSES: Record<string, { label: string; grains: Grain[] }> = {
       { color: "#7F9C4A", r: 3.1, squash: 0.75 },
     ],
   },
+  whiteUrad: {
+    label: "White urad",
+    grains: [
+      { color: "#E9E1CC", r: 3, squash: 0.78 },
+      { color: "#DDD2B8", r: 2.9, squash: 0.78 },
+      { color: "#F1EBDB", r: 3.1, squash: 0.78 },
+    ],
+  },
   urad: {
-    label: "Urad",
+    label: "Black urad",
     grains: [
       { color: "#2E2A27", r: 3, squash: 0.78 },
       { color: "#1F1C1A", r: 2.9, squash: 0.78 },

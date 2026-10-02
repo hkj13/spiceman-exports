@@ -17,7 +17,8 @@ import basmatiRice from "@/assets/photos/basmati-rice.jpg";
 import ponniRice from "@/assets/photos/ponni-rice.jpg";
 import toorDal from "@/assets/photos/toor-dal.jpg";
 import moong from "@/assets/photos/moong.jpg";
-import urad from "@/assets/photos/urad.jpg";
+import whiteUradDal from "@/assets/photos/white-urad-dal.jpg";
+import blackUradDal from "@/assets/photos/black-urad-dal.jpg";
 import masoor from "@/assets/photos/masoor.jpg";
 import smallOnion from "@/assets/photos/small-onion.jpg";
 import bigOnion from "@/assets/photos/big-onion.jpg";
@@ -122,8 +123,14 @@ export const photos = {
   },
   "basmati-rice": {
     src: basmatiRice,
-    alt: "Long-grain basmati rice spilling from a jute sack",
-    credit: SUPPLIED,
+    alt: "Close-up of long-grain basmati rice",
+    credit: {
+      title: "Basmati Rice (49683600583).jpg",
+      author: "Ajay Suresh from New York, NY, USA",
+      license: "CC BY 2.0",
+      license_url: "https://creativecommons.org/licenses/by/2.0",
+      source: "https://commons.wikimedia.org/wiki/File:Basmati_Rice_(49683600583).jpg",
+    },
   },
   "ponni-rice": {
     src: ponniRice,
@@ -158,15 +165,26 @@ export const photos = {
       source: "https://commons.wikimedia.org/wiki/File:Green_Mung_Beans.jpg",
     },
   },
-  urad: {
-    src: urad,
-    alt: "Close-up of whole black urad",
+  "white-urad-dal": {
+    src: whiteUradDal,
+    alt: "White urad, skinned black gram, heaped on a banana leaf",
     credit: {
-      title: "Black gram.jpg",
-      author: "Sanjay Acharya",
-      license: "CC BY-SA 3.0",
-      license_url: "http://creativecommons.org/licenses/by-sa/3.0/",
-      source: "https://commons.wikimedia.org/wiki/File:Black_gram.jpg",
+      title: "Vigna mungo without skin.jpg",
+      author: "Thamizhpparithi Maari",
+      license: "CC BY-SA 4.0",
+      license_url: "https://creativecommons.org/licenses/by-sa/4.0",
+      source: "https://commons.wikimedia.org/wiki/File:Vigna_mungo_without_skin.jpg",
+    },
+  },
+  "black-urad-dal": {
+    src: blackUradDal,
+    alt: "Split black urad dal with skin, heaped on a banana leaf",
+    credit: {
+      title: "Black gram with skin.jpg",
+      author: "Thamizhpparithi Maari",
+      license: "CC BY-SA 4.0",
+      license_url: "https://creativecommons.org/licenses/by-sa/4.0",
+      source: "https://commons.wikimedia.org/wiki/File:Black_gram_with_skin.jpg",
     },
   },
   masoor: {
@@ -194,7 +212,13 @@ export const photos = {
   "big-onion": {
     src: bigOnion,
     alt: "Large red onions piled together",
-    credit: SUPPLIED,
+    credit: {
+      title: "Red Onions (2724039538).jpg",
+      author: "Bob",
+      license: "CC BY 2.0",
+      license_url: "https://creativecommons.org/licenses/by/2.0",
+      source: "https://commons.wikimedia.org/wiki/File:Red_Onions_(2724039538).jpg",
+    },
   },
   "stage-soil": {
     src: stageSoil,
@@ -242,8 +266,14 @@ export const photos = {
   },
   "stage-pack": {
     src: stagePack,
-    alt: "Rice in an open jute sack",
-    credit: SUPPLIED,
+    alt: "Filled jute sacks of rice",
+    credit: {
+      title: "Bird on a sack of rice.jpg",
+      author: "Kritzolina",
+      license: "CC BY-SA 4.0",
+      license_url: "https://creativecommons.org/licenses/by-sa/4.0",
+      source: "https://commons.wikimedia.org/wiki/File:Bird_on_a_sack_of_rice.jpg",
+    },
   },
   "stage-container": {
     src: stageContainer,
