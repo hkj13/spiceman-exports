@@ -7,9 +7,9 @@ import { Slot } from "@/components/placeholder/Slot";
 import { site, whatsappLink } from "@/config/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "About: Shanthi Krishnamurthy, Lawspet, Pondicherry",
+  title: "About: Shanthi Krishnamurthy, Pondicherry, India",
   description:
-    "Spiceman Exports is a proprietorship run by Shanthi Krishnamurthy from Lawspet, Pondicherry, trading spices, rice, pulses and onions wholesale and for export.",
+    "Spiceman Exports is a proprietorship run by Shanthi Krishnamurthy from Pondicherry, India, trading spices, rice, pulses and onions wholesale and for export.",
   path: "/about",
 });
 
@@ -85,11 +85,11 @@ export default function AboutPage() {
         <div className="col-span-4 md:col-span-4 xl:col-span-5 xl:col-start-2">
           <p className="mono-label text-brown">The base</p>
           <h2 id="base" className="display-l mt-4">
-            Lawspet, on the north-west side of Pondicherry.
+            Pondicherry, India.
           </h2>
           <div className="mt-8 max-w-[46ch] space-y-5 text-[1.0625rem]">
             <p>
-              The office is at {address.lines.join(", ")}, {address.locality} {address.postalCode}. Pondicherry sits
+              The office is at {address.lines.join(", ")}, {address.locality} {address.postalCode}, {address.country}. Pondicherry sits
               on the Coromandel Coast of south India, about 150 km south of Chennai.
             </p>
             <p>If you would like to visit, call ahead first.</p>

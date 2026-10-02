@@ -12,7 +12,7 @@ export function SiteFooter() {
             Pure spices. <span className="display-em text-turmeric">Better tomorrow.</span>
           </p>
           <p className="mt-6 max-w-md text-paper/75">
-            Wholesale trading and export of spices, rice, pulses and onions, from Lawspet, Pondicherry.
+            Wholesale trading and export of spices, rice, pulses and onions, from Pondicherry, India.
           </p>
         </div>
 

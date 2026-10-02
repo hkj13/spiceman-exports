@@ -63,7 +63,7 @@ export function MapFacade() {
               </svg>
             </div>
             <p className="mono-label absolute bottom-4 left-4 right-4 text-brown">
-              Ashok Nagar, Lawspet · Pondicherry 605008
+              Ashok Nagar · Pondicherry 605008, India
             </p>
           </>
         )}

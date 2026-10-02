@@ -35,8 +35,8 @@ export const site = {
   },
 
   address: {
-    lines: ["No.28, Ground Floor", "Kavikuil Street, Ashok Nagar", "Lawspet"],
-    street: "No.28, Ground Floor, Kavikuil Street, Ashok Nagar, Lawspet",
+    lines: ["No.28, Ground Floor", "Kavikuil Street, Ashok Nagar"],
+    street: "No.28, Ground Floor, Kavikuil Street, Ashok Nagar",
     locality: "Pondicherry",
     region: "Puducherry",
     postalCode: "605008",
@@ -45,7 +45,7 @@ export const site = {
   },
 
   /** Used for the map link and embed. Search query rather than coordinates so nothing is guessed. */
-  mapQuery: "Kavikuil Street, Ashok Nagar, Lawspet, Puducherry 605008, India",
+  mapQuery: "Kavikuil Street, Ashok Nagar, Puducherry 605008, India",
 
   phones: [
     { display: "+91 98945 21812", e164: "919894521812" },
