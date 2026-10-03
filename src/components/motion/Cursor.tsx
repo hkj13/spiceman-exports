@@ -48,6 +48,7 @@ export default function Cursor() {
       const text = target?.closest(TEXT_ENTRY);
       const hit = text ? null : target?.closest(INTERACTIVE);
       el.dataset.state = text ? "text" : hit ? "hover" : "idle";
+      el.dataset.dark = target?.closest("footer, .on-dark") ? "true" : "false";
       const name = hit?.getAttribute("data-cursor") ?? "";
       if (lbl.textContent !== name) lbl.textContent = name;
       el.dataset.label = name ? "true" : "false";

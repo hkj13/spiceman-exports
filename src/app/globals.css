@@ -395,9 +395,11 @@ html.has-cursor :is(input:not([type="checkbox"], [type="radio"], [type="submit"]
 .cursor[data-label="true"] .cursor-dot {
   opacity: 0;
 }
+.cursor[data-dark="true"] .cursor-ring,
 html[data-tone="night"] .cursor-ring {
   border-color: var(--color-paper);
 }
+.cursor[data-dark="true"] .cursor-dot,
 html[data-tone="night"] .cursor-dot {
   background: radial-gradient(circle at 35% 30%, #fff3c9, #e3a21a 60%);
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Mark = { label: string; el: HTMLElement };
 
@@ -15,6 +15,9 @@ export function RouteLine() {
   const pathname = usePathname();
   const [marks, setMarks] = useState<Mark[]>([]);
   const [active, setActive] = useState(0);
+  // true while the marker sits over the (always green) footer
+  const [overDark, setOverDark] = useState(false);
+  const marker = useRef<HTMLSpanElement>(null);
 
   // Collect the page's sections after each navigation (and once more after
   // late content mounts).
@@ -52,6 +55,9 @@ export function RouteLine() {
         }
       });
       setActive(best);
+      const footer = document.querySelector("footer");
+      const m = marker.current?.getBoundingClientRect();
+      setOverDark(!!footer && !!m && footer.getBoundingClientRect().top < m.top + m.height / 2);
     };
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(measure);
@@ -74,7 +80,8 @@ export function RouteLine() {
   return (
     <div
       aria-hidden
-      className="enter-fade pointer-events-none fixed bottom-6 top-[calc(var(--header-h)+1.5rem)] z-40 hidden w-8 -translate-x-1/2 sm:block [view-transition-name:route-line]"
+      data-over-dark={overDark}
+      className="group/rail enter-fade pointer-events-none fixed bottom-6 top-[calc(var(--header-h)+1.5rem)] z-40 hidden w-8 -translate-x-1/2 sm:block [view-transition-name:route-line]"
       style={{ left: "var(--route-x)", "--d": 700 } as React.CSSProperties}
     >
       <div className="tone-rail-line absolute inset-y-0 left-1/2 w-px -translate-x-1/2" />
@@ -85,7 +92,7 @@ export function RouteLine() {
           style={{ top: pos(i) }}
         >
           <span
-            className={`block h-px w-2.5 transition-colors duration-500 ${i <= active ? "bg-brown night:bg-paper/70" : "tone-rail-line"}`}
+            className={`block h-px w-2.5 transition-colors duration-500 ${i <= active ? "bg-brown night:bg-paper/70 group-data-[over-dark=true]/rail:bg-[#fbf7ee]/70" : "tone-rail-line"}`}
           />
         </div>
       ))}
@@ -94,9 +101,12 @@ export function RouteLine() {
         className="absolute left-1/2 top-0 h-full w-0 transition-transform duration-700 ease-(--ease-settle)"
         style={{ transform: `translateY(${(active / last) * 100}%)` }}
       >
-        <span className="absolute -left-[5px] -top-[5px] block h-2.5 w-2.5 rounded-full bg-[radial-gradient(circle_at_35%_30%,#6b5a4e,#2b2420_60%)] shadow-[0_1px_0_rgb(0_0_0/0.2)] night:bg-[radial-gradient(circle_at_35%_30%,#fff3c9,#e3a21a_60%)]" />
         <span
-          className={`mono-label absolute left-2 hidden whitespace-nowrap tone-rail-text text-[0.625rem] [writing-mode:vertical-rl] lg:block ${active === last && last > 0 ? "-top-3 -translate-y-full" : "top-3"}`}
+          ref={marker}
+          className="absolute -left-[5px] -top-[5px] block h-2.5 w-2.5 rounded-full bg-[radial-gradient(circle_at_35%_30%,#6b5a4e,#2b2420_60%)] shadow-[0_1px_0_rgb(0_0_0/0.2)] night:bg-[radial-gradient(circle_at_35%_30%,#fff3c9,#e3a21a_60%)] group-data-[over-dark=true]/rail:bg-[radial-gradient(circle_at_35%_30%,#fff3c9,#e3a21a_60%)]"
+        />
+        <span
+          className={`mono-label absolute left-2 hidden whitespace-nowrap tone-rail-text text-[0.625rem] [writing-mode:vertical-rl] lg:block group-data-[over-dark=true]/rail:!text-[#fbf7ee]/75 ${active === last && last > 0 ? "-top-3 -translate-y-full" : "top-3"}`}
         >
           {String(active + 1).padStart(2, "0")} {current.label}
         </span>
