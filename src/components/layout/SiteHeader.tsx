@@ -31,10 +31,12 @@ export function SiteHeader() {
     // The open sheet is always paper-toned: lift any night tone while it's open.
     const tone = root.dataset.tone;
     root.removeAttribute("data-tone");
+    root.dataset.menu = "open";
     root.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
     return () => {
       root.style.overflow = "";
+      delete root.dataset.menu;
       if (tone) root.dataset.tone = tone;
       window.removeEventListener("keydown", onKey);
     };
@@ -53,15 +55,17 @@ export function SiteHeader() {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
+    <>
     <header
       data-scrolled={scrolled}
-      className="fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 [view-transition-name:site-header] data-[scrolled=true]:bg-paper/88 data-[scrolled=true]:shadow-[0_1px_0_rgb(90_46_26/0.1)] data-[scrolled=true]:backdrop-blur-md night:data-[scrolled=true]:bg-green-900/88 night:data-[scrolled=true]:shadow-[0_1px_0_rgb(251_247_238/0.08)]"
+      data-open={open}
+      className="fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 [view-transition-name:site-header] data-[open=true]:!bg-paper data-[open=true]:!shadow-[0_1px_0_rgb(90_46_26/0.1)] data-[scrolled=true]:bg-paper/88 data-[scrolled=true]:shadow-[0_1px_0_rgb(90_46_26/0.1)] data-[scrolled=true]:backdrop-blur-md night:data-[scrolled=true]:bg-green-900/88 night:data-[scrolled=true]:shadow-[0_1px_0_rgb(251_247_238/0.08)]"
       style={{ height: "var(--header-h)" }}
     >
       <div className="wrap flex h-full items-center justify-between gap-6">
         <Link
           href="/"
-          className="enter-fade group relative z-10 -ml-3 flex items-center gap-2.5 rounded-full bg-paper/80 py-1.5 pl-2 pr-4 backdrop-blur-md night:bg-green-900/70"
+          className="enter-fade group relative z-10 -ml-3 flex items-center gap-2.5 rounded-full bg-paper/80 py-1.5 pl-2 pr-4 text-ink backdrop-blur-md night:bg-green-900/70 night:text-paper"
         >
           <LogoMark className="h-8 w-8 transition-transform duration-500 ease-(--ease-settle) group-hover:-rotate-6" />
           <span className="flex flex-col leading-none">
@@ -125,17 +129,19 @@ export function SiteHeader() {
           {open ? "Close" : "Menu"}
         </button>
       </div>
+    </header>
 
-      {/* Mobile sheet */}
+      {/* Mobile sheet. Kept outside the header: the header's backdrop blur
+          would otherwise become the containing block and shrink this to it. */}
       <div
         id={menuId}
         hidden={!open}
-        className="keep-tone fixed inset-0 bg-paper px-[var(--margin)] pt-[calc(var(--header-h)+2rem)] text-ink lg:hidden"
+        className="menu-sheet keep-tone fixed inset-0 z-40 overflow-y-auto overscroll-contain bg-paper px-[var(--margin)] pb-10 pt-[calc(var(--header-h)+2rem)] text-ink lg:hidden"
       >
         <nav aria-label="Mobile">
           <ol className="flex flex-col gap-1">
-            {nav.map((item) => (
-              <li key={item.href} className="border-b border-rule">
+            {nav.map((item, i) => (
+              <li key={item.href} className="menu-item border-b border-rule" style={{ "--i": i } as React.CSSProperties}>
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? "page" : undefined}
@@ -143,17 +149,18 @@ export function SiteHeader() {
                 >
                   <span className="mono-label text-brown">{item.stage}</span>
                   <span className="display-l text-ink">{item.label}</span>
+                  {isActive(item.href) && <span aria-hidden className="ml-auto h-2 w-2 self-center rounded-full bg-chilli" />}
                 </Link>
               </li>
             ))}
           </ol>
-          <p className="mono-label mt-10 text-brown">
+          <p className="menu-item mono-label mt-10 text-brown" style={{ "--i": nav.length } as React.CSSProperties}>
             {site.phones[0].display}
             <br />
             {site.email}
           </p>
         </nav>
       </div>
-    </header>
+    </>
   );
 }

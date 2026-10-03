@@ -139,7 +139,7 @@ export function SortingTable({ products }: { products: Product[] }) {
               type="button"
               aria-pressed={view === v}
               onClick={() => setView(v)}
-              className="mono-label text-brown underline-offset-4 aria-pressed:text-ink aria-pressed:underline"
+              className="mono-label tap text-brown underline-offset-4 aria-pressed:text-ink aria-pressed:underline"
             >
               {v === "table" ? "Sorting table" : "Spec list"}
             </button>

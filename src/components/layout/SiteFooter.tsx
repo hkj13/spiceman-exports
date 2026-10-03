@@ -36,15 +36,16 @@ export function SiteFooter() {
 
         <div className="col-span-4 sm:col-span-2 md:col-span-3 md:col-start-6 xl:col-span-2 xl:col-start-11">
           <p className="mono-label mb-4 text-turmeric">Call or WhatsApp</p>
-          <ul className="space-y-3">
+          <ul className="space-y-6">
             {site.phones.map((p) => (
               <li key={p.e164}>
                 <a href={`tel:+${p.e164}`} className="link-draw whitespace-nowrap">
                   {p.display}
                 </a>
+                <br />
                 <a
                   href={whatsappLink(p)}
-                  className="mono-label ml-0 mt-1 block text-[0.65rem] text-paper/70 hover:text-paper"
+                  className="mono-label tap mt-3 inline-block text-[0.65rem] text-paper/70 hover:text-paper"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -56,10 +57,10 @@ export function SiteFooter() {
         </div>
 
         <nav aria-label="Footer" className="col-span-4 md:col-span-8 xl:col-span-12">
-          <ul className="flex flex-wrap gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+          <ul className="flex flex-wrap gap-x-8 gap-y-6 border-t border-paper/15 pt-8 md:gap-y-3">
             {nav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="mono-label text-paper/80 hover:text-paper">
+                <Link href={item.href} className="mono-label tap text-paper/80 hover:text-paper">
                   <span className="text-turmeric">{item.stage}</span> {item.label}
                 </Link>
               </li>
@@ -74,7 +75,7 @@ export function SiteFooter() {
         <div className="col-span-4 flex items-end justify-between gap-6 pr-16 md:col-span-8 xl:col-span-12">
           <p className="mono-label text-[0.65rem] text-paper/60">
             © {year} {site.legalName} · Sole&nbsp;proprietor {site.proprietor.name} ·{" "}
-            <Link href="/credits" className="underline-offset-4 hover:text-paper hover:underline">
+            <Link href="/credits" className="tap underline-offset-4 hover:text-paper hover:underline">
               Photo credits
             </Link>
           </p>

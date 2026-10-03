@@ -225,7 +225,25 @@ html.lenis body {
 }
 
 /* Underline that draws in from the left */
+/* Gives small text links and buttons a finger-sized touch area (about 40px
+   tall) without moving anything: an invisible layer around the element. */
+@utility tap {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -12px -6px;
+  }
+}
+
 @utility link-draw {
+  /* text links get the same finger-sized touch area as .tap */
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -12px -6px;
+  }
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 100% 1px;
   background-position: 0 100%;
@@ -559,6 +577,30 @@ html[data-toning] main .text-green:not(.tone-scrub *, .keep-tone *, :has(> input
     opacity: 0.02;
     transform: translateY(10px) scale(0.92);
   }
+}
+
+/* Mobile menu: the sheet fades in and its links rise in a short stagger. */
+@media (prefers-reduced-motion: no-preference) {
+  .menu-sheet:not([hidden]) {
+    animation: enter-fade 0.25s ease-out both;
+  }
+  .menu-sheet:not([hidden]) .menu-item {
+    animation: enter-rise 0.5s var(--ease-settle) both;
+    animation-delay: calc(var(--i, 0) * 40ms + 60ms);
+  }
+}
+/* When a page ends on a green section the footer follows straight on,
+   rather than after a band of empty green; a hairline marks the seam. */
+main:has(> .tone-scrub:last-child, > :last-child > .tone-scrub:last-child) + footer {
+  margin-top: 0;
+  box-shadow: inset 0 1px 0 rgb(251 247 238 / 0.1);
+}
+
+/* The WhatsApp button and the route rail step aside while the menu covers the page. */
+html[data-menu] [data-wa-float],
+html[data-menu] [data-over-dark] {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Page openings (other than Home's hero): the header's children rise in
