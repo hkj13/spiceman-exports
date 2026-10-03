@@ -40,11 +40,22 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  // Once the page scrolls, the header gets its own backdrop so content never
+  // runs underneath the logo and menu.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const on = () => setScrolled(window.scrollY > 24);
+    on();
+    window.addEventListener("scroll", on, { passive: true });
+    return () => window.removeEventListener("scroll", on);
+  }, []);
+
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 [view-transition-name:site-header]"
+      data-scrolled={scrolled}
+      className="fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 [view-transition-name:site-header] data-[scrolled=true]:bg-paper/88 data-[scrolled=true]:shadow-[0_1px_0_rgb(90_46_26/0.1)] data-[scrolled=true]:backdrop-blur-md night:data-[scrolled=true]:bg-green-900/88 night:data-[scrolled=true]:shadow-[0_1px_0_rgb(251_247_238/0.08)]"
       style={{ height: "var(--header-h)" }}
     >
       <div className="wrap flex h-full items-center justify-between gap-6">

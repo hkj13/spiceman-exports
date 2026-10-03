@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { nav, site, whatsappLink } from "@/config/site";
 import { LogoMark } from "@/components/brand/LogoMark";
+import { CatalogueDownload } from "@/components/products/CatalogueDownload";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
@@ -63,10 +64,14 @@ export function SiteFooter() {
                 </Link>
               </li>
             ))}
+            <li className="sm:ml-auto">
+              <CatalogueDownload variant="dark-link" />
+            </li>
           </ul>
         </nav>
 
-        <div className="col-span-4 flex items-end justify-between gap-6 md:col-span-8 xl:col-span-12">
+        {/* Right padding keeps the logo clear of the floating WhatsApp button */}
+        <div className="col-span-4 flex items-end justify-between gap-6 pr-16 md:col-span-8 xl:col-span-12">
           <p className="mono-label text-[0.65rem] text-paper/60">
             © {year} {site.legalName} · Proprietor {site.proprietor.name} ·{" "}
             <Link href="/credits" className="underline-offset-4 hover:text-paper hover:underline">

@@ -35,12 +35,46 @@ export function WhatsAppFloat() {
     };
   }, [open]);
 
+  // On small screens the button steps aside while a form field is being
+  // typed in, and while the page is scrolling, so it never covers something
+  // the visitor is about to tap.
+  const [aside, setAside] = useState(false);
+  useEffect(() => {
+    let t = 0;
+    let typing = false;
+    const small = () => window.innerWidth < 1024;
+    const update = (v: boolean) => setAside(v && small());
+    const onScroll = () => {
+      update(true);
+      window.clearTimeout(t);
+      t = window.setTimeout(() => update(typing), 650);
+    };
+    const onFocus = (e: FocusEvent) => {
+      typing = !!(e.target as Element | null)?.closest?.("input, select, textarea");
+      update(typing);
+    };
+    const onBlur = () => {
+      typing = false;
+      update(false);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    document.addEventListener("focusin", onFocus);
+    document.addEventListener("focusout", onBlur);
+    return () => {
+      window.clearTimeout(t);
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("focusin", onFocus);
+      document.removeEventListener("focusout", onBlur);
+    };
+  }, []);
+
   if (pathname === "/contact") return null;
 
   return (
     <div
       ref={root}
-      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-50 flex flex-col items-end gap-2 [view-transition-name:whatsapp]"
+      data-aside={aside && !open}
+      className="transition-[opacity,transform] duration-300 data-[aside=true]:pointer-events-none data-[aside=true]:translate-y-3 data-[aside=true]:opacity-0 fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-50 flex flex-col items-end gap-2 [view-transition-name:whatsapp]"
     >
       <div
         id={panelId}
@@ -73,7 +107,7 @@ export function WhatsAppFloat() {
         aria-label="Chat on WhatsApp"
         onClick={() => setOpen((v) => !v)}
         data-cursor="Chat"
-        className="grid h-12 w-12 place-items-center rounded-full bg-green text-paper shadow-[0_10px_30px_-10px_rgb(18_54_28/0.7),0_0_0_3px_rgb(251_247_238/0.9)] transition-transform duration-300 ease-(--ease-settle) hover:-translate-y-0.5"
+        className="grid h-11 w-11 place-items-center rounded-full md:h-12 md:w-12 bg-green text-paper shadow-[0_10px_30px_-10px_rgb(18_54_28/0.7),0_0_0_3px_rgb(251_247_238/0.9)] transition-transform duration-300 ease-(--ease-settle) hover:-translate-y-0.5"
       >
         <WhatsAppGlyph className="h-6 w-6" />
       </button>
