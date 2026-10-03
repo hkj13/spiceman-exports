@@ -8,7 +8,7 @@ import type { Engine, Rect, Scene, ShapeOut, Tier } from "./types";
  * settles with `handoff`, particles fade out and the loop stops.
  */
 
-const MAX_PARTS = 16;
+const MAX_PARTS = 24;
 const DELAY_SPREAD = 0.35;
 
 const COUNTS: Record<Exclude<Tier, "off">, number> = { high: 2200, mid: 900, low: 260 };
@@ -347,7 +347,8 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
     // old shape hands back to its drawn still and the new one blooms outward
     // from its own centre. Clean on a small screen, still alive.
     const small = W < 768;
-    const bloom = small && !instant && !s.from && !s.flow;
+    // Page-to-page handoffs always flow, so grains are visible the whole way.
+    const bloom = small && !instant && !s.from && !s.flow && !s.handoff;
     if (bloom) {
       for (let i = 0; i < N; i++) {
         if (i < o) {
@@ -530,7 +531,10 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
           return;
         }
       }
-      build(s, !!s.instant || document.hidden);
+      // The very first scene lands where its still was drawn, instead of
+      // flying in from nowhere (the intro, with its own spawn shape, still flies).
+      const first = !scene && !s.from;
+      build(s, !!s.instant || document.hidden || first);
       draw(performance.now());
       schedule();
     },

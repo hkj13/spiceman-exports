@@ -205,7 +205,18 @@ export const combine =
 
 export type Draw = (ctx: CanvasRenderingContext2D) => void;
 
-type Mask = { pts: Uint16Array; count: number; w: number; h: number; ox: number; oy: number; scale: number };
+type Mask = {
+  pts: Uint16Array;
+  count: number;
+  /** Pixels on the outline (filled, with an empty neighbour) */
+  edge: Uint16Array;
+  edgeCount: number;
+  w: number;
+  h: number;
+  ox: number;
+  oy: number;
+  scale: number;
+};
 const maskCache = new Map<string, Mask>();
 
 function rasterise(key: string, draw: Draw, vbW: number, vbH: number, r: Rect): Mask | null {
@@ -232,13 +243,27 @@ function rasterise(key: string, draw: Draw, vbW: number, vbH: number, r: Rect): 
   ctx.strokeStyle = "#000";
   draw(ctx);
   const data = ctx.getImageData(0, 0, w, h).data;
+  const on = (x: number, y: number) => x >= 0 && y >= 0 && x < w && y < h && data[(y * w + x) * 4 + 3] > 110;
   const pts: number[] = [];
+  const edge: number[] = [];
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {
-      if (data[(y * w + x) * 4 + 3] > 110) pts.push(x, y);
+      if (!on(x, y)) continue;
+      pts.push(x, y);
+      if (!on(x - 1, y) || !on(x + 1, y) || !on(x, y - 1) || !on(x, y + 1)) edge.push(x, y);
     }
   }
-  const mask: Mask = { pts: Uint16Array.from(pts), count: pts.length / 2, w, h, ox, oy, scale: 1 / raster };
+  const mask: Mask = {
+    pts: Uint16Array.from(pts),
+    count: pts.length / 2,
+    edge: Uint16Array.from(edge),
+    edgeCount: edge.length / 2,
+    w,
+    h,
+    ox,
+    oy,
+    scale: 1 / raster,
+  };
   maskCache.set(cacheKey, mask);
   return mask;
 }
@@ -252,12 +277,18 @@ export const silhouette =
     const mask = rasterise(key, draw, vbW, vbH, r);
     if (!mask || mask.count === 0) return heap()(n, r, rng);
     const pos = new Float32Array(n * 2);
+    const size = new Float32Array(n);
     for (let i = 0; i < n; i++) {
-      const k = Math.floor(rng() * mask.count);
-      pos[i * 2] = mask.ox + (mask.pts[k * 2] + rng()) * mask.scale;
-      pos[i * 2 + 1] = mask.oy + (mask.pts[k * 2 + 1] + rng()) * mask.scale;
+      // A share of grains traces the outline so the shape reads crisply;
+      // the rest fill it in.
+      const onEdge = mask.edgeCount > 0 && rng() < 0.38;
+      const src = onEdge ? mask.edge : mask.pts;
+      const k = Math.floor(rng() * (onEdge ? mask.edgeCount : mask.count));
+      pos[i * 2] = mask.ox + (src[k * 2] + 0.5) * mask.scale;
+      pos[i * 2 + 1] = mask.oy + (src[k * 2 + 1] + 0.5) * mask.scale;
+      size[i] = onEdge ? 0.75 : 0.95;
     }
-    return { pos };
+    return { pos, size };
   };
 
 /** Silhouette from SVG path data. */

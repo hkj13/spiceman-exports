@@ -30,7 +30,7 @@ export default function ParticleLayer({ tier }: { tier: Exclude<Tier, "off"> }) 
       ref={ref}
       aria-hidden
       data-particles-canvas
-      className="pointer-events-none fixed left-0 top-0 z-[5] h-lvh w-full [view-transition-name:particles]"
+      className="pointer-events-none fixed left-0 top-0 z-[20] h-lvh w-full [view-transition-name:particles]"
     />
   );
 }

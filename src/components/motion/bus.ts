@@ -26,11 +26,11 @@ export function getTier() {
 
 export function registerEngine(e: Engine | null) {
   engine = e;
-  // Static stage art steps aside once live particles can draw the scenes.
-  document.documentElement.dataset.particles = e ? "on" : "off";
+  if (!e) document.documentElement.dataset.particles = "off";
   if (e && pending) {
     // The page is already on screen: land the scene without a morph.
     e.play({ ...pending, instant: true });
+    document.documentElement.dataset.particles = "on";
   }
   pending = null;
   booted = !!e;
@@ -56,6 +56,8 @@ export function particlesLive() {
 export function play(scene: Scene) {
   if (engine) {
     engine.play(scene);
+    // Static stills step aside the moment live particles draw a scene.
+    document.documentElement.dataset.particles = "on";
     return;
   }
   pending = scene;
