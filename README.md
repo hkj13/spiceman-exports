@@ -25,7 +25,7 @@ None are required. The quote form doesn't send email from the server. Once the f
 |---|---|
 | Business facts: name, tagline, proprietor, address, phones, email | `src/config/site.ts` |
 | Trust content: certifications, testimonials, clients, stats | `src/config/site.ts` (arrays, empty by default) |
-| Products: names, origins, grades, forms, packing, MOQ, colours | `src/data/products.ts` (also feeds each product's PDF spec sheet at `/products/<slug>/spec-sheet.pdf`, layout in `src/lib/specSheet.ts`) |
+| Products: names, origins, grades, forms, packing, MOQ, colours | `src/data/products.ts` (also feeds each product's PDF spec sheet at `/products/<slug>/spec-sheet.pdf`, layout in `src/lib/specSheet.ts`; its "Request a quote" button and contact details are clickable links) |
 | Process page stages | `src/content/process.ts` |
 | Home page copy | `src/app/page.tsx` |
 | Journey page copy | `src/app/journey/page.tsx` |

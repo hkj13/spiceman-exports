@@ -1,9 +1,9 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import fontkit from "@pdf-lib/fontkit";
-import { PDFDocument, rgb, type PDFFont, type PDFPage, type RGB } from "pdf-lib";
+import { PDFDocument, PDFName, PDFString, rgb, type PDFFont, type PDFPage, type RGB } from "pdf-lib";
 import sharp from "sharp";
-import { site } from "@/config/site";
+import { site, whatsappLink } from "@/config/site";
 import { categoryLabel, type Product } from "@/data/products";
 import { accentPalette } from "@/lib/color";
 
@@ -18,6 +18,30 @@ const hex = (h: string) => {
   const n = parseInt(h.replace("#", ""), 16);
   return rgb(((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255);
 };
+
+/**
+ * Where the PDF's links point. On Vercel this is the production address
+ * (the vercel.app URL now, the custom domain once it's connected); locally
+ * it falls back to the canonical site URL.
+ */
+const liveUrl = () =>
+  process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : site.url;
+
+/** A clickable area on the page that opens a URL. */
+function addLink(doc: PDFDocument, page: PDFPage, x: number, y: number, w: number, h: number, url: string) {
+  const annot = doc.context.register(
+    doc.context.obj({
+      Type: "Annot",
+      Subtype: "Link",
+      Rect: [x, y, x + w, y + h],
+      Border: [0, 0, 0],
+      A: { Type: "Action", S: "URI", URI: PDFString.of(url) },
+    }),
+  );
+  const annots = page.node.lookup(PDFName.of("Annots"));
+  if (annots && "push" in annots) (annots as { push: (r: typeof annot) => void }).push(annot);
+  else page.node.set(PDFName.of("Annots"), doc.context.obj([annot]));
+}
 
 const C = {
   paper: hex("#FBF7EE"),
@@ -229,44 +253,62 @@ export async function specSheetPdf(p: Product, photoPath?: string) {
     page.drawRectangle({ x: M, y, width: W - 2 * M, height: 0.5, color: C.rule });
   });
 
-  /* ---------------- Buyer's specification: a paper sample tag ---------------- */
+  /* ---------------- Request a quote: links straight to the contact page ---------------- */
+  const base = liveUrl();
+  const quoteUrl = `${base}/contact?product=${p.slug}`;
   y -= 20;
-  const tagH = 96;
-  const tagX = M;
-  const tagW = W - 2 * M;
-  const ty = y - tagH;
-  // tag with a clipped corner, string hole and a short string
-  page.drawSvgPath(`M0 0 H${tagW} V${tagH - 14} L${tagW - 14} ${tagH} H0 Z`, {
-    x: tagX,
+  const boxH = 92;
+  const boxW = W - 2 * M;
+  const by = y - boxH;
+  // a paper sample tag with a clipped corner and string hole, as on the site
+  page.drawSvgPath(`M0 0 H${boxW - 14} L${boxW} 14 V${boxH} H0 Z`, {
+    x: M,
     y: y,
     scale: 1,
     color: C.tag,
     borderColor: C.rule,
     borderWidth: 0.6,
   });
-  page.drawCircle({ x: tagX + tagW - 26, y: y - 16, size: 4.2, color: C.paper, borderColor: C.brown, borderWidth: 0.6, borderOpacity: 0.5 });
-  label(page, "Your specification · to be filled by the buyer", tagX + 16, y - 20, 7, mono, C.brown);
-  const fields = [
-    "Grade or size",
-    "Moisture, % max",
-    "Extraneous matter, % max",
-    "Quantity and unit",
-    "Packing and marking",
-    "Shipping: sea / air",
-    "Port or airport",
-    "Shipment window",
-  ];
-  const colW = (tagW - 32) / 4;
-  fields.forEach((f, i) => {
-    const fx = tagX + 16 + (i % 4) * colW;
-    const fy = y - 42 - Math.floor(i / 4) * 30;
-    label(page, f, fx, fy, 5.8, mono, C.brown);
-    page.drawRectangle({ x: fx, y: fy - 14, width: colW - 14, height: 0.6, color: C.brown, opacity: 0.45 });
+  page.drawCircle({ x: M + 22, y: y - 18, size: 4.2, color: C.paper, borderColor: C.brown, borderWidth: 0.6, borderOpacity: 0.5 });
+  label(page, "Ready to order?", M + 34, y - 20.5, 7, mono, C.brown);
+  page.drawText("Request a quote for", { x: M + 18, y: y - 46, size: 17, font: display, color: C.ink });
+  page.drawText(clean(p.name.toLowerCase()), {
+    x: M + 18 + display.widthOfTextAtSize("Request a quote for ", 17),
+    y: y - 46,
+    size: 17,
+    font: displayItalic,
+    color: accentInk,
   });
-  y = ty - 14;
+  const lead = wrap(
+    "Send your quantity, shipping (sea or air) and destination on the enquiry page. The product is filled in for you.",
+    text,
+    9,
+    boxW - 210,
+  );
+  lead.forEach((l, i) => page.drawText(l, { x: M + 18, y: y - 64 - i * 12, size: 9, font: text, color: C.brown }));
+  // button
+  const btnText = "Request a quote";
+  const btnW = text.widthOfTextAtSize(btnText, 10) + 52;
+  const btnH = 30;
+  const btnX = M + boxW - btnW - 18;
+  const btnY = by + (boxH - btnH) / 2 - 6;
+  page.drawRectangle({ x: btnX, y: btnY, width: btnW, height: btnH, color: C.green900 });
+  page.drawCircle({ x: btnX, y: btnY + btnH / 2, size: btnH / 2, color: C.green900 });
+  page.drawCircle({ x: btnX + btnW, y: btnY + btnH / 2, size: btnH / 2, color: C.green900 });
+  page.drawText(btnText, { x: btnX + 14, y: btnY + 10.5, size: 10, font: textBold, color: C.paper });
+  // arrow, drawn (the text fonts are subset to Latin)
+  const ax = btnX + btnW - 22;
+  const ay = btnY + btnH / 2;
+  page.drawLine({ start: { x: ax, y: ay }, end: { x: ax + 12, y: ay }, thickness: 1.2, color: C.turmeric });
+  page.drawLine({ start: { x: ax + 8, y: ay + 3.5 }, end: { x: ax + 12, y: ay }, thickness: 1.2, color: C.turmeric });
+  page.drawLine({ start: { x: ax + 8, y: ay - 3.5 }, end: { x: ax + 12, y: ay }, thickness: 1.2, color: C.turmeric });
+  addLink(doc, page, btnX - btnH / 2, btnY, btnW + btnH, btnH, quoteUrl);
+  // the whole tag opens the enquiry page too
+  addLink(doc, page, M, by, boxW - btnW - 50, boxH, quoteUrl);
+  y = by - 14;
 
   for (const l of wrap(
-    "Origins, grades, packing and minimum order are typical values, confirmed at the time of quoting. Send the specification you buy to and the quote is made against it, parameter by parameter.",
+    "Origins, grades, packing and minimum order are typical values, confirmed at the time of quoting. If you buy to your own specification, share it with your enquiry and the quote is made against it.",
     text,
     8.5,
     W - 2 * M,
@@ -289,12 +331,35 @@ export async function specSheetPdf(p: Product, photoPath?: string) {
   });
 
   label(page, "Request a quote", M, FB - 58, 6.5, mono, C.turmeric);
-  const contact = [
-    `WhatsApp ${site.phones.map((ph) => ph.display).join("  ·  ")}`,
-    site.email,
-    `${site.url.replace("https://", "")}/products/${p.slug}`,
+  // WhatsApp numbers, email and the product page, each clickable
+  let cx = M;
+  const wy = FB - 73;
+  const wa = "WhatsApp ";
+  page.drawText(wa, { x: cx, y: wy, size: 9.5, font: text, color: C.paper });
+  cx += text.widthOfTextAtSize(wa, 9.5);
+  site.phones.forEach((ph, i) => {
+    const t = ph.display;
+    const w = text.widthOfTextAtSize(t, 9.5);
+    page.drawText(t, { x: cx, y: wy, size: 9.5, font: text, color: C.paper });
+    page.drawRectangle({ x: cx, y: wy - 2, width: w, height: 0.5, color: C.paperOnGreen });
+    addLink(doc, page, cx, wy - 3, w, 13, whatsappLink(ph, `Hello Spiceman Exports, I would like a quote for ${p.name}.`));
+    cx += w;
+    if (i < site.phones.length - 1) {
+      page.drawText("  ·  ", { x: cx, y: wy, size: 9.5, font: text, color: C.paper });
+      cx += text.widthOfTextAtSize("  ·  ", 9.5);
+    }
+  });
+  const links: [string, string][] = [
+    [site.email, `mailto:${site.email}?subject=${encodeURIComponent(`Quote request: ${p.name}`)}`],
+    [`${base.replace("https://", "")}/products/${p.slug}`, `${base}/products/${p.slug}`],
   ];
-  contact.forEach((l, i) => page.drawText(clean(l), { x: M, y: FB - 73 - i * 13, size: 9.5, font: text, color: C.paper }));
+  links.forEach(([t, url], i) => {
+    const ly = wy - 13 * (i + 1);
+    const w = text.widthOfTextAtSize(clean(t), 9.5);
+    page.drawText(clean(t), { x: M, y: ly, size: 9.5, font: text, color: C.paper });
+    page.drawRectangle({ x: M, y: ly - 2, width: w, height: 0.5, color: C.paperOnGreen });
+    addLink(doc, page, M, ly - 3, w, 13, url);
+  });
 
   label(page, "Write or visit", W - M, FB - 58, 6.5, mono, C.turmeric, true);
   const addr = [site.name, ...site.address.lines, `${site.address.locality} ${site.address.postalCode}, ${site.address.country}`];
