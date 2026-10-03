@@ -44,6 +44,12 @@ const SUPPLIED: Credit = {
   source: "",
 };
 
+/** Images the client sent that were generated with an AI image tool; said so on the credits page. */
+const SUPPLIED_AI: Credit = {
+  ...SUPPLIED,
+  title: "Supplied by Spiceman Exports (AI-generated image)",
+};
+
 export const photos = {
   "black-pepper": {
     src: blackPepper,
@@ -71,8 +77,14 @@ export const photos = {
   },
   "red-chilli": {
     src: redChilli,
-    alt: "Dried Guntur red chillies heaped in a wooden bowl",
-    credit: SUPPLIED,
+    alt: "A heap of dried red chillies with their stems on",
+    credit: {
+      title: "Dried chillies 4.jpg",
+      author: "Richard Mortel",
+      license: "CC BY 2.0",
+      license_url: "https://creativecommons.org/licenses/by/2.0",
+      source: "https://commons.wikimedia.org/wiki/File:Dried_chillies_4.jpg",
+    },
   },
   cardamom: {
     src: cardamom,
@@ -125,25 +137,13 @@ export const photos = {
   },
   "basmati-rice": {
     src: basmatiRice,
-    alt: "Close-up of long-grain basmati rice",
-    credit: {
-      title: "Basmati Rice (49683600583).jpg",
-      author: "Ajay Suresh from New York, NY, USA",
-      license: "CC BY 2.0",
-      license_url: "https://creativecommons.org/licenses/by/2.0",
-      source: "https://commons.wikimedia.org/wiki/File:Basmati_Rice_(49683600583).jpg",
-    },
+    alt: "Long-grain white basmati rice in a wooden bowl",
+    credit: SUPPLIED_AI,
   },
   "ponni-rice": {
     src: ponniRice,
-    alt: "Close-up of white ponni rice",
-    credit: {
-      title: "A closeup of white Ponni Rice.JPG",
-      author: "Thamizhpparithi Maari",
-      license: "CC BY-SA 3.0",
-      license_url: "https://creativecommons.org/licenses/by-sa/3.0",
-      source: "https://commons.wikimedia.org/wiki/File:A_closeup_of_white_Ponni_Rice.JPG",
-    },
+    alt: "White ponni rice in a wooden bowl beside ripe rice stalks",
+    credit: SUPPLIED_AI,
   },
   "toor-dal": {
     src: toorDal,
@@ -169,13 +169,13 @@ export const photos = {
   },
   "white-urad-dal": {
     src: whiteUradDal,
-    alt: "White urad, skinned black gram, heaped on a banana leaf",
+    alt: "Whole white urad, skinned black gram, in a wooden bowl with a scoop",
     credit: {
-      title: "Vigna mungo without skin.jpg",
-      author: "Thamizhpparithi Maari",
-      license: "CC BY-SA 4.0",
-      license_url: "https://creativecommons.org/licenses/by-sa/4.0",
-      source: "https://commons.wikimedia.org/wiki/File:Vigna_mungo_without_skin.jpg",
+      title: "White whole urad dal",
+      author: "indiamart.com",
+      license: "Supplied by the client",
+      license_url: "",
+      source: "https://www.indiamart.com/proddetail/white-whole-urad-dal-2853366525591.html",
     },
   },
   "black-urad-dal": {
