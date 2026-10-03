@@ -45,18 +45,17 @@ export const homeScenes: Record<HomeSceneName, Build> = {
   }),
   container: (a, _x, palette) => ({
     id: "home-container",
-    parts: [{ anchor: a, shape: containerShape, colors: palette ?? PALETTE.night }],
+    parts: [{ anchor: a, shape: containerShape, colors: palette ?? PALETTE.cargo, size: 1 }],
     scatter: 120,
   }),
   port: (a, horizon, palette) => ({
     id: "home-port",
     parts: [
-      { anchor: a, shape: shipShape, colors: palette ?? PALETTE.night, weight: horizon ? 3 : 1 },
+      { anchor: a, shape: shipShape, colors: palette ?? PALETTE.cargo, weight: horizon ? 6 : 1, size: 1 },
       ...(horizon
-        ? [{ anchor: horizon, shape: combine([line(2), 1]), colors: ["#FBF7EE", "#E3A21A"], weight: 1, size: 0.6, alpha: 0.7 }]
+        ? [{ anchor: horizon, shape: combine([line(1.5), 1]), colors: ["#FBF7EE", "#E3A21A"], weight: 1, size: 0.55, alpha: 0.6 }]
         : []),
     ],
-    live: true,
     scatter: 140,
   }),
 };

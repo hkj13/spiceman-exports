@@ -71,7 +71,7 @@ export function SortingTable({ products }: { products: Product[] }) {
       if (view !== "table") return;
       play({
         id: `products-${key}`,
-        parts: items.slice(0, 16).map((p) => ({
+        parts: items.map((p) => ({
           anchor: arts.current.get(p.slug) ?? null,
           shape: heap(0.95, 1.4),
           colors: accentPalette(p.accent),

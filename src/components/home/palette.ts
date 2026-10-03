@@ -6,4 +6,6 @@ export const PALETTE = {
   dried: ["#2B2420", "#3A2F29", "#5A2E1A", "#6B4E2C", "#B99459"],
   spice: ["#2B2420", "#5A2E1A", "#E3A21A", "#B3201B", "#B99459", "#7C8F48"],
   night: ["#E3A21A", "#FBF7EE", "#DDAE45", "#C8231E"],
+  /** Ship and container on the night chapters: turmeric and cream only, so the outline reads cleanly */
+  cargo: ["#E3A21A", "#F3D58A", "#FBF7EE", "#DDAE45"],
 } as const;

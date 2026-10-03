@@ -376,7 +376,7 @@ export default function JourneyPage() {
         className="on-dark night-bg bg-green-900 relative overflow-x-clip pb-10 pt-14 md:pt-[clamp(6rem,14vh,10rem)] text-paper"
       >
         <div className="wrap relative">
-          <div data-scene-extra aria-hidden className="absolute inset-x-0 top-[clamp(9rem,26vw,22rem)] h-4" />
+          <div data-scene-extra aria-hidden className="absolute inset-x-0 bottom-[3%] h-3" />
           <div data-scene-anchor className="relative ml-auto aspect-[240/100] w-[min(92%,760px)]">
             <StageArt kind="ship" colors={["#E3A21A", "#FBF7EE"]} />
           </div>
