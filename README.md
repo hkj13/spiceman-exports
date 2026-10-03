@@ -51,7 +51,7 @@ certifications: [{ name: "Spices Board of India registration (CRES)", issuer: "S
 Illustrations are generated in code. The photographs in `src/assets/photos` are openly licensed stock (credited in `CREDITS.md`) and are illustrative only. Replace these once real material is available:
 
 - [ ] **Logo**: `public/logo.svg`, `src/app/icon.svg` and `src/components/brand/LogoMark.tsx` hold a placeholder mortar-and-pestle drawn from the business card. Keep the `pestle` group class in `LogoMark` if the opening grind animation should still move it. Also update `src/app/apple-icon.tsx`.
-- [ ] **Proprietor portrait** (About page): a leaf with the monogram "SK" (`src/components/about/LeafStage.tsx`). Swap in a photo with `next/image` if one is supplied.
+- [ ] **Sole proprietor portrait** (About page): a leaf with the monogram "SK" (`src/components/about/LeafStage.tsx`). Swap in a photo with `next/image` if one is supplied.
 - [ ] **Product photographs**: `src/assets/photos/<product-slug>.jpg` (17 files: sorting-table tags, product pages, the Home product slider, PDF spec sheets; red chilli and cumin are already the client's own photos). Replace each with a close-up of the business's own stock, keeping the file name; then update or remove its credit in `src/data/photos.ts` and `CREDITS.md`. Full-frame close-ups (the goods filling the picture) look best.
 - [ ] **Journey photographs**: `src/assets/photos/stage-*.jpg` (soil, harvest, sun, sort, pack, container, port), used on Home, Journey and Process. Swap in the business's own photos of drying, sorting, packing and loading when available.
 - [ ] **Open Graph images**: generated from `src/og/render.tsx`. Replace with photography later if you like.

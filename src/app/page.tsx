@@ -186,7 +186,7 @@ export default function Home() {
               Run by {site.proprietor.name}, and answered directly.
             </h2>
             <p className="body-l mt-6 max-w-[48ch] text-paper/80">
-              Spiceman Exports is a proprietorship. Inquiries go straight to the proprietor by phone, WhatsApp or
+              Spiceman Exports is a sole proprietorship. Inquiries go straight to the sole proprietor by phone, WhatsApp or
               email, with a straight answer on what can be supplied.
             </p>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">

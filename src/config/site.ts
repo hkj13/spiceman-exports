@@ -31,7 +31,7 @@ export const site = {
 
   proprietor: {
     name: "Shanthi Krishnamurthy",
-    role: "Proprietor",
+    role: "Sole proprietor",
   },
 
   address: {

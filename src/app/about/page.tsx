@@ -9,7 +9,7 @@ import { site, whatsappLink } from "@/config/site";
 export const metadata: Metadata = pageMeta({
   title: "About: Shanthi Krishnamurthy, Pondicherry, India",
   description:
-    "Spiceman Exports is a proprietorship run by Shanthi Krishnamurthy from Pondicherry, India, trading spices, rice, pulses and onions wholesale and for export.",
+    "Spiceman Exports is a sole proprietorship run by Shanthi Krishnamurthy from Pondicherry, India, trading spices, rice, pulses and onions wholesale and for export.",
   path: "/about",
 });
 
@@ -34,8 +34,8 @@ export default function AboutPage() {
         </div>
       </header>
 
-      {/* Proprietor */}
-      <section aria-labelledby="proprietor" data-rail="Proprietor" className="wrap grid-12 items-center gap-y-12 py-12 md:py-20">
+      {/* Sole proprietor */}
+      <section aria-labelledby="proprietor" data-rail="Sole proprietor" className="wrap grid-12 items-center gap-y-12 py-12 md:py-20">
         <div className="col-span-3 md:col-span-3 xl:col-span-4 xl:col-start-2">
           <LeafStage monogram={monogram} />
         </div>
@@ -46,11 +46,11 @@ export default function AboutPage() {
           </h2>
           <div className="body-l mt-8 max-w-[44ch] space-y-5 text-ink">
             <p>
-              Spiceman Exports is a proprietorship run by {proprietor.name}. The business buys and sells spices, rice,
+              Spiceman Exports is a sole proprietorship run by {proprietor.name}. The business buys and sells spices, rice,
               pulses and onions in wholesale quantities and prepares them for export.
             </p>
             <p>
-              Inquiries go straight to the proprietor, by phone, WhatsApp or email. Say what you buy, the
+              Inquiries go straight to the sole proprietor, by phone, WhatsApp or email. Say what you buy, the
               specification you buy to and where it needs to go, and you will get a straight answer on what can be
               supplied.
             </p>
