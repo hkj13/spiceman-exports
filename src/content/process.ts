@@ -51,9 +51,9 @@ export const processStages: ProcessStage[] = [
     title: "How it is dried",
     body: [
       "Pepper is spread on drying yards for several days and turns from green to black as it dries. Turmeric is boiled before drying, which sets its colour. Chillies are dried whole, often on the field. Cardamom is the exception: it is cured in heated drying houses so the pods keep their green. Paddy is dried before milling, and parboiled first for boiled rice. Onions are cured until the skins are dry and the necks close.",
-      "Drying decides how well a crop survives a sea voyage. Moisture is brought down to the limit the contract sets, commonly around 11 to 12 percent for pepper.",
+      "Drying decides how well a crop survives the journey, by sea or air. Moisture is brought down to the limit the contract sets, commonly around 11 to 12 percent for pepper and about 14 percent for rice.",
     ],
-    specify: ["Moisture, % max", "Colour expectations (e.g. green cardamom, bright red chilli)"],
+    specify: ["Moisture, % max", "Colour expectations (e.g. green cardamom, bright red chilli, white rice)"],
     scene: "sun",
     art: "bed",
   },
@@ -63,7 +63,7 @@ export const processStages: ProcessStage[] = [
     label: "Sort",
     title: "Cleaning and grading",
     body: [
-      "Cleaning takes out stones, stalks, dust and light or broken grains, by sieving, destoning, gravity separation and, for many seed spices and pulses, a sortex colour sorter.",
+      "Cleaning takes out stones, stalks, dust and light or broken grains, by sieving, destoning, gravity separation and, for many seed spices, rice and pulses, a sortex colour sorter.",
       "Grading follows the conventions of each crop: pepper by bulk density in grams per litre, cardamom by pod size in millimetres, chilli by variety and whether the stem is on, rice by grain length and broken percentage, pulses by size and polish, onions by bulb diameter.",
     ],
     specify: ["Grade", "Extraneous matter, % max", "Machine-cleaned or sortex"],
@@ -76,7 +76,7 @@ export const processStages: ProcessStage[] = [
     label: "Check",
     title: "Checking against your spec",
     body: [
-      "A quote is only as good as the specification it is made against. Send the one you buy to: moisture, extraneous matter, grade, and any product-specific values such as colour value for chilli, curcumin for turmeric, volatile oil for pepper and cardamom, or grain length and broken percentage for rice.",
+      "A quote is only as good as the specification it is made against. Send the one you buy to: moisture, extraneous matter, grade, and any product-specific values such as colour value for chilli, curcumin for turmeric, volatile oil for pepper and cardamom, grain length and broken percentage for rice, grain size for pulses or bulb size for onions.",
       "If your market needs laboratory reports, for example on pesticide residues, aflatoxin or microbiology, mention it with the inquiry. Testing affects both lead time and price.",
     ],
     specify: ["Full specification sheet", "Laboratory reports your importer requires", "Pre-shipment samples"],

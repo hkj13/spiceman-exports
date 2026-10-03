@@ -22,7 +22,7 @@ export function CatalogueDownload({ variant = "band" }: { variant?: "band" | "li
     );
   }
   return (
-    <div className="wrap">
+    <div className="wrap" data-rv>
       <div className="flex flex-col gap-5 rounded-[4px] bg-green-900 px-6 py-6 text-paper sm:flex-row sm:items-center sm:justify-between md:px-8">
         <div>
           <p className="mono-label text-turmeric">Product catalogue</p>

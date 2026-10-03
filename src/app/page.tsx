@@ -44,6 +44,8 @@ const STOP_SLIDES: SlideItem[] = stages.map((st) => ({
   photo: photos[STOP_PHOTO[st.id]],
   title: st.label,
   eyebrow: st.n,
+  // the last two stops cover both ways out
+  meta: st.id === "container" ? "Containers by sea, or air cargo" : st.id === "port" ? "Sea freight and air cargo" : undefined,
   href: `/journey#${st.id}`,
 }));
 
@@ -60,7 +62,7 @@ export default function Home() {
             We trade spices, rice, pulses and onions in wholesale lots, and prepare them for buyers{" "}
             <em className="display-em text-green">abroad</em>.
           </h2>
-          <ul className="mt-12 grid grid-cols-1 gap-x-8 gap-y-8 border-t border-rule pt-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
+          <ul data-rv-group className="mt-12 grid grid-cols-1 gap-x-8 gap-y-8 border-t border-rule pt-8 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4">
             {CATEGORIES.map((c) => {
               const items = products.filter((p) => p.category === c.id);
               return (
@@ -134,7 +136,7 @@ export default function Home() {
             </Reveal>
           </div>
           <p className="col-span-4 max-w-[40ch] self-end text-brown md:col-span-3 md:col-start-6 xl:col-span-4 xl:col-start-9">
-            From a field in India to a port abroad: what happens to a spice at each stop, and what you can ask
+            From a field in India to a port or airport abroad: what happens to the goods at each stop, and what you can ask
             for along the way.
           </p>
         </div>
@@ -166,7 +168,7 @@ export default function Home() {
       </SceneSection>
 
       {/* A word from Pondicherry: the green block of the page starts here */}
-      <NightZone labelledBy="note-title" rail="About us" className="on-dark night-bg bg-green-900 text-paper">
+      <NightZone toneStart labelledBy="note-title" rail="About us" className="on-dark night-bg bg-green-900 text-paper">
         <div className="wrap grid-12 gap-y-10 pb-6 pt-14 md:pb-10 md:pt-[clamp(5rem,14vh,10rem)]">
           <div className="col-span-4 md:col-span-3 xl:col-span-3 xl:col-start-2">
             <p className="mono-label text-turmeric">Pondicherry, India</p>
@@ -237,7 +239,7 @@ export default function Home() {
               <div data-scene-anchor className="relative mx-auto aspect-[100/120] w-[min(44vw,260px)] sm:w-full">
                 <StageArt kind="sack" colors={["#E3A21A", "#FBF7EE"]} />
               </div>
-              <div className="rounded-[4px] border border-paper/15 bg-green/15 p-6">
+              <div data-rv className="rounded-[4px] border border-paper/15 bg-green/15 p-6">
                 <p className="mono-label text-turmeric">Start a quote</p>
                 <div className="mt-6">
                   <QuoteStarter tone="dark" />

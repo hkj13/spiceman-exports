@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function CreditsPage() {
   const list = Object.entries(photos) as [string, Photo][];
   return (
-    <div className="wrap pb-10 pt-[calc(var(--header-h)+4rem)]">
+    <div className="page-enter wrap pb-10 pt-[calc(var(--header-h)+4rem)]">
       <p className="mono-label flex items-center gap-3 text-brown">
         <span aria-hidden className="inline-block h-px w-8 bg-brown" />
         Credits

@@ -15,9 +15,9 @@ import { photos } from "@/data/photos";
 import { stages } from "@/config/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "The journey: from soil to ship",
+  title: "The journey: from soil to shipment",
   description:
-    "Follow a spice from the field to the port: soil, harvest, sun-drying, sorting, checking against your specification, packing, container and shipment.",
+    "Follow spices, rice, pulses and onions from the field to the port or airport: soil, harvest, sun-drying, sorting, checking against your specification, packing, container and shipment.",
   path: "/journey",
 });
 
@@ -27,6 +27,8 @@ const SPEC_PARAMETERS = [
   ["Grade or size", "e.g. 550 g/l, 8 mm"],
   ["Colour value", "ASTA, for chilli"],
   ["Curcumin", "%, for turmeric"],
+  ["Broken grains", "%, for rice and pulses"],
+  ["Bulb size", "mm, for onions"],
   ["Volatile oil", "ml/100 g"],
   ["Packing and marking", "bag, weight, label"],
 ] as const;
@@ -40,15 +42,15 @@ export default function JourneyPage() {
         scene="rail"
         stage={0}
         labelledBy="journey-title"
-        className="wrap grid-12 relative items-end gap-y-12 pb-20 pt-[calc(var(--header-h)+4rem)] md:pb-28"
+        className="page-enter wrap grid-12 relative items-end gap-y-12 pb-20 pt-[calc(var(--header-h)+4rem)] md:pb-28"
       >
         <div className="col-span-4 md:col-span-5 xl:col-span-7">
           <ChapterLabel label="The journey" />
           <h1 id="journey-title" className="display-xxl mt-6">
-            From <em className="display-em text-green">soil</em> to ship.
+            From <em className="display-em text-green">soil</em> to shipment.
           </h1>
           <p className="body-l mt-8 max-w-[40ch] text-brown">
-            Eight stops between a field in India and a port abroad. Scroll to follow a spice along the way.
+            Eight stops between a field in India and a port or airport abroad. Scroll to follow the goods along the way.
           </p>
           <nav aria-label="Stops on the journey" className="mt-10">
             {/* A fixed grid on phones: its height can't change when the label font arrives */}
@@ -104,7 +106,7 @@ export default function JourneyPage() {
             season when it is ready.
           </Reveal>
           <Reveal as="p" by="fade" delay={0.1} className="mt-5 max-w-[46ch] text-brown">
-            Where a spice comes from is the first thing worth asking about, so every product page lists the
+            Where a crop comes from is the first thing worth asking about, so every product page lists the
             regions it is sourced from.
           </Reveal>
           <PhotoFrame
@@ -129,7 +131,7 @@ export default function JourneyPage() {
                 Picked when it is <em className="display-em">ready</em>.
               </>
             ),
-            body: "Pepper spikes are picked as the first berries on them turn red. Chillies are left on the plant to colour. Turmeric is lifted once its leaves dry back, eight or nine months after planting.",
+            body: "Pepper spikes are picked as the first berries on them turn red. Chillies are left on the plant to colour. Turmeric is lifted once its leaves dry back. Paddy is cut when the grain hardens, pulses when the pods dry, and onions once their tops fall over.",
             art: <StageArt kind="strands" colors={PALETTE.vine} count={220} w={400} h={420} />,
             photo: photos["stage-harvest"],
             aspect: "aspect-[40/42]",
@@ -145,7 +147,7 @@ export default function JourneyPage() {
                 Green turns <em className="display-em">black</em> in the sun.
               </>
             ),
-            body: "Spread thin on drying yards, green pepper darkens and wrinkles over several days as the skin oxidises. Drying brings moisture down far enough for the crop to keep through a sea voyage.",
+            body: "Spread thin on drying yards, green pepper darkens and wrinkles over several days as the skin oxidises. Paddy, pulses and onions are dried and cured too. Drying brings moisture down far enough for the crop to keep through the journey.",
             art: <StageArt kind="bed" colors={PALETTE.dried} count={240} w={480} h={300} />,
             photo: photos["stage-sun"],
             aspect: "aspect-[48/30]",
@@ -161,7 +163,7 @@ export default function JourneyPage() {
                 Sieved, cleaned, <em className="display-em">graded</em>.
               </>
             ),
-            body: "Stones, stalks and light berries come out. Seed spices are machine-cleaned or run through a sortex. Pepper is graded by density in grams per litre, cardamom by pod size in millimetres.",
+            body: "Stones, stalks and light berries come out. Seed spices are machine-cleaned or run through a sortex. Pepper is graded by density, cardamom by pod size, rice by grain length, pulses by size and onions by bulb diameter.",
             art: <StageArt kind="sieve" colors={PALETTE.dried} count={220} w={400} h={320} />,
             photo: photos["stage-sort"],
             aspect: "aspect-[40/32]",
@@ -303,8 +305,9 @@ export default function JourneyPage() {
         stage={6}
         id="container"
         night
+        toneStart
         labelledBy="container-title"
-        className="on-dark night-bg bg-green-900 wrap grid-12 relative gap-y-12 py-14 md:py-[clamp(7rem,20vh,14rem)] text-paper"
+        className="on-dark night-bg bg-green-900 wrap grid-12 relative gap-y-12 py-14 md:py-[clamp(4.5rem,11vh,8rem)] text-paper"
       >
         <div
           data-scene-anchor
@@ -334,13 +337,13 @@ export default function JourneyPage() {
       {/* 08 Port (night) + quote: headline and contacts left, form right, ship across the foot */}
       <SceneSection
         flow
-        scene="port"
+        scene="rail"
         rail="Port"
         stage={7}
         id="port"
         night
         labelledBy="port-title"
-        className="on-dark night-bg bg-green-900 relative overflow-x-clip pb-0 pt-14 md:pt-[clamp(6rem,14vh,10rem)] text-paper"
+        className="on-dark night-bg bg-green-900 relative overflow-x-clip pb-0 pt-6 md:pt-[clamp(2rem,5vh,4rem)] text-paper"
       >
         <div className="wrap grid-12 items-start gap-y-14">
           <div className="col-span-4 md:col-span-8 lg:col-span-6 xl:col-span-6">
@@ -349,7 +352,8 @@ export default function JourneyPage() {
             <Reveal as="h2" id="port-title" className="display-xxl mt-6">
               Tell us what you need to <em className="display-em text-turmeric">ship</em>.
             </Reveal>
-            <div className="mt-12 grid gap-x-10 gap-y-6 text-paper/85 sm:grid-cols-2 lg:mt-16">
+            <div data-scene-anchor aria-hidden className="mt-10 h-3 w-full max-w-[520px]" />
+            <div className="mt-8 grid gap-x-10 gap-y-6 text-paper/85 sm:grid-cols-2 lg:mt-10">
               <div>
                 <p className="mono-label text-turmeric">WhatsApp or call</p>
                 <ul className="mt-3 space-y-2">
@@ -371,7 +375,7 @@ export default function JourneyPage() {
             </div>
           </div>
           <div className="col-span-4 md:col-span-6 md:col-start-2 lg:col-span-5 lg:col-start-8 lg:pt-10">
-            <div className="rounded-[4px] border border-paper/15 bg-green/15 p-6 md:p-8">
+            <div data-rv className="rounded-[4px] border border-paper/15 bg-green/15 p-6 md:p-8">
               <p className="mono-label text-turmeric">Start a quote</p>
               <div className="mt-6">
                 <QuoteStarter tone="dark" />
@@ -379,38 +383,29 @@ export default function JourneyPage() {
             </div>
           </div>
         </div>
-        {/* Port: a wide photograph across the foot of the chapter. The photo's
-            ship waits on the left; the grain ship sails in on the same horizon. */}
-        <div className="relative mt-16 md:mt-24">
-          <div className="relative hidden md:block">
-            <PhotoFrame
-              photo={photos["stage-port"]}
-              sizes="100vw"
-              position="50% 64%"
-              className="aspect-[16/6] w-full !rounded-none opacity-80"
-            />
-            <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-green-900 via-green-900/30 to-green-900/20" />
-            {/* the photo's horizon sits at 64% of its height */}
-            <div className="absolute inset-0">
-              <div
-                data-scene-anchor
-                className="absolute bottom-[34%] right-[6%] aspect-[240/100] w-[44%]"
-              >
-                <StageArt kind="ship" colors={["#E3A21A", "#FBF7EE"]} />
-              </div>
-              <div data-scene-extra aria-hidden className="absolute bottom-[33.5%] left-[48%] right-0 h-2" />
-            </div>
-          </div>
-          {/* phones: the grain ship on its own, with a horizon */}
-          <div className="relative md:hidden">
-            <div className="wrap relative pb-10">
-              <div data-scene-anchor className="relative ml-auto aspect-[240/100] w-full">
-                <StageArt kind="ship" colors={["#E3A21A", "#FBF7EE"]} />
-              </div>
-              <div data-scene-extra aria-hidden className="absolute inset-x-0 bottom-10 h-2" />
-            </div>
+        {/* By sea or by air: both ways a consignment can travel, side by side */}
+        <div className="wrap mt-14 md:mt-20" data-rv-group>
+          <div className="grid gap-4 md:grid-cols-[1.35fr_1fr] md:gap-6">
+            {(
+              [
+                ["stage-port", "By sea", "Full 20 ft and 40 ft containers, for larger lots", "aspect-[16/9]"],
+                ["stage-air", "By air", "Air cargo, for samples, smaller lots and urgent orders", "aspect-[16/9] md:aspect-auto md:h-full"],
+              ] as const
+            ).map(([key, label, note, aspect]) => (
+              <figure key={key} className="group relative overflow-hidden rounded-[4px]">
+                <PhotoFrame photo={photos[key]} sizes="(min-width: 768px) 55vw, 92vw" className={`w-full !rounded-none ${aspect}`} />
+                <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-t from-green-900/85 via-green-900/15 to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 p-5 md:p-6">
+                  <p className="font-display text-[clamp(1.5rem,2.4vw,2.4rem)] leading-none text-[#fbf7ee] [font-variation-settings:'opsz'_72]">
+                    {label}
+                  </p>
+                  <p className="mt-2 max-w-[38ch] text-sm text-[#fbf7ee]/85">{note}</p>
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </div>
+        <div className="h-14 md:h-20" />
       </SceneSection>
     </div>
   );

@@ -22,14 +22,14 @@ export default function AboutPage() {
 
   return (
     <>
-      <header className="wrap grid-12 gap-y-8 pb-16 pt-[calc(var(--header-h)+4rem)]">
+      <header className="page-enter wrap grid-12 gap-y-8 pb-16 pt-[calc(var(--header-h)+4rem)]">
         <div className="col-span-4 md:col-span-7 xl:col-span-8">
           <p className="mono-label flex items-center gap-3 text-brown">
             <span aria-hidden className="inline-block h-px w-8 bg-brown" />
             About
           </p>
           <Reveal as="h1" className="display-xl mt-6">
-            Spices, rice and pulses, traded from <em className="display-em">Pondicherry</em>.
+            Spices, rice, pulses and onions, traded from <em className="display-em">Pondicherry</em>.
           </Reveal>
         </div>
       </header>

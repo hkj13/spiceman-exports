@@ -53,7 +53,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
 
   return (
     <article className="overflow-x-clip" style={{ "--accent": product.accent, "--accent-ink": product.ink } as React.CSSProperties}>
-      <div className="wrap pt-[calc(var(--header-h)+3rem)]">
+      <div className="enter wrap pt-[calc(var(--header-h)+3rem)]">
         <nav aria-label="Breadcrumb">
           {/* One line always, so the label font arriving can't reflow the page below */}
           <ol className="mono-label flex min-w-0 flex-nowrap gap-2 whitespace-nowrap text-brown">
@@ -73,7 +73,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
       </div>
 
       {/* Name bleeding off the left edge, silhouette beside it */}
-      <header className="relative mt-6" data-rail="Overview">
+      <header className="page-enter relative mt-6" data-rail="Overview">
         <h1
           className="font-display -ml-[0.06em] pl-[var(--margin)] pr-[var(--margin)] leading-[0.9] md:whitespace-nowrap md:pr-0 md:leading-[0.85] tracking-[-0.045em] text-[var(--accent-ink)] [font-variation-settings:'opsz'_144]"
           // Size to the name so long names still fit the width.

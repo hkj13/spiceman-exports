@@ -59,14 +59,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.6s var(--ease-settle), color 0.6s var(--ease-settle);
 }
 
-/* Night chapters (container, port) switch the whole page tone. */
-html[data-tone="night"] body {
-  background: var(--color-green-900);
-  color: var(--color-paper);
-}
 
 /* Paper grain: a tiny tiling turbulence, multiplied over everything. */
 body::before {
@@ -93,9 +87,6 @@ body::after {
   pointer-events: none;
   background: radial-gradient(120% 90% at 8% -10%, rgb(255 244 214 / 0.9), transparent 60%);
   transition: opacity 0.6s;
-}
-html[data-tone="night"] body::after {
-  opacity: 0;
 }
 
 ::selection {
@@ -469,16 +460,138 @@ html:not([data-vt])::view-transition-new(*) {
   margin-top: -1px;
 }
 
-/* Text set for paper stays legible when the page turns to night. Paper
-   objects (tags, cards) opt out with .keep-tone. */
-html[data-tone="night"] main :is(.text-brown, .text-ink):not(.keep-tone *) {
-  color: rgb(251 247 238 / 0.78);
-}
-html[data-tone="night"] main .text-green:not(.keep-tone *) {
-  color: var(--color-turmeric);
-}
 
 /* A light, warm grade so photographs from different sources sit together. */
 .photo-grade {
   filter: saturate(0.9) sepia(0.1) contrast(1.04) brightness(0.98);
+}
+
+/* ------------------------------------------------------------------ */
+/* Scroll-driven tone: cream blends into green as a green run of      */
+/* sections approaches (see ToneScrub). --tone runs from 0 to 1.      */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --tone: 0;
+  --tone-ink: 0;
+  --tone-pct: calc(var(--tone) * 100%);
+  --ink-pct: calc(var(--tone-ink) * 100%);
+}
+body {
+  background: color-mix(in oklab, #fbf7ee, #12361c var(--tone-pct));
+  color: color-mix(in oklab, #2a1810, #fbf7ee var(--ink-pct));
+}
+body::after {
+  opacity: calc(1 - var(--tone));
+}
+
+/* Green sections let the blended page colour show through once script is
+   running; without it they keep their own solid green. Their light text
+   (paper, turmeric) starts dark and lightens with the tone, so it reads at
+   every step of the blend. */
+html[data-js] .tone-scrub {
+  background: transparent;
+  box-shadow: none;
+  --color-paper: color-mix(in oklab, #2a1810, #fbf7ee var(--ink-pct));
+  --color-turmeric: color-mix(in oklab, #6e4700, #e3a21a var(--ink-pct));
+}
+
+/* Text on the cream side lightens as the green arrives behind it. Applied
+   only while a blend is under way (data-toning), so components keep their
+   own hover and selected colours the rest of the time.
+   Paper objects (tags, cards) opt out with .keep-tone. */
+html[data-toning] main .text-ink:not(.tone-scrub *, .keep-tone *, :has(> input:checked), :hover, [aria-pressed="true"]) {
+  color: color-mix(in oklab, #2a1810, #fbf7ee var(--ink-pct));
+}
+html[data-toning] main .text-brown:not(.tone-scrub *, .keep-tone *, :has(> input:checked), :hover, [aria-pressed="true"]) {
+  color: color-mix(in oklab, #5a2e1a, rgb(251 247 238 / 0.8) var(--ink-pct));
+}
+html[data-toning] main .text-green:not(.tone-scrub *, .keep-tone *, :has(> input:checked), :hover, [aria-pressed="true"]) {
+  color: color-mix(in oklab, #1d6a2c, #e3a21a var(--ink-pct));
+}
+
+/* The side rail's label and ticks follow the same blend. */
+.tone-rail-text {
+  color: color-mix(in oklab, #5a2e1a, rgb(251 247 238 / 0.75) var(--ink-pct));
+}
+.tone-rail-line {
+  background: color-mix(in oklab, #ddcfb4, rgb(251 247 238 / 0.25) var(--tone-pct));
+}
+
+/* ------------------------------------------------------------------ */
+/* Entrance on a page load: header, hero and first content fade and   */
+/* rise in a short stagger (about a second in all). Elements opt in   */
+/* with .enter and an optional --d delay in ms. Moves within the site  */
+/* use the page transition instead.                                   */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-entrance] .enter {
+    animation: enter-rise 0.85s var(--ease-settle) both;
+    animation-delay: calc(var(--d, 0) * 1ms + 60ms);
+  }
+  html[data-entrance] .enter-fade {
+    animation: enter-fade 0.7s ease-out both;
+    animation-delay: calc(var(--d, 0) * 1ms + 60ms);
+  }
+  html[data-entrance] .enter-scale {
+    animation: enter-scale 0.9s var(--ease-settle) both;
+    animation-delay: calc(var(--d, 0) * 1ms + 60ms);
+  }
+}
+/* Opacity starts just above zero rather than at it: the browser then counts
+   the content as painted from the first frame, so the entrance never delays
+   the page's measured load. */
+@keyframes enter-rise {
+  from {
+    opacity: 0.02;
+    transform: translateY(22px);
+  }
+}
+@keyframes enter-fade {
+  from {
+    opacity: 0.02;
+  }
+}
+@keyframes enter-scale {
+  from {
+    opacity: 0.02;
+    transform: translateY(10px) scale(0.92);
+  }
+}
+
+/* Page openings (other than Home's hero): the header's children rise in
+   turn, then the first block after it. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-entrance] main .page-enter > * {
+    animation: enter-rise 0.85s var(--ease-settle) both;
+    animation-delay: 140ms;
+  }
+  html[data-entrance] main .page-enter > :nth-child(2) {
+    animation-delay: 260ms;
+  }
+  html[data-entrance] main .page-enter > :nth-child(3) {
+    animation-delay: 380ms;
+  }
+  html[data-entrance] main .page-enter > :nth-child(n + 4) {
+    animation-delay: 480ms;
+  }
+  html[data-entrance] main .page-enter + * {
+    animation: enter-rise 0.9s var(--ease-settle) 520ms both;
+  }
+  html[data-entrance] main .table-enter {
+    animation: enter-rise 0.9s var(--ease-settle) 640ms both;
+  }
+}
+
+/* Blocks further down ease in as they reach the screen (see ScrollReveal). */
+@media (prefers-reduced-motion: no-preference) {
+  .rv-pending {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  .rv-in {
+    transition:
+      opacity 0.8s var(--ease-settle),
+      transform 0.9s var(--ease-settle);
+  }
 }

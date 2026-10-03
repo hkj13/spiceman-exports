@@ -18,7 +18,7 @@ export const metadata: Metadata = pageMeta({
 export default function ContactPage() {
   return (
     <>
-      <header className="wrap grid-12 gap-y-8 pb-14 pt-[calc(var(--header-h)+4rem)]">
+      <header className="page-enter wrap grid-12 gap-y-8 pb-14 pt-[calc(var(--header-h)+4rem)]">
         <div className="col-span-4 md:col-span-7 xl:col-span-8">
           <p className="mono-label flex items-center gap-3 text-brown">
             <span aria-hidden className="inline-block h-px w-8 bg-brown" />

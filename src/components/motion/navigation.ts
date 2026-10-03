@@ -21,7 +21,6 @@ export function NavigationWatcher() {
   useEffect(() => {
     if (first === null) first = pathname;
     else if (pathname !== first) navigated = true;
-    document.documentElement.removeAttribute("data-tone");
   }, [pathname]);
   return null;
 }

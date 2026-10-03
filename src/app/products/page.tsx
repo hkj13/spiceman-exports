@@ -18,7 +18,7 @@ export default function ProductsPage() {
   return (
     <>
       <div data-rail="Sorting table">
-      <header className="wrap grid-12 gap-y-8 pb-12 pt-[calc(var(--header-h)+4rem)] md:pb-16">
+      <header className="page-enter wrap grid-12 gap-y-8 pb-12 pt-[calc(var(--header-h)+4rem)] md:pb-16">
         <div className="col-span-4 md:col-span-6 xl:col-span-7">
           <p className="mono-label flex items-center gap-3 text-brown">
             <span aria-hidden className="inline-block h-px w-8 bg-brown" />
@@ -38,7 +38,9 @@ export default function ProductsPage() {
         <CatalogueDownload />
       </div>
 
-      <SortingTable products={products} />
+      <div className="table-enter">
+        <SortingTable products={products} />
+      </div>
       </div>
 
       <section aria-labelledby="pour-title" data-rail="Pulses and rice" className="wrap grid-12 mt-32 gap-y-10">
