@@ -4,11 +4,11 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { play } from "@/components/motion/bus";
 import { loadGsap } from "@/components/motion/gsap";
 import { claimStage } from "@/components/motion/liveStage";
-import { homeScenes, type HomeSceneName } from "@/components/home/scenes";
-import { PALETTE } from "@/components/home/palette";
+import { processScene } from "./scenes";
+import type { ProcessArtKind } from "./drawings";
 import { setStage } from "@/lib/journey";
 
-type StageMeta = { id: string; n: string; label: string; scene: HomeSceneName; art: ReactNode };
+type StageMeta = { id: string; n: string; label: string; scene: ProcessArtKind; art: ReactNode };
 
 /**
  * On large screens a sticky stage sits beside the chapters: its numeral and
@@ -32,12 +32,9 @@ export function ProcessScroller({ stages, children }: { stages: StageMeta[]; chi
       setStage(i);
       const article = el.querySelectorAll<HTMLElement>("[data-stage-article]")[i];
       const anchor = wide.matches ? sticky.current : article?.querySelector("[data-inline-anchor]");
-      const name = stages[i].scene;
-      // Paper-tone palettes for the scenes that are drawn in night colours on Home.
-      const palette = name === "container" || name === "port" ? PALETTE.dried : undefined;
       const owner = (wide.matches ? sticky.current : article) as HTMLElement | null;
       const settled = owner ? claimStage(owner) : undefined;
-      play({ ...homeScenes[name](anchor ?? null, null, palette), onSettled: settled });
+      play({ ...processScene(stages[i].scene, anchor ?? null), onSettled: settled });
     };
 
     loadGsap().then(({ ScrollTrigger }) => {

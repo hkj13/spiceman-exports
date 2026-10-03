@@ -1,4 +1,4 @@
-import type { StageKind } from "@/components/art/StageArt";
+import type { ProcessArtKind } from "@/components/process/drawings";
 
 /**
  * The eight stages as they appear on the Process page. Written as what
@@ -12,8 +12,8 @@ export type ProcessStage = {
   title: string;
   body: string[];
   specify: string[];
-  scene: "soil" | "harvest" | "sun" | "sort" | "check" | "pack" | "container" | "port";
-  art: StageKind;
+  /** The drawing the grains form for this stage */
+  art: ProcessArtKind;
 };
 
 export const processStages: ProcessStage[] = [
@@ -28,8 +28,7 @@ export const processStages: ProcessStage[] = [
       "Each product page lists the regions it is typically sourced from. For a specific lot, ask for its origin when you request a quote.",
     ],
     specify: ["Origin region or district", "Crop year: new crop or old crop"],
-    scene: "soil",
-    art: "furrows",
+    art: "field",
   },
   {
     id: "harvest",
@@ -41,8 +40,7 @@ export const processStages: ProcessStage[] = [
       "Basmati is harvested in October and November, and the delta's main ponni crop around January. Pulses are rabi or kharif crops, and onions come in more than one crop a year, so availability and quality shift through the year. If timing matters for your market, say so early.",
     ],
     specify: ["Shipment window", "New crop only, or blends acceptable"],
-    scene: "harvest",
-    art: "strands",
+    art: "calendar",
   },
   {
     id: "sun",
@@ -54,8 +52,7 @@ export const processStages: ProcessStage[] = [
       "Drying decides how well a crop survives the journey, by sea or air. Moisture is brought down to the limit the contract sets, commonly around 11 to 12 percent for pepper and about 14 percent for rice.",
     ],
     specify: ["Moisture, % max", "Colour expectations (e.g. green cardamom, bright red chilli, white rice)"],
-    scene: "sun",
-    art: "bed",
+    art: "sun",
   },
   {
     id: "sort",
@@ -67,8 +64,7 @@ export const processStages: ProcessStage[] = [
       "Grading follows the conventions of each crop: pepper by bulk density in grams per litre, cardamom by pod size in millimetres, chilli by variety and whether the stem is on, rice by grain length and broken percentage, pulses by size and polish, onions by bulb diameter.",
     ],
     specify: ["Grade", "Extraneous matter, % max", "Machine-cleaned or sortex"],
-    scene: "sort",
-    art: "sieve",
+    art: "grades",
   },
   {
     id: "check",
@@ -80,8 +76,7 @@ export const processStages: ProcessStage[] = [
       "If your market needs laboratory reports, for example on pesticide residues, aflatoxin or microbiology, mention it with the inquiry. Testing affects both lead time and price.",
     ],
     specify: ["Full specification sheet", "Laboratory reports your importer requires", "Pre-shipment samples"],
-    scene: "check",
-    art: "loupe",
+    art: "spec",
   },
   {
     id: "pack",
@@ -93,8 +88,7 @@ export const processStages: ProcessStage[] = [
       "Bag marking follows your instructions: product, grade, lot, net and gross weight, origin, and your brand if you are buying under private label.",
     ],
     specify: ["Bag type and weight", "Marking and labels", "Private label artwork"],
-    scene: "pack",
-    art: "sack",
+    art: "sacks",
   },
   {
     id: "container",
@@ -107,8 +101,7 @@ export const processStages: ProcessStage[] = [
       "Some destinations require fumigation or particular treatment before loading, and onions need ventilated or temperature-controlled containers. Name your destination early so these are included.",
     ],
     specify: ["Sea freight or air cargo", "Container size or quantity", "Incoterm (for example FOB or CIF)", "Fumigation or treatment requirements"],
-    scene: "container",
-    art: "container",
+    art: "cargo",
   },
   {
     id: "port",
@@ -120,7 +113,6 @@ export const processStages: ProcessStage[] = [
       "Tell us the port or airport of destination and which documents your importer needs, and they are prepared alongside the shipment.",
     ],
     specify: ["Port or airport of destination", "Documents required by your importer"],
-    scene: "port",
-    art: "ship",
+    art: "papers",
   },
 ];

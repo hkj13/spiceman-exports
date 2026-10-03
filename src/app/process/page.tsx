@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { PhotoFrame } from "@/components/art/PhotoFrame";
-import { StageArt, type StageKind } from "@/components/art/StageArt";
 import { photos, type PhotoKey } from "@/data/photos";
-import { PALETTE } from "@/components/home/palette";
 import { Reveal } from "@/components/motion/Reveal";
 import { Slot } from "@/components/placeholder/Slot";
+import { ProcessArt } from "@/components/process/ProcessArt";
 import { ProcessScroller } from "@/components/process/ProcessScroller";
 import { site } from "@/config/site";
 import { processStages } from "@/content/process";
@@ -18,18 +17,6 @@ export const metadata: Metadata = pageMeta({
   path: "/process",
 });
 
-const ART_COLORS: Record<StageKind, readonly string[]> = {
-  heap: PALETTE.spice,
-  furrows: PALETTE.soil,
-  strands: PALETTE.vine,
-  bed: PALETTE.greenPepper,
-  sieve: PALETTE.dried,
-  loupe: PALETTE.dried,
-  sack: ["#5A2E1A", "#B99459"],
-  container: ["#5A2E1A", "#B99459"],
-  ship: ["#5A2E1A", "#B99459"],
-};
-
 const STAGE_PHOTO: Record<string, PhotoKey> = {
   soil: "stage-soil",
   harvest: "stage-harvest",
@@ -40,14 +27,6 @@ const STAGE_PHOTO: Record<string, PhotoKey> = {
   container: "stage-container",
   port: "stage-port",
 };
-
-function Art({ kind }: { kind: StageKind }) {
-  const box: Partial<Record<StageKind, { w: number; h: number }>> = {
-    strands: { w: 400, h: 300 },
-    bed: { w: 400, h: 300 },
-  };
-  return <StageArt kind={kind} colors={ART_COLORS[kind]} count={200} {...box[kind]} />;
-}
 
 export default function ProcessPage() {
   return (
@@ -73,8 +52,8 @@ export default function ProcessPage() {
           id: s.id,
           n: s.n,
           label: s.label,
-          scene: s.scene,
-          art: <Art kind={s.art} />,
+          scene: s.art,
+          art: <ProcessArt kind={s.art} />,
         }))}
       >
         <ol>
@@ -88,7 +67,7 @@ export default function ProcessPage() {
                   {s.title}
                 </Reveal>
                 <div data-inline-anchor className="relative my-10 aspect-[4/3] w-full max-w-[440px] lg:hidden">
-                  <Art kind={s.art} />
+                  <ProcessArt kind={s.art} />
                 </div>
                 <div className="mt-8 grid max-w-[58ch] gap-8 lg:mt-10 lg:max-w-none lg:grid-cols-[minmax(0,58ch)_1fr] lg:items-start">
                   <div className="space-y-5 text-[1.0625rem]">
@@ -102,7 +81,7 @@ export default function ProcessPage() {
                       {(
                         [
                           [s.id === "container" ? "stage-container" : "stage-port", "By sea"],
-                          ["stage-air", "By air"],
+                          [s.id === "container" ? "stage-air-cargo" : "stage-air", "By air"],
                         ] as const
                       ).map(([k, label]) => (
                         <figure key={k}>
