@@ -74,10 +74,10 @@ export function RouteLine() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed bottom-6 top-[calc(var(--header-h)+1.5rem)] z-40 hidden w-8 -translate-x-1/2 sm:block [view-transition-name:route-line]"
-      style={{ left: "var(--route-x)" }}
+      className="enter-fade pointer-events-none fixed bottom-6 top-[calc(var(--header-h)+1.5rem)] z-40 hidden w-8 -translate-x-1/2 sm:block [view-transition-name:route-line]"
+      style={{ left: "var(--route-x)", "--d": 700 } as React.CSSProperties}
     >
-      <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-rule night:bg-paper/20" />
+      <div className="tone-rail-line absolute inset-y-0 left-1/2 w-px -translate-x-1/2" />
       {marks.map((m, i) => (
         <div
           key={`${m.label}-${i}`}
@@ -85,7 +85,7 @@ export function RouteLine() {
           style={{ top: pos(i) }}
         >
           <span
-            className={`block h-px w-2.5 transition-colors duration-500 ${i <= active ? "bg-brown night:bg-paper/70" : "bg-rule night:bg-paper/25"}`}
+            className={`block h-px w-2.5 transition-colors duration-500 ${i <= active ? "bg-brown night:bg-paper/70" : "tone-rail-line"}`}
           />
         </div>
       ))}
@@ -96,7 +96,7 @@ export function RouteLine() {
       >
         <span className="absolute -left-[5px] -top-[5px] block h-2.5 w-2.5 rounded-full bg-[radial-gradient(circle_at_35%_30%,#6b5a4e,#2b2420_60%)] shadow-[0_1px_0_rgb(0_0_0/0.2)] night:bg-[radial-gradient(circle_at_35%_30%,#fff3c9,#e3a21a_60%)]" />
         <span
-          className={`mono-label absolute left-2 hidden whitespace-nowrap text-[0.625rem] text-brown [writing-mode:vertical-rl] lg:block night:text-paper/70 ${active === last && last > 0 ? "-top-3 -translate-y-full" : "top-3"}`}
+          className={`mono-label absolute left-2 hidden whitespace-nowrap tone-rail-text text-[0.625rem] [writing-mode:vertical-rl] lg:block ${active === last && last > 0 ? "-top-3 -translate-y-full" : "top-3"}`}
         >
           {String(active + 1).padStart(2, "0")} {current.label}
         </span>

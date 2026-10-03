@@ -8,19 +8,14 @@ import { setStage } from "@/lib/journey";
 import { PALETTE } from "./palette";
 import { homeScenes, type HomeSceneName } from "./scenes";
 
-// The page is in its night tone while a night chapter sits under the header.
-export const nightActive = new Set<Element>();
-export const applyTone = () => {
-  if (nightActive.size) document.documentElement.dataset.tone = "night";
-  else document.documentElement.removeAttribute("data-tone");
-};
-
 type Props = {
   scene: HomeSceneName;
   /** Position on the route line, 0..7 */
   stage: number;
-  /** Switch the page to its night tone while this section is active */
+  /** Part of a green run: its colours follow the scroll-driven tone */
   night?: boolean;
+  /** First section of a green run: the tone blends in as it approaches */
+  toneStart?: boolean;
   /** Draw the scene in the night palette (for scenes that are paper-toned by default) */
   nightPalette?: boolean;
   /** Grains fly here from the previous shape, on phones too */
@@ -38,7 +33,7 @@ type Props = {
  * the particles form its scene inside the element marked
  * `data-scene-anchor` (and `data-scene-extra`, if present).
  */
-export function SceneSection({ scene, stage, night, nightPalette, flow, id, className, labelledBy, rail, children }: Props) {
+export function SceneSection({ scene, stage, night, toneStart, nightPalette, flow, id, className, labelledBy, rail, children }: Props) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -67,37 +62,24 @@ export function SceneSection({ scene, stage, night, nightPalette, flow, id, clas
         onToggle: (self) => self.isActive && activate(),
       });
       if (st.isActive) activate();
-      // Night chapters carry their own green, which slides in with the
-      // section; the page tone (header, rail, cursor) flips exactly when that
-      // green reaches the header, and back when it leaves.
-      const tone = night
-        ? ScrollTrigger.create({
-            trigger: el,
-            start: "top 64px",
-            end: "bottom 64px",
-            onToggle: (self) => {
-              if (self.isActive) nightActive.add(el);
-              else nightActive.delete(el);
-              applyTone();
-            },
-          })
-        : null;
-      kill = () => {
-        st.kill();
-        tone?.kill();
-        nightActive.delete(el);
-        applyTone();
-      };
+      kill = () => st.kill();
     });
 
     return () => {
       cancelled = true;
       kill();
     };
-  }, [scene, stage, night, nightPalette, flow]);
+  }, [scene, stage, nightPalette, flow]);
 
   return (
-    <section ref={ref} id={id} className={className} aria-labelledby={labelledBy} data-rail={rail}>
+    <section
+      ref={ref}
+      id={id}
+      className={`${night ? "tone-scrub " : ""}${className ?? ""}`}
+      aria-labelledby={labelledBy}
+      data-rail={rail}
+      data-tone-start={toneStart ? "" : undefined}
+    >
       {children}
     </section>
   );
