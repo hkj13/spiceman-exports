@@ -7,17 +7,18 @@ import { StageArt } from "@/components/art/StageArt";
 import { play, whenReady } from "@/components/motion/bus";
 import { loadGsap } from "@/components/motion/gsap";
 import { claimStage } from "@/components/motion/liveStage";
+import { hasNavigated } from "@/components/motion/navigation";
 import { mouth } from "@/components/motion/particles/shapes";
 import { setStage } from "@/lib/journey";
 import { PALETTE } from "./palette";
 import { homeScenes } from "./scenes";
 
-const SEEN_KEY = "spiceman:intro";
-
 /**
  * The first screen. The headline is server-rendered and never waits for
- * animation. On a first visit the mortar grinds and the ground spice rises
- * out of the bowl to become the particle field, which settles into a heap.
+ * animation. Every time Home is loaded (refreshes included) the mortar grinds
+ * and the ground spice rises out of the bowl to become the particle field,
+ * which settles into a heap. Arriving from another page of the site, the
+ * grains flow in from that page instead.
  */
 export function Opening() {
   const section = useRef<HTMLElement>(null);
@@ -30,20 +31,20 @@ export function Opening() {
     let revert = () => {};
     setStage(0);
 
-    let seen = false;
-    try {
-      seen = sessionStorage.getItem(SEEN_KEY) === "1";
-      sessionStorage.setItem(SEEN_KEY, "1");
-    } catch {
-      /* storage unavailable: play the intro */
+    // A page load (not a move within the site) always starts at the top, so
+    // the opening plays from the beginning even after a refresh mid-page.
+    const loaded = !hasNavigated();
+    if (loaded) {
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
     }
 
     whenReady().then(async (engine) => {
       if (cancelled || !engine) return;
       const base = homeScenes.heap(pile.current);
       const heapScene = { ...base, onSettled: pile.current ? claimStage(pile.current) : undefined };
-      // Only grind if the reader is still at the top of the page.
-      if (seen || window.scrollY > 40) {
+      // Grind on a page load; if the reader has already scrolled on, just form the heap.
+      if (!loaded || window.scrollY > 40) {
         play(heapScene);
         return;
       }
