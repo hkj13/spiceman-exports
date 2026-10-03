@@ -6,3 +6,14 @@ export function ChapterLabel({ n, label, dark = false }: { n?: string; label: st
     </p>
   );
 }
+
+/** The big step numeral every journey chapter carries, so all eight read as equal steps. */
+export function StepNumber({ n, dark = false, className = "" }: { n: string; dark?: boolean; className?: string }) {
+  return (
+    <p
+      aria-hidden
+      data-n={n}
+      className={`display-xxl before:content-[attr(data-n)] ${dark ? "text-paper/20" : "text-rule"} ${className}`}
+    />
+  );
+}

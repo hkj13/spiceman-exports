@@ -5,7 +5,9 @@ import { StageArt } from "@/components/art/StageArt";
 import { ChapterLabel } from "@/components/home/ChapterLabel";
 import { Opening } from "@/components/home/Opening";
 import { QuoteStarter } from "@/components/home/QuoteStarter";
+import { NightZone } from "@/components/home/NightZone";
 import { SceneSection } from "@/components/home/SceneSection";
+import { CatalogueDownload } from "@/components/products/CatalogueDownload";
 import { Reveal } from "@/components/motion/Reveal";
 import { site, stages, whatsappLink } from "@/config/site";
 import { photos, type PhotoKey } from "@/data/photos";
@@ -51,7 +53,7 @@ export default function Home() {
       <Opening />
 
       {/* What we do: one sentence, then the four categories across the full width */}
-      <section aria-labelledby="intro-title" className="relative pb-6 pt-14 md:pb-8 md:pt-[clamp(4rem,10vh,8rem)]">
+      <section aria-labelledby="intro-title" data-rail="What we do" className="relative pb-6 pt-14 md:pb-8 md:pt-[clamp(4rem,10vh,8rem)]">
         <div className="wrap">
           <ChapterLabel label="What we do" />
           <h2 id="intro-title" className="display-l mt-8 max-w-[24ch] leading-[1.12]">
@@ -67,16 +69,20 @@ export default function Home() {
                     {c.many}
                     <span className="text-[0.65rem]">{String(items.length).padStart(2, "0")}</span>
                   </p>
-                  <ul className="mt-4 space-y-1.5">
+                  <ul className="mt-4 space-y-1">
                     {items.map((p) => (
                       <li key={p.slug}>
                         <Link
                           href={`/products/${p.slug}`}
-                          className="group flex items-center gap-2.5 text-lg text-ink transition-colors hover:text-[var(--ink)]"
+                          className="group flex items-baseline gap-2.5 font-display text-[clamp(1.35rem,1.9vw,2.15rem)] leading-[1.15] tracking-[-0.015em] text-ink transition-colors [font-variation-settings:'opsz'_72] hover:text-[var(--ink)]"
                           style={{ "--ink": p.ink } as React.CSSProperties}
                           data-cursor="Open"
                         >
-                          <span aria-hidden className="h-2 w-2 flex-none rounded-full" style={{ background: p.accent }} />
+                          <span
+                            aria-hidden
+                            className="inline-block h-[0.3em] w-[0.3em] flex-none -translate-y-[0.08em] rounded-full transition-transform duration-500 ease-(--ease-settle) group-hover:scale-150"
+                            style={{ background: p.accent }}
+                          />
                           {p.name}
                         </Link>
                       </li>
@@ -91,12 +97,13 @@ export default function Home() {
             <Link href="/products" className="mono-label link-draw text-green" data-cursor="Open">
               Open the sorting table →
             </Link>
+            <CatalogueDownload variant="link" />
           </p>
         </div>
       </section>
 
       {/* From the table: every product, in a slider */}
-      <section aria-labelledby="table-title" className="relative py-14 md:py-[clamp(4rem,10vh,8rem)]">
+      <section aria-labelledby="table-title" data-rail="Products" className="relative py-14 md:py-[clamp(4rem,10vh,8rem)]">
         <div className="wrap flex flex-wrap items-end justify-between gap-6">
           <div>
             <ChapterLabel label="From the table" />
@@ -104,9 +111,6 @@ export default function Home() {
               The goods, <em className="display-em">up close</em>.
             </Reveal>
           </div>
-          <Link href="/products" className="mono-label link-draw text-green" data-cursor="Open">
-            All {products.length} products →
-          </Link>
         </div>
 
         <div className="mt-12 md:mt-16">
@@ -119,6 +123,7 @@ export default function Home() {
         scene="rail"
         stage={3}
         labelledBy="route-title"
+        rail="The journey"
         className="relative py-14 md:py-[clamp(6rem,16vh,12rem)]"
       >
         <div className="wrap grid-12 gap-y-8">
@@ -160,32 +165,34 @@ export default function Home() {
         </div>
       </SceneSection>
 
-      {/* A word from Pondicherry */}
-      <section aria-labelledby="note-title" className="wrap grid-12 gap-y-10 py-14 md:py-[clamp(5rem,14vh,10rem)]">
-        <div className="col-span-4 md:col-span-3 xl:col-span-3 xl:col-start-2">
-          <p className="mono-label text-brown">Pondicherry, India</p>
-          <p className="mt-4 font-display text-2xl italic text-green [font-variation-settings:'opsz'_36]">
-            {site.tagline.replace("|", "·")}
-          </p>
-        </div>
-        <div className="col-span-4 md:col-span-5 md:col-start-4 xl:col-span-6 xl:col-start-6">
-          <h2 id="note-title" className="display-l">
-            Run by {site.proprietor.name}, and answered directly.
-          </h2>
-          <p className="body-l mt-6 max-w-[48ch] text-brown">
-            Spiceman Exports is a proprietorship. Inquiries go straight to the proprietor by phone, WhatsApp or
-            email, with a straight answer on what can be supplied.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
-            <Link href="/about" className="mono-label link-draw text-green">
-              About the business →
-            </Link>
-            <Link href="/process" className="mono-label link-draw text-green">
-              How quality is specified →
-            </Link>
+      {/* A word from Pondicherry: the green block of the page starts here */}
+      <NightZone labelledBy="note-title" rail="About us" className="on-dark night-bg bg-green-900 text-paper">
+        <div className="wrap grid-12 gap-y-10 pb-6 pt-14 md:pb-10 md:pt-[clamp(5rem,14vh,10rem)]">
+          <div className="col-span-4 md:col-span-3 xl:col-span-3 xl:col-start-2">
+            <p className="mono-label text-turmeric">Pondicherry, India</p>
+            <p className="mt-4 font-display text-2xl italic text-turmeric [font-variation-settings:'opsz'_36]">
+              {site.tagline.replace("|", "·")}
+            </p>
+          </div>
+          <div className="col-span-4 md:col-span-5 md:col-start-4 xl:col-span-6 xl:col-start-6">
+            <h2 id="note-title" className="display-l">
+              Run by {site.proprietor.name}, and answered directly.
+            </h2>
+            <p className="body-l mt-6 max-w-[48ch] text-paper/80">
+              Spiceman Exports is a proprietorship. Inquiries go straight to the proprietor by phone, WhatsApp or
+              email, with a straight answer on what can be supplied.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+              <Link href="/about" className="mono-label link-draw text-turmeric">
+                About the business →
+              </Link>
+              <Link href="/process" className="mono-label link-draw text-turmeric">
+                How quality is specified →
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
+      </NightZone>
 
       {/* Quote (night) */}
       <SceneSection
@@ -194,37 +201,49 @@ export default function Home() {
         night
         nightPalette
         labelledBy="quote-title"
+        rail="Get a quote"
         className="on-dark night-bg bg-green-900 relative overflow-x-clip py-14 md:py-[clamp(6rem,16vh,12rem)] text-paper"
       >
-        <div className="wrap grid-12 gap-y-14">
-          <div className="col-span-4 md:col-span-8 xl:col-span-6">
+        <div className="wrap grid-12 items-center gap-y-14">
+          <div className="col-span-4 md:col-span-8 lg:col-span-6">
             <ChapterLabel label="Get a quote" dark />
             <Reveal as="h2" id="quote-title" className="display-xxl mt-6">
               Tell us what you need to <em className="display-em text-turmeric">ship</em>.
             </Reveal>
-            <div className="mt-12 flex flex-col items-start gap-8 sm:flex-row sm:items-end">
-              <div data-scene-anchor className="relative aspect-[100/120] w-[min(34vw,180px)] flex-none">
-                <StageArt kind="sack" colors={["#E3A21A", "#FBF7EE"]} />
+            <div className="mt-12 grid gap-x-10 gap-y-6 text-paper/85 sm:grid-cols-2 lg:mt-16">
+              <div>
+                <p className="mono-label text-turmeric">WhatsApp or call</p>
+                <ul className="mt-3 space-y-2">
+                  {site.phones.map((p) => (
+                    <li key={p.e164}>
+                      <a href={whatsappLink(p)} target="_blank" rel="noopener noreferrer" className="link-draw text-lg">
+                        {p.display}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="space-y-3 text-paper/85">
-                <p className="mono-label text-turmeric">Or talk directly</p>
-                {site.phones.map((p) => (
-                  <p key={p.e164}>
-                    <a href={whatsappLink(p)} target="_blank" rel="noopener noreferrer" className="link-draw text-lg">
-                      WhatsApp {p.display}
-                    </a>
-                  </p>
-                ))}
-                <p>
-                  <a href={`mailto:${site.email}`} className="link-draw break-words text-lg">
-                    {site.email}
-                  </a>
-                </p>
+              <div>
+                <p className="mono-label text-turmeric">Email</p>
+                <a href={`mailto:${site.email}`} className="link-draw mt-3 inline-block break-words text-lg">
+                  {site.email}
+                </a>
               </div>
             </div>
           </div>
-          <div className="col-span-4 md:col-span-6 md:col-start-2 xl:col-span-5 xl:col-start-8 xl:pt-24">
-            <QuoteStarter tone="dark" />
+          {/* Right: the sack the grains pour into, with the quote form beside it */}
+          <div className="col-span-4 md:col-span-8 lg:col-span-6 lg:col-start-7">
+            <div className="grid items-end gap-8 sm:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
+              <div data-scene-anchor className="relative mx-auto aspect-[100/120] w-[min(44vw,260px)] sm:w-full">
+                <StageArt kind="sack" colors={["#E3A21A", "#FBF7EE"]} />
+              </div>
+              <div className="rounded-[4px] border border-paper/15 bg-green/15 p-6">
+                <p className="mono-label text-turmeric">Start a quote</p>
+                <div className="mt-6">
+                  <QuoteStarter tone="dark" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </SceneSection>

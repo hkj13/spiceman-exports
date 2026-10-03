@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
-import Link from "next/link";
 import { StageArt } from "@/components/art/StageArt";
 import { SampleTag } from "@/components/art/SampleTag";
 import { PhotoFrame } from "@/components/art/PhotoFrame";
-import { ChapterLabel } from "@/components/home/ChapterLabel";
+import { ChapterLabel, StepNumber } from "@/components/home/ChapterLabel";
 import { HorizontalChapters } from "@/components/home/HorizontalChapters";
 import { QuoteStarter } from "@/components/home/QuoteStarter";
 import { SceneSection } from "@/components/home/SceneSection";
@@ -13,7 +12,6 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Slot } from "@/components/placeholder/Slot";
 import { site, whatsappLink } from "@/config/site";
 import { photos } from "@/data/photos";
-import { products } from "@/data/products";
 import { stages } from "@/config/site";
 
 export const metadata: Metadata = pageMeta({
@@ -82,6 +80,7 @@ export default function JourneyPage() {
       <SceneSection
         flow
         scene="soil"
+        rail="Soil"
         stage={0}
         id="soil"
         labelledBy="soil-title"
@@ -94,6 +93,7 @@ export default function JourneyPage() {
           <StageArt kind="furrows" colors={PALETTE.soil} count={260} />
         </div>
         <div className="col-span-4 md:col-span-3 xl:col-span-5 xl:col-start-8">
+          <StepNumber n="01" className="mb-3" />
           <ChapterLabel n="01" label="Soil" />
           <Reveal as="h2" id="soil-title" className="display-xl mt-6">
             It starts in the <em className="display-em">ground</em>.
@@ -171,6 +171,7 @@ export default function JourneyPage() {
             key={c.scene}
             id={c.scene}
             data-panel
+            data-rail={c.label}
             data-scene={c.scene}
             data-stage={c.stage}
             aria-labelledby={c.id}
@@ -203,57 +204,18 @@ export default function JourneyPage() {
         ))}
       </HorizontalChapters>
 
-      {/* The table: what is traded */}
-      <section aria-labelledby="table-title" className="relative py-14 md:py-[clamp(6rem,18vh,14rem)]">
-        <div className="wrap grid-12 relative">
-          <div className="col-span-4 md:col-span-7 xl:col-span-10 xl:col-start-2">
-            <ChapterLabel label="What we trade" />
-            <Reveal as="h2" id="table-title" className="display-l mt-6 max-w-[18ch]">
-              Spices, rice, pulses and onions, traded whole, split or ground.
-            </Reveal>
-            <ul className="mt-12 flex flex-wrap items-baseline gap-x-2 gap-y-1 font-display text-[clamp(1.75rem,4.2vw,4rem)] leading-[1.12] tracking-[-0.02em] [font-variation-settings:'opsz'_120]">
-              {products.map((p, i) => (
-                <li key={p.slug} className="flex items-baseline gap-2">
-                  <Link
-                    href={`/products/${p.slug}`}
-                    className="group relative inline-flex items-baseline gap-2 transition-colors duration-300 hover:text-[var(--ink)] focus-visible:text-[var(--ink)]"
-                    style={{ "--ink": p.ink } as React.CSSProperties}
-                    data-cursor="Open"
-                  >
-                    <span
-                      aria-hidden
-                      className="inline-block h-[0.32em] w-[0.32em] -translate-y-[0.12em] rounded-full transition-transform duration-500 ease-(--ease-settle) group-hover:scale-150"
-                      style={{ background: p.accent }}
-                    />
-                    {p.name}
-                  </Link>
-                  {i < products.length - 1 && (
-                    <span aria-hidden className="text-rule before:content-['/']" />
-                  )}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/products"
-              className="mono-label link-draw mt-12 inline-block text-green"
-              data-cursor="Open"
-            >
-              Open the sorting table →
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* 05 Check */}
       <SceneSection
         flow
         scene="check"
+        rail="Check"
         stage={4}
         id="check"
         labelledBy="check-title"
         className="wrap grid-12 relative scroll-mt-24 items-center gap-y-16 py-14 md:py-[clamp(6rem,16vh,12rem)]"
       >
         <div className="col-span-4 md:col-span-4 xl:col-span-5 xl:col-start-2">
+          <StepNumber n="05" className="mb-3" />
           <ChapterLabel n="05" label="Check" />
           <Reveal as="h2" id="check-title" className="display-xl mt-6">
             Your spec, <em className="display-em">written down</em>.
@@ -274,7 +236,7 @@ export default function JourneyPage() {
           </div>
         </div>
         <div className="col-span-4 md:col-span-4 md:col-start-5 xl:col-span-4 xl:col-start-8">
-          <SampleTag title="Specification · to be filled by the buyer">
+          <SampleTag title="Specification · what you can set">
             <dl className="divide-y divide-rule font-mono text-[0.8125rem]">
               {SPEC_PARAMETERS.map(([k, v]) => (
                 <div key={k} className="flex items-baseline justify-between gap-6 py-2.5">
@@ -302,12 +264,14 @@ export default function JourneyPage() {
       <SceneSection
         flow
         scene="pack"
+        rail="Pack"
         stage={5}
         id="pack"
         labelledBy="pack-title"
-        className="wrap grid-12 relative items-end gap-y-12 py-14 md:py-[clamp(6rem,16vh,12rem)]"
+        className="wrap grid-12 relative items-center gap-y-12 py-14 md:py-[clamp(6rem,16vh,12rem)]"
       >
-        <div className="col-span-4 md:col-span-5 xl:col-span-5 xl:col-start-3">
+        <div className="col-span-4 md:col-span-5 xl:col-span-5 xl:col-start-2">
+          <StepNumber n="06" className="mb-3" />
           <ChapterLabel n="06" label="Pack" />
           <Reveal as="h2" id="pack-title" className="display-xl mt-6">
             Bagged the way your market <em className="display-em">expects</em>.
@@ -325,7 +289,7 @@ export default function JourneyPage() {
         </div>
         <div
           data-scene-anchor
-          className="relative col-span-3 aspect-[100/120] w-full max-w-[320px] md:col-span-3 md:col-start-6 xl:col-span-3 xl:col-start-9"
+          className="relative col-span-3 aspect-[100/120] w-full max-w-[420px] md:col-span-3 md:col-start-6 md:self-start xl:col-span-4 xl:col-start-8"
         >
           <StageArt kind="sack" colors={["#5A2E1A", "#B99459"]} />
         </div>
@@ -335,6 +299,7 @@ export default function JourneyPage() {
       <SceneSection
         flow
         scene="container"
+        rail="Container"
         stage={6}
         id="container"
         night
@@ -353,6 +318,7 @@ export default function JourneyPage() {
           className="hidden md:block col-span-3 aspect-[4/5] w-full max-w-[340px] md:col-span-3 xl:col-span-4 xl:col-start-1 xl:max-w-[360px]"
         />
         <div className="col-span-4 self-end md:col-span-5 md:col-start-4 xl:col-span-5 xl:col-start-6">
+          <StepNumber n="07" dark className="mb-3" />
           <ChapterLabel n="07" label="Container" dark />
           <Reveal as="h2" id="container-title" className="display-xl mt-6">
             By the kilo, the tonne or the <em className="display-em text-turmeric">box</em>.
@@ -365,51 +331,84 @@ export default function JourneyPage() {
         </div>
       </SceneSection>
 
-      {/* 08 Port (night) + quote */}
+      {/* 08 Port (night) + quote: headline and contacts left, form right, ship across the foot */}
       <SceneSection
         flow
         scene="port"
+        rail="Port"
         stage={7}
         id="port"
         night
         labelledBy="port-title"
-        className="on-dark night-bg bg-green-900 relative overflow-x-clip pb-10 pt-14 md:pt-[clamp(6rem,14vh,10rem)] text-paper"
+        className="on-dark night-bg bg-green-900 relative overflow-x-clip pb-0 pt-14 md:pt-[clamp(6rem,14vh,10rem)] text-paper"
       >
-        <div className="wrap relative">
-          <div data-scene-extra aria-hidden className="absolute inset-x-0 bottom-[3%] h-3" />
-          <div data-scene-anchor className="relative ml-auto aspect-[240/100] w-[min(92%,760px)]">
-            <StageArt kind="ship" colors={["#E3A21A", "#FBF7EE"]} />
-          </div>
-        </div>
-        <div className="wrap grid-12 mt-16 gap-y-14">
-          <div className="col-span-4 md:col-span-8 xl:col-span-6">
-            <ChapterLabel n="08" label="Port" dark />
+        <div className="wrap grid-12 items-start gap-y-14">
+          <div className="col-span-4 md:col-span-8 lg:col-span-6 xl:col-span-6">
+            <StepNumber n="08" dark className="mb-3" />
+          <ChapterLabel n="08" label="Port" dark />
             <Reveal as="h2" id="port-title" className="display-xxl mt-6">
               Tell us what you need to <em className="display-em text-turmeric">ship</em>.
             </Reveal>
-            <PhotoFrame
-              photo={photos["stage-port"]}
-              sizes="(min-width: 1280px) 22vw, 60vw"
-              className="hidden md:block mt-12 aspect-[3/2] w-[min(80%,380px)]"
-            />
-            <div className="mt-12 space-y-3 text-paper/85">
-              <p className="mono-label text-turmeric">Or talk to us directly</p>
-              {site.phones.map((p) => (
-                <p key={p.e164} className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
-                  <a href={whatsappLink(p)} target="_blank" rel="noopener noreferrer" className="link-draw text-xl">
-                    WhatsApp {p.display}
-                  </a>
-                </p>
-              ))}
-              <p>
-                <a href={`mailto:${site.email}`} className="link-draw text-xl [overflow-wrap:anywhere]">
+            <div className="mt-12 grid gap-x-10 gap-y-6 text-paper/85 sm:grid-cols-2 lg:mt-16">
+              <div>
+                <p className="mono-label text-turmeric">WhatsApp or call</p>
+                <ul className="mt-3 space-y-2">
+                  {site.phones.map((p) => (
+                    <li key={p.e164}>
+                      <a href={whatsappLink(p)} target="_blank" rel="noopener noreferrer" className="link-draw text-xl">
+                        {p.display}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="mono-label text-turmeric">Email</p>
+                <a href={`mailto:${site.email}`} className="link-draw mt-3 inline-block text-xl [overflow-wrap:anywhere]">
                   {site.email}
                 </a>
-              </p>
+              </div>
             </div>
           </div>
-          <div className="col-span-4 md:col-span-6 md:col-start-2 xl:col-span-5 xl:col-start-8 xl:pt-24">
-            <QuoteStarter tone="dark" />
+          <div className="col-span-4 md:col-span-6 md:col-start-2 lg:col-span-5 lg:col-start-8 lg:pt-10">
+            <div className="rounded-[4px] border border-paper/15 bg-green/15 p-6 md:p-8">
+              <p className="mono-label text-turmeric">Start a quote</p>
+              <div className="mt-6">
+                <QuoteStarter tone="dark" />
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Port: a wide photograph across the foot of the chapter. The photo's
+            ship waits on the left; the grain ship sails in on the same horizon. */}
+        <div className="relative mt-16 md:mt-24">
+          <div className="relative hidden md:block">
+            <PhotoFrame
+              photo={photos["stage-port"]}
+              sizes="100vw"
+              position="50% 64%"
+              className="aspect-[16/6] w-full !rounded-none opacity-80"
+            />
+            <div aria-hidden className="pointer-events-none absolute inset-0 bg-gradient-to-b from-green-900 via-green-900/30 to-green-900/20" />
+            {/* the photo's horizon sits at 64% of its height */}
+            <div className="absolute inset-0">
+              <div
+                data-scene-anchor
+                className="absolute bottom-[34%] right-[6%] aspect-[240/100] w-[44%]"
+              >
+                <StageArt kind="ship" colors={["#E3A21A", "#FBF7EE"]} />
+              </div>
+              <div data-scene-extra aria-hidden className="absolute bottom-[33.5%] left-[48%] right-0 h-2" />
+            </div>
+          </div>
+          {/* phones: the grain ship on its own, with a horizon */}
+          <div className="relative md:hidden">
+            <div className="wrap relative pb-10">
+              <div data-scene-anchor className="relative ml-auto aspect-[240/100] w-full">
+                <StageArt kind="ship" colors={["#E3A21A", "#FBF7EE"]} />
+              </div>
+              <div data-scene-extra aria-hidden className="absolute inset-x-0 bottom-10 h-2" />
+            </div>
           </div>
         </div>
       </SceneSection>

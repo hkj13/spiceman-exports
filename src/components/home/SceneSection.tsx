@@ -8,9 +8,9 @@ import { setStage } from "@/lib/journey";
 import { PALETTE } from "./palette";
 import { homeScenes, type HomeSceneName } from "./scenes";
 
-// The page is in its night tone while any night chapter is on screen.
-const nightActive = new Set<Element>();
-const applyTone = () => {
+// The page is in its night tone while a night chapter sits under the header.
+export const nightActive = new Set<Element>();
+export const applyTone = () => {
   if (nightActive.size) document.documentElement.dataset.tone = "night";
   else document.documentElement.removeAttribute("data-tone");
 };
@@ -28,6 +28,8 @@ type Props = {
   id?: string;
   className?: string;
   labelledBy?: string;
+  /** Label for this section on the side rail */
+  rail?: string;
   children: ReactNode;
 };
 
@@ -36,7 +38,7 @@ type Props = {
  * the particles form its scene inside the element marked
  * `data-scene-anchor` (and `data-scene-extra`, if present).
  */
-export function SceneSection({ scene, stage, night, nightPalette, flow, id, className, labelledBy, children }: Props) {
+export function SceneSection({ scene, stage, night, nightPalette, flow, id, className, labelledBy, rail, children }: Props) {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -47,8 +49,11 @@ export function SceneSection({ scene, stage, night, nightPalette, flow, id, clas
 
     const activate = () => {
       setStage(stage);
-      const anchor = el.querySelector("[data-scene-anchor]");
-      const extra = el.querySelector("[data-scene-extra]");
+      // A section can carry separate anchors per layout; use the visible one.
+      const visible = (sel: string) =>
+        [...el.querySelectorAll<HTMLElement>(sel)].find((n) => n.offsetParent !== null || n.getClientRects().length > 0) ?? null;
+      const anchor = visible("[data-scene-anchor]");
+      const extra = visible("[data-scene-extra]");
       const settled = claimStage(el);
       play({ ...homeScenes[scene](anchor, extra, nightPalette ? PALETTE.night : undefined), flow, onSettled: settled });
     };
@@ -62,12 +67,14 @@ export function SceneSection({ scene, stage, night, nightPalette, flow, id, clas
         onToggle: (self) => self.isActive && activate(),
       });
       if (st.isActive) activate();
-      // Tone switches early so light text never sits on paper.
+      // Night chapters carry their own green, which slides in with the
+      // section; the page tone (header, rail, cursor) flips exactly when that
+      // green reaches the header, and back when it leaves.
       const tone = night
         ? ScrollTrigger.create({
             trigger: el,
-            start: "top 85%",
-            end: "bottom top",
+            start: "top 64px",
+            end: "bottom 64px",
             onToggle: (self) => {
               if (self.isActive) nightActive.add(el);
               else nightActive.delete(el);
@@ -90,7 +97,7 @@ export function SceneSection({ scene, stage, night, nightPalette, flow, id, clas
   }, [scene, stage, night, nightPalette, flow]);
 
   return (
-    <section ref={ref} id={id} className={className} aria-labelledby={labelledBy}>
+    <section ref={ref} id={id} className={className} aria-labelledby={labelledBy} data-rail={rail}>
       {children}
     </section>
   );
