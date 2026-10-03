@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PhotoSlider, type SlideItem } from "@/components/art/PhotoSlider";
-import { StageArt } from "@/components/art/StageArt";
 import { ChapterLabel } from "@/components/home/ChapterLabel";
 import { Opening } from "@/components/home/Opening";
 import { QuoteStarter } from "@/components/home/QuoteStarter";
@@ -42,9 +41,15 @@ const STOP_PHOTO: Record<string, PhotoKey> = {
 const STOP_SLIDES: SlideItem[] = stages.map((st) => ({
   key: st.id,
   photo: photos[STOP_PHOTO[st.id]],
+  // the last two stops cover both ways out, so they show sea and air together
+  pair:
+    st.id === "container" || st.id === "port"
+      ? st.id === "container"
+        ? { photo: photos["stage-air-cargo"], captions: ["By sea", "By air"] as [string, string] }
+        : { photo: photos["stage-air"], captions: ["By sea", "By air"] as [string, string], position: "50% 74%" }
+      : undefined,
   title: st.label,
   eyebrow: st.n,
-  // the last two stops cover both ways out
   meta: st.id === "container" ? "Containers by sea, or air cargo" : st.id === "port" ? "Sea freight and air cargo" : undefined,
   href: `/journey#${st.id}`,
 }));
@@ -198,10 +203,9 @@ export default function Home() {
 
       {/* Quote (night) */}
       <SceneSection
-        scene="pack"
+        scene="rail"
         stage={7}
         night
-        nightPalette
         labelledBy="quote-title"
         rail="Get a quote"
         className="on-dark night-bg bg-green-900 relative overflow-x-clip py-14 md:py-[clamp(6rem,16vh,12rem)] text-paper"
@@ -212,7 +216,8 @@ export default function Home() {
             <Reveal as="h2" id="quote-title" className="display-xxl mt-6">
               Tell us what you need to <em className="display-em text-turmeric">ship</em>.
             </Reveal>
-            <div className="mt-12 grid gap-x-10 gap-y-6 text-paper/85 sm:grid-cols-2 lg:mt-16">
+            <div data-scene-anchor aria-hidden className="mt-10 h-3 w-full max-w-[520px]" />
+            <div className="mt-8 grid gap-x-10 gap-y-6 text-paper/85 sm:grid-cols-2 lg:mt-10">
               <div>
                 <p className="mono-label text-turmeric">WhatsApp or call</p>
                 <ul className="mt-3 space-y-2">
@@ -233,17 +238,11 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {/* Right: the sack the grains pour into, with the quote form beside it */}
-          <div className="col-span-4 md:col-span-8 lg:col-span-6 lg:col-start-7">
-            <div className="grid items-end gap-8 sm:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
-              <div data-scene-anchor className="relative mx-auto aspect-[100/120] w-[min(44vw,260px)] sm:w-full">
-                <StageArt kind="sack" colors={["#E3A21A", "#FBF7EE"]} />
-              </div>
-              <div data-rv className="rounded-[4px] border border-paper/15 bg-green/15 p-6">
-                <p className="mono-label text-turmeric">Start a quote</p>
-                <div className="mt-6">
-                  <QuoteStarter tone="dark" />
-                </div>
+          <div className="col-span-4 md:col-span-6 md:col-start-2 lg:col-span-5 lg:col-start-8">
+            <div data-rv className="rounded-[4px] border border-paper/15 bg-green/15 p-6 md:p-8">
+              <p className="mono-label text-turmeric">Start a quote</p>
+              <div className="mt-6">
+                <QuoteStarter tone="dark" />
               </div>
             </div>
           </div>

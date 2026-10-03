@@ -283,17 +283,17 @@ export default function JourneyPage() {
             for onions. Bag weight, marking and labels follow your instructions, and private label is
             available on request.
           </Reveal>
+        </div>
+        {/* Right: the sack the grains pour into, then the photograph of real sacks */}
+        <div className="col-span-4 flex flex-col items-center gap-8 md:col-span-3 md:col-start-6 xl:col-span-5 xl:col-start-8">
+          <div data-scene-anchor className="relative aspect-[100/120] w-[min(60vw,240px)] md:w-[42%]">
+            <StageArt kind="sack" colors={["#5A2E1A", "#B99459"]} />
+          </div>
           <PhotoFrame
             photo={photos["stage-pack"]}
-            sizes="(min-width: 1280px) 26vw, 70vw"
-            className="hidden md:block mt-12 aspect-[5/4] w-[min(80%,380px)]"
+            sizes="(min-width: 1280px) 34vw, 40vw"
+            className="hidden aspect-[16/10] w-full md:block"
           />
-        </div>
-        <div
-          data-scene-anchor
-          className="relative col-span-3 aspect-[100/120] w-full max-w-[420px] md:col-span-3 md:col-start-6 md:self-start xl:col-span-4 xl:col-start-8"
-        >
-          <StageArt kind="sack" colors={["#5A2E1A", "#B99459"]} />
         </div>
       </SceneSection>
 
