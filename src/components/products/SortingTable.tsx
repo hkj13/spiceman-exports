@@ -207,7 +207,7 @@ export function SortingTable({ products }: { products: Product[] }) {
                       pos?.right ? "md:right-[calc(100%-10px)]" : "md:left-[calc(100%-10px)]"
                     } ${isOpen ? "block" : "hidden md:block"}`}
                   >
-                    <SampleTag title={`${p.name} · ${p.botanical}`} swing={false} className="md:pt-12">
+                    <SampleTag title={`${p.name} · ${p.botanical}`} swing={false} className="md:pt-4">
                       {productPhoto(p.slug) && (
                         <PhotoFrame
                           photo={productPhoto(p.slug)!}

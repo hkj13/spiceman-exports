@@ -35,7 +35,7 @@ export default function AboutPage() {
       </header>
 
       {/* Proprietor */}
-      <section aria-labelledby="proprietor" className="wrap grid-12 items-center gap-y-12 py-12 md:py-20">
+      <section aria-labelledby="proprietor" data-rail="Proprietor" className="wrap grid-12 items-center gap-y-12 py-12 md:py-20">
         <div className="col-span-3 md:col-span-3 xl:col-span-4 xl:col-start-2">
           <LeafStage monogram={monogram} />
         </div>
@@ -81,7 +81,7 @@ export default function AboutPage() {
       </section>
 
       {/* Pondicherry */}
-      <section aria-labelledby="base" className="wrap grid-12 items-end gap-y-12 py-12 md:py-20">
+      <section aria-labelledby="base" data-rail="Pondicherry" className="wrap grid-12 items-end gap-y-12 py-12 md:py-20">
         <div className="col-span-4 md:col-span-4 xl:col-span-5 xl:col-start-2">
           <p className="mono-label text-brown">The base</p>
           <h2 id="base" className="display-l mt-4">

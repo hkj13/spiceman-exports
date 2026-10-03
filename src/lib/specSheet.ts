@@ -4,7 +4,7 @@ import fontkit from "@pdf-lib/fontkit";
 import { PDFDocument, PDFName, PDFString, rgb, type PDFFont, type PDFPage, type RGB } from "pdf-lib";
 import sharp from "sharp";
 import { site, whatsappLink } from "@/config/site";
-import { categoryLabel, type Product } from "@/data/products";
+import { CATEGORIES, categoryLabel, products, type Product } from "@/data/products";
 import { accentPalette } from "@/lib/color";
 
 /**
@@ -260,7 +260,7 @@ export async function specSheetPdf(p: Product, photoPath?: string) {
   const boxH = 92;
   const boxW = W - 2 * M;
   const by = y - boxH;
-  // a paper sample tag with a clipped corner and string hole, as on the site
+  // a paper sample tag with a clipped corner, as on the site
   page.drawSvgPath(`M0 0 H${boxW - 14} L${boxW} 14 V${boxH} H0 Z`, {
     x: M,
     y: y,
@@ -269,8 +269,7 @@ export async function specSheetPdf(p: Product, photoPath?: string) {
     borderColor: C.rule,
     borderWidth: 0.6,
   });
-  page.drawCircle({ x: M + 22, y: y - 18, size: 4.2, color: C.paper, borderColor: C.brown, borderWidth: 0.6, borderOpacity: 0.5 });
-  label(page, "Ready to order?", M + 34, y - 20.5, 7, mono, C.brown);
+  label(page, "Ready to order?", M + 18, y - 20.5, 7, mono, C.brown);
   page.drawText("Request a quote for", { x: M + 18, y: y - 46, size: 17, font: display, color: C.ink });
   page.drawText(clean(p.name.toLowerCase()), {
     x: M + 18 + display.widthOfTextAtSize("Request a quote for ", 17),
@@ -368,6 +367,143 @@ export async function specSheetPdf(p: Product, photoPath?: string) {
     const t = clean(l);
     page.drawText(t, { x: W - M - f.widthOfTextAtSize(t, 9), y: FB - 73 - i * 12, size: 9, font: f, color: i === 0 ? C.paper : C.paperOnGreen });
   });
+
+  return doc.save();
+}
+
+/**
+ * Every product's spec sheet in one PDF, behind a cover page whose contents
+ * list jumps to each product.
+ */
+export async function cataloguePdf(photoFor: (slug: string) => string | undefined) {
+  const doc = await PDFDocument.create();
+  doc.registerFontkit(fontkit);
+  doc.setTitle(`Product catalogue · ${site.name}`);
+  doc.setAuthor(site.name);
+  doc.setSubject("Specification sheets for every product");
+  doc.setCreator(site.name);
+  doc.setProducer(site.name);
+
+  const dir = join(process.cwd(), "src/og/fonts");
+  const font = async (f: string) => doc.embedFont(await readFile(join(dir, f)), { subset: true });
+  const display = await font("fraunces-latin-400-normal.ttf");
+  const displayItalic = await font("fraunces-latin-400-italic.ttf");
+  const text = await font("schibsted-grotesk-latin-400-normal.ttf");
+  const textBold = await font("schibsted-grotesk-latin-600-normal.ttf");
+  const mono = await font("ibm-plex-mono-latin-400-normal.ttf");
+
+  const W = 595.28;
+  const H = 841.89;
+  const M = 46;
+  const cover = doc.addPage([W, H]);
+  cover.drawRectangle({ x: 0, y: 0, width: W, height: H, color: C.paper });
+  cover.drawCircle({ x: 40, y: H + 40, size: 360, color: hex("#FFF4D6"), opacity: 0.55 });
+
+  // header band
+  cover.drawRectangle({ x: 0, y: H - 86, width: W, height: 86, color: C.green900 });
+  drawMark(cover, M - 6, H - 20, 0.44);
+  cover.drawText("Spiceman", { x: M + 50, y: H - 47, size: 21, font: display, color: C.paper });
+  label(cover, "Exports", M + 51, H - 62, 7, mono, C.turmeric);
+  label(cover, "Product catalogue", W - M, H - 44, 8, mono, C.paper, true);
+  label(cover, `${products.length} specification sheets`, W - M, H - 58, 6.5, mono, C.paperOnGreen, true);
+  cover.drawRectangle({ x: 0, y: H - 89, width: W, height: 3, color: C.turmeric });
+
+  // title
+  let y = H - 86 - 70;
+  cover.drawRectangle({ x: M, y: y + 2.5, width: 22, height: 0.8, color: C.brown });
+  label(cover, "Wholesale and export · Pondicherry, India", M + 30, y, 7, mono, C.brown);
+  y -= 52;
+  cover.drawText("Every product,", { x: M - 2, y, size: 44, font: display, color: C.ink });
+  y -= 46;
+  cover.drawText("one", { x: M - 2, y, size: 44, font: display, color: C.ink });
+  cover.drawText("catalogue.", { x: M - 2 + display.widthOfTextAtSize("one ", 44), y, size: 44, font: displayItalic, color: C.green });
+  y -= 30;
+  for (const l of wrap(
+    "Spices, rice, pulses and onions, each with its own specification sheet: origin, forms, grades, packing and minimum order. Select a product to jump to its sheet.",
+    text,
+    11,
+    W - 2 * M - 80,
+  )) {
+    cover.drawText(l, { x: M, y, size: 11, font: text, color: C.brown });
+    y -= 15.5;
+  }
+
+  // contents
+  y -= 22;
+  cover.drawRectangle({ x: M, y, width: W - 2 * M, height: 1.1, color: C.ink });
+  y -= 8;
+  const colW = (W - 2 * M - 24) / 2;
+  const entries: { slug: string; page: number; x: number; y: number; w: number }[] = [];
+  let page = 2;
+  const cols: { x: number; y: number }[] = [
+    { x: M, y },
+    { x: M + colW + 24, y },
+  ];
+  CATEGORIES.forEach((c, ci) => {
+    const col = cols[ci < 2 ? 0 : 1];
+    const items = products.filter((p) => p.category === c.id);
+    col.y -= 16;
+    label(cover, `${c.many} · ${String(items.length).padStart(2, "0")}`, col.x, col.y, 6.8, mono, C.brown);
+    col.y -= 8;
+    for (const p of items) {
+      col.y -= 19;
+      cover.drawCircle({ x: col.x + 3.5, y: col.y + 3.6, size: 3, color: hex(p.accent) });
+      cover.drawText(clean(p.name), { x: col.x + 13, y: col.y, size: 12.5, font: display, color: C.ink });
+      const pn = String(page).padStart(2, "0");
+      cover.drawText(pn, { x: col.x + colW - mono.widthOfTextAtSize(pn, 8), y: col.y + 1, size: 8, font: mono, color: C.brown });
+      // dotted leader
+      const nameEnd = col.x + 13 + display.widthOfTextAtSize(clean(p.name), 12.5) + 6;
+      for (let dx = nameEnd; dx < col.x + colW - 18; dx += 4) cover.drawCircle({ x: dx, y: col.y + 3, size: 0.45, color: C.rule });
+      entries.push({ slug: p.slug, page, x: col.x, y: col.y - 4, w: colW });
+      page++;
+    }
+    col.y -= 10;
+  });
+
+  // footer band
+  const FB = 96;
+  cover.drawRectangle({ x: 0, y: 0, width: W, height: FB, color: C.green900 });
+  cover.drawRectangle({ x: 0, y: FB, width: W, height: 3, color: C.turmeric });
+  cover.drawText("Pure spices.", { x: M, y: FB - 34, size: 16, font: display, color: C.paper });
+  cover.drawText("Better tomorrow.", {
+    x: M + display.widthOfTextAtSize("Pure spices. ", 16),
+    y: FB - 34,
+    size: 16,
+    font: displayItalic,
+    color: C.turmeric,
+  });
+  const base = liveUrl();
+  const contactLine = `${site.phones.map((ph) => ph.display).join("  ·  ")}   ·   ${site.email}`;
+  cover.drawText(clean(contactLine), { x: M, y: FB - 56, size: 9, font: text, color: C.paper });
+  const webT = `${base.replace("https://", "")}/contact`;
+  cover.drawText(webT, { x: M, y: FB - 70, size: 9, font: textBold, color: C.turmeric });
+  addLink(doc, cover, M, FB - 73, text.widthOfTextAtSize(webT, 9) + 10, 13, `${base}/contact`);
+
+  // product pages
+  for (const p of products) {
+    const bytes = await specSheetPdf(p, photoFor(p.slug));
+    const src = await PDFDocument.load(bytes);
+    const [pg] = await doc.copyPages(src, [0]);
+    doc.addPage(pg);
+  }
+
+  // contents entries jump to their pages
+  const pages = doc.getPages();
+  for (const e of entries) {
+    const target = pages[e.page - 1];
+    const annot = doc.context.register(
+      doc.context.obj({
+        Type: "Annot",
+        Subtype: "Link",
+        Rect: [e.x, e.y, e.x + e.w, e.y + 17],
+        Border: [0, 0, 0],
+        Dest: [target.ref, "Fit"],
+      }),
+    );
+    const annots = cover.node.lookup(PDFName.of("Annots"));
+    if (annots && "push" in annots) (annots as { push: (r: typeof annot) => void }).push(annot);
+    else cover.node.set(PDFName.of("Annots"), doc.context.obj([annot]));
+  }
 
   return doc.save();
 }

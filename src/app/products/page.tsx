@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import Link from "next/link";
 import { LazyPour } from "@/components/products/LazyPour";
+import { CatalogueDownload } from "@/components/products/CatalogueDownload";
 import { SortingTable } from "@/components/products/SortingTable";
 import { Reveal } from "@/components/motion/Reveal";
 import { products } from "@/data/products";
@@ -16,11 +17,12 @@ export const metadata: Metadata = pageMeta({
 export default function ProductsPage() {
   return (
     <>
+      <div data-rail="Sorting table">
       <header className="wrap grid-12 gap-y-8 pb-12 pt-[calc(var(--header-h)+4rem)] md:pb-16">
         <div className="col-span-4 md:col-span-6 xl:col-span-7">
           <p className="mono-label flex items-center gap-3 text-brown">
             <span aria-hidden className="inline-block h-px w-8 bg-brown" />
-            04 · Sort
+            Products
           </p>
           <Reveal as="h1" className="display-xl mt-6">
             The sorting <em className="display-em">table</em>.
@@ -32,9 +34,14 @@ export default function ProductsPage() {
         </p>
       </header>
 
-      <SortingTable products={products} />
+      <div className="mb-10">
+        <CatalogueDownload />
+      </div>
 
-      <section aria-labelledby="pour-title" className="wrap grid-12 mt-32 gap-y-10">
+      <SortingTable products={products} />
+      </div>
+
+      <section aria-labelledby="pour-title" data-rail="Pulses and rice" className="wrap grid-12 mt-32 gap-y-10">
         <div className="col-span-4 md:col-span-3 xl:col-span-4">
           <p className="mono-label text-brown">Pulses and rice</p>
           <h2 id="pour-title" className="display-l mt-4">

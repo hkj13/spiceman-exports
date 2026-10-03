@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { PhotoFrame } from "@/components/art/PhotoFrame";
 import { ProductArt } from "@/components/art/ProductArt";
 import { productPhoto } from "@/data/photos";
+import { CatalogueDownload } from "@/components/products/CatalogueDownload";
 import { ProductStage } from "@/components/products/ProductStage";
 import { QuoteForProduct } from "@/components/products/QuoteForProduct";
 import { Reveal } from "@/components/motion/Reveal";
@@ -72,7 +73,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
       </div>
 
       {/* Name bleeding off the left edge, silhouette beside it */}
-      <header className="relative mt-6">
+      <header className="relative mt-6" data-rail="Overview">
         <h1
           className="font-display -ml-[0.06em] pl-[var(--margin)] pr-[var(--margin)] leading-[0.9] md:whitespace-nowrap md:pr-0 md:leading-[0.85] tracking-[-0.045em] text-[var(--accent-ink)] [font-variation-settings:'opsz'_144]"
           // Size to the name so long names still fit the width.
@@ -121,46 +122,25 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
               </a>
             </div>
           </div>
-          {/* The goods photographed, with the drawn silhouette the particles form beside it */}
-          <div className="relative col-span-4 aspect-[6/5] w-full md:col-span-4 md:col-start-5 xl:col-span-6 xl:col-start-7">
-            {photo && (
-              <PhotoFrame
-                photo={photo}
-                priority
-                sizes="(min-width: 1280px) 34vw, (min-width: 768px) 38vw, 64vw"
-                className="absolute right-0 top-0 h-full w-[58%]"
-              />
-            )}
-            <ProductStage
-              slug={product.slug}
-              silhouette={product.silhouette}
-              accent={product.accent}
-              className="absolute bottom-0 left-0 aspect-square w-[36%]"
-            >
-              <ProductArt product={product} className="h-full w-full" />
-            </ProductStage>
-          </div>
+          {/* The goods, photographed */}
+          {photo && (
+            <PhotoFrame
+              photo={photo}
+              priority
+              sizes="(min-width: 1280px) 40vw, (min-width: 768px) 46vw, 92vw"
+              className="col-span-4 aspect-[5/4] w-full md:col-span-4 md:col-start-5 xl:col-span-6 xl:col-start-7"
+            />
+          )}
         </div>
       </header>
 
-      <div className="wrap grid-12 mt-20 gap-y-14">
+      <div className="wrap grid-12 mt-20 gap-y-14" data-rail="Specification">
         <section aria-labelledby="spec-title" className="col-span-4 md:col-span-8 xl:col-span-7">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <h2 id="spec-title" className="mono-label flex items-center gap-3 text-brown">
               <span aria-hidden className="inline-block h-px w-8 bg-brown" />
               Specification sheet
             </h2>
-            <a
-              href={`/products/${product.slug}/spec-sheet.pdf`}
-              download={`spiceman-exports-${product.slug}-spec-sheet.pdf`}
-              data-cursor="Save"
-              className="mono-label group inline-flex items-center gap-2.5 rounded-full border border-ink px-4 py-2.5 text-ink transition-colors hover:bg-ink hover:text-paper"
-            >
-              <svg aria-hidden viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M8 2v8m0 0 3.5-3.5M8 10 4.5 6.5M2.5 13.5h11" />
-              </svg>
-              Download PDF
-            </a>
           </div>
           <dl className="mt-6 border-t border-ink">
             {rows.map(([k, v]) => (
@@ -174,13 +154,27 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
             Grades, packing and minimum order are confirmed at the time of quoting. Send your own specification
             if you buy to one.
           </p>
+          <div className="mt-6">
+            <CatalogueDownload variant="link" />
+          </div>
         </section>
 
         <aside aria-labelledby="quote-title" className="col-span-4 md:col-span-6 xl:col-span-4 xl:col-start-9">
           <div className="xl:sticky xl:top-28">
-            <h2 id="quote-title" className="display-l">
-              Quote this <em className="display-em text-[var(--accent-ink)]">{product.name.toLowerCase()}</em>.
-            </h2>
+            <div className="flex items-end justify-between gap-4">
+              <h2 id="quote-title" className="display-l">
+                Quote this <em className="display-em text-[var(--accent-ink)]">{product.name.toLowerCase()}</em>.
+              </h2>
+              {/* the product's grains settle here */}
+              <ProductStage
+                slug={product.slug}
+                silhouette={product.silhouette}
+                accent={product.accent}
+                className="aspect-square w-[clamp(84px,9vw,140px)] flex-none"
+              >
+                <ProductArt product={product} className="h-full w-full" />
+              </ProductStage>
+            </div>
             <div className="mt-8">
               <QuoteForProduct slug={product.slug} name={product.name} packaging={product.packaging} />
             </div>
@@ -188,7 +182,7 @@ export default async function ProductPage({ params }: PageProps<"/products/[slug
         </aside>
       </div>
 
-      <nav aria-label="More products" className="wrap mt-28 flex items-stretch justify-between gap-6 border-t border-rule pt-8">
+      <nav aria-label="More products" data-rail="More products" className="wrap mt-28 flex items-stretch justify-between gap-6 border-t border-rule pt-8">
         <Link href={`/products/${prev.slug}`} className="group flex max-w-[45%] flex-col" data-cursor="Prev">
           <span className="mono-label text-brown">← Previous</span>
           <span className="h3 mt-2 transition-colors group-hover:text-[var(--hover)]" style={{ "--hover": prev.ink } as React.CSSProperties}>

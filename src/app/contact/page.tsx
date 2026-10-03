@@ -22,7 +22,7 @@ export default function ContactPage() {
         <div className="col-span-4 md:col-span-7 xl:col-span-8">
           <p className="mono-label flex items-center gap-3 text-brown">
             <span aria-hidden className="inline-block h-px w-8 bg-brown" />
-            08 · Port
+            Contact
           </p>
           <Reveal as="h1" className="display-xl mt-6">
             Get a <em className="display-em">quote</em>.

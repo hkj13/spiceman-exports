@@ -123,6 +123,7 @@ export function Opening() {
     <section
       ref={section}
       aria-labelledby="home-title"
+      data-rail="Welcome"
       className="relative flex min-h-[100svh] flex-col overflow-x-clip pt-[calc(var(--header-h)+2.5rem)] lg:block"
     >
       <div className="wrap grid-12 relative z-10 lg:min-h-[calc(100svh-var(--header-h)-2.5rem)]">

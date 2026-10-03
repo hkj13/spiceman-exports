@@ -79,7 +79,7 @@ export default function ProcessPage() {
       >
         <ol>
           {processStages.map((s) => (
-            <li key={s.id} id={s.id} data-stage-article className="scroll-mt-28 border-t border-rule py-16 lg:min-h-[80svh] lg:py-24">
+            <li key={s.id} id={s.id} data-rail={s.label} data-stage-article className="scroll-mt-28 border-t border-rule py-16 lg:min-h-[80svh] lg:py-24">
               <article aria-labelledby={`${s.id}-title`}>
                 <p className="mono-label text-brown">
                   {s.n} · {s.label}
