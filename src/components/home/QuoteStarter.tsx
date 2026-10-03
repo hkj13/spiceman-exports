@@ -16,8 +16,9 @@ export function QuoteStarter({ tone = "light" }: { tone?: "light" | "dark" }) {
   const option = dark ? "bg-green-900 text-paper" : "";
 
   return (
-    <form action="/contact" method="get" className="grid grid-cols-1 gap-x-8 gap-y-7 sm:grid-cols-2">
-      <div className="sm:col-span-2">
+    <div className="@container">
+    <form action="/contact" method="get" className="grid grid-cols-1 gap-x-8 gap-y-7 @md:grid-cols-2">
+      <div className="@md:col-span-2">
         <label htmlFor="qs-product" className={label}>
           01 · Product
         </label>
@@ -70,13 +71,13 @@ export function QuoteStarter({ tone = "light" }: { tone?: "light" | "dark" }) {
           ))}
         </select>
       </div>
-      <div className="sm:col-span-2">
+      <div className="@md:col-span-2">
         <label htmlFor="qs-port" className={label}>
           04 · Destination port or airport
         </label>
         <input id="qs-port" name="port" placeholder="e.g. Jebel Ali, Dubai airport (DXB)" className={field} />
       </div>
-      <div className="sm:col-span-2">
+      <div className="@md:col-span-2">
         <button
           type="submit"
           data-cursor="Next"
@@ -91,5 +92,6 @@ export function QuoteStarter({ tone = "light" }: { tone?: "light" | "dark" }) {
         </button>
       </div>
     </form>
+    </div>
   );
 }

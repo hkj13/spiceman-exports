@@ -131,7 +131,12 @@ export function HorizontalChapters({ children, labelledBy }: { children: ReactNo
 
   return (
     <section ref={root} aria-labelledby={labelledBy} data-hscroll="off" className="group/h relative overflow-x-clip">
-      <div ref={pinned} className="group-data-[hscroll=on]/h:h-svh">
+      {/* While pinned, the track is clipped to the area right of the side rail
+          so chapters never slide underneath it */}
+      <div
+        ref={pinned}
+        className="group-data-[hscroll=on]/h:h-svh group-data-[hscroll=on]/h:[clip-path:inset(0_0_0_calc(var(--route-x)+3.25rem))]"
+      >
         <div
           ref={track}
           className="flex flex-col group-data-[hscroll=on]/h:h-full group-data-[hscroll=on]/h:w-max group-data-[hscroll=on]/h:flex-row group-data-[hscroll=on]/h:will-change-transform"
