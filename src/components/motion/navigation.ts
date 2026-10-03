@@ -13,6 +13,12 @@ export const hasNavigated = () => navigated;
 export function NavigationWatcher() {
   const pathname = usePathname();
   useEffect(() => {
+    // Page-change animations are enabled once the first load has settled, so
+    // hydration never cross-fades the page with itself.
+    const t = window.setTimeout(() => (document.documentElement.dataset.vt = "on"), 700);
+    return () => window.clearTimeout(t);
+  }, []);
+  useEffect(() => {
     if (first === null) first = pathname;
     else if (pathname !== first) navigated = true;
     document.documentElement.removeAttribute("data-tone");

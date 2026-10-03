@@ -428,6 +428,23 @@ html[data-tone="night"] .cursor-dot {
 html[data-particles="on"] .stage-art {
   opacity: 0;
 }
+/* When animation is going to run, the grains themselves fill every scene, so
+   no drawing is ever shown first and then swapped out. The drawings appear
+   only with reduced motion, without JavaScript, or if particles can't start. */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-js]:not([data-particles="off"]) .stage-art {
+    opacity: 0;
+    transition: none;
+  }
+}
+
+/* No page-change animation on the first load of a page: only for moves
+   within the site (data-vt is set shortly after the page has loaded). */
+html:not([data-vt])::view-transition-group(*),
+html:not([data-vt])::view-transition-old(*),
+html:not([data-vt])::view-transition-new(*) {
+  animation: none !important;
+}
 
 @keyframes tag-swing {
   0%,

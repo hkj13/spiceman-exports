@@ -269,7 +269,7 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
 
   /* ---------------- scenes ---------------- */
 
-  const build = (s: Scene, instant: boolean) => {
+  const build = (s: Scene, instant: boolean, appear = false) => {
     const now = performance.now();
     const T = progress(now);
     // Particles that handed off reappear exactly where the artwork was.
@@ -348,7 +348,24 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
     // from its own centre. Clean on a small screen, still alive.
     const small = W < 768;
     // Page-to-page handoffs always flow, so grains are visible the whole way.
-    const bloom = small && !instant && !s.from && !s.flow && !s.handoff;
+    const bloom = small && !instant && !appear && !s.from && !s.flow && !s.handoff;
+    if (appear) {
+      // First scene on a freshly loaded page: grains drop gently into their
+      // places, fading in, with nothing drawn there beforehand.
+      for (let i = 0; i < N; i++) {
+        if (i < o) {
+          from[i * 4] = to[i * 4] + (seed[i * 4] - 0.5) * 10;
+          from[i * 4 + 1] = to[i * 4 + 1] - 14 - seed[i * 4 + 1] * 22;
+          from[i * 4 + 3] = to[i * 4 + 3] * 0.6;
+        } else {
+          to[i * 4 + 2] = 0;
+          from[i * 4] = to[i * 4];
+          from[i * 4 + 1] = to[i * 4 + 1];
+        }
+        from[i * 4 + 2] = 0;
+        fromCol.set(toCol.subarray(i * 3, i * 3 + 3), i * 3);
+      }
+    }
     if (bloom) {
       for (let i = 0; i < N; i++) {
         if (i < o) {
@@ -375,10 +392,11 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
 
     upload();
     scene = s;
-    duration = bloom ? Math.min(s.duration ?? 1100, 850) : (s.duration ?? 1100);
+    duration = appear ? 800 : bloom ? Math.min(s.duration ?? 1100, 850) : (s.duration ?? 1100);
     // Flowing scenes on phones travel as a slightly tighter stream.
-    scatterPx = bloom ? 0 : (s.scatter ?? Math.min(W, 1200) * 0.08) * (small ? 0.5 : 1);
-    bloomOn = bloom ? 1 : 0;
+    scatterPx = bloom || appear ? 0 : (s.scatter ?? Math.min(W, 1200) * 0.08) * (small ? 0.5 : 1);
+    // Blooms and first appearances start inside their section, so they scroll with it.
+    bloomOn = bloom || appear ? 1 : 0;
     // No idle drift on phones.
     jitter = s.live && !small ? 2.5 : 0;
     start = now;
@@ -531,10 +549,13 @@ export function createEngine(canvas: HTMLCanvasElement, tier: Exclude<Tier, "off
           return;
         }
       }
-      // The very first scene lands where its still was drawn, instead of
-      // flying in from nowhere (the intro, with its own spawn shape, still flies).
+      // The first scene on a freshly loaded page has nowhere to fly in from.
+      // Page drawings that particles hand off to (product art, heaps) are
+      // already on screen, so those land invisibly; other scenes drop gently
+      // into place. The Home intro, with its own spawn shape, still flies.
       const first = !scene && !s.from;
-      build(s, !!s.instant || document.hidden || first);
+      const instant = !!s.instant || document.hidden || (first && !!s.handoff);
+      build(s, instant, first && !instant);
       draw(performance.now());
       schedule();
     },

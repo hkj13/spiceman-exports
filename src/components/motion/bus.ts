@@ -28,8 +28,8 @@ export function registerEngine(e: Engine | null) {
   engine = e;
   if (!e) document.documentElement.dataset.particles = "off";
   if (e && pending) {
-    // The page is already on screen: land the scene without a morph.
-    e.play({ ...pending, instant: true });
+    // The page is already on screen: the engine lands this first scene in place.
+    e.play(pending);
     document.documentElement.dataset.particles = "on";
   }
   pending = null;

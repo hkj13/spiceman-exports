@@ -66,6 +66,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${fraunces.variable} ${frauncesItalic.variable} ${schibsted.variable} ${plexMono.variable}`}
     >
+      <head>
+        {/* Runs before first paint: lets CSS hold back drawings the particles
+            will animate in, and makes Home always load at its top. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              'document.documentElement.dataset.js="1";if(location.pathname==="/"&&"scrollRestoration"in history)history.scrollRestoration="manual";',
+          }}
+        />
+      </head>
       <body className="min-h-dvh">
         <JsonLd />
         <a

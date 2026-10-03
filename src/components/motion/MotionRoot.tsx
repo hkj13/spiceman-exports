@@ -12,10 +12,10 @@ const Cursor = dynamic(() => import("./Cursor"), { ssr: false });
 
 const idle = (cb: () => void) => {
   if ("requestIdleCallback" in window) {
-    const id = window.requestIdleCallback(cb, { timeout: 1800 });
+    const id = window.requestIdleCallback(cb, { timeout: 500 });
     return () => window.cancelIdleCallback(id);
   }
-  const id = setTimeout(cb, 600);
+  const id = setTimeout(cb, 120);
   return () => clearTimeout(id);
 };
 

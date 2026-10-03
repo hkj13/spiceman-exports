@@ -33,57 +33,58 @@ export function Opening() {
 
     // A page load (not a move within the site) always starts at the top, so
     // the opening plays from the beginning even after a refresh mid-page.
+    // (the head script has already turned off scroll restoration for Home)
     const loaded = !hasNavigated();
-    if (loaded) {
-      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-      window.scrollTo(0, 0);
-    }
+    if (loaded && window.scrollY > 0) window.scrollTo(0, 0);
 
-    whenReady().then(async (engine) => {
+    whenReady().then((engine) => {
       if (cancelled || !engine) return;
       const base = homeScenes.heap(pile.current);
       const heapScene = { ...base, onSettled: pile.current ? claimStage(pile.current) : undefined };
-      // Grind on a page load; if the reader has already scrolled on, just form the heap.
+      // Arrived from another page, or already scrolled on: just form the heap.
       if (!loaded || window.scrollY > 40) {
         play(heapScene);
         return;
       }
-      const { gsap } = await loadGsap();
-      if (cancelled) return;
-      const pestle = mortar.current?.querySelector(".pestle");
-      const ctx = gsap.context(() => {
-        const tl = gsap.timeline();
-        if (pestle) {
-          tl.to(pestle, {
-            rotation: -16,
-            x: -5,
-            y: 2,
-            svgOrigin: "74 62",
-            duration: 0.2,
-            ease: "sine.inOut",
-            yoyo: true,
-            repeat: 5,
-          });
-        }
-        tl.call(
-          () =>
-            play({
-              ...heapScene,
-              from: { anchor: bowl.current, shape: mouth(), colors: PALETTE.spice },
-              duration: 1700,
-              scatter: 70,
-            }),
-          undefined,
-          0.55,
+      // The grind uses the browser's own animation engine, so it starts the
+      // moment the particles are ready instead of waiting for GSAP to load.
+      const pestle = mortar.current?.querySelector<SVGGElement>(".pestle");
+      const anims: Animation[] = [];
+      if (pestle) {
+        pestle.style.transformBox = "view-box";
+        pestle.style.transformOrigin = "74px 62px";
+        anims.push(
+          pestle.animate(
+            [{ transform: "none" }, { transform: "translate(-5px, 2px) rotate(-16deg)" }],
+            { duration: 200, iterations: 6, direction: "alternate", easing: "ease-in-out" },
+          ),
         );
-        tl.fromTo(
-          mortar.current,
-          { y: 0 },
-          { y: -6, duration: 0.18, yoyo: true, repeat: 3, ease: "sine.inOut" },
-          0,
+      }
+      if (mortar.current) {
+        anims.push(
+          mortar.current.animate([{ transform: "none" }, { transform: "translateY(-6px)" }], {
+            duration: 180,
+            iterations: 4,
+            direction: "alternate",
+            easing: "ease-in-out",
+          }),
         );
-      });
-      revert = () => ctx.revert();
+      }
+      const t = window.setTimeout(
+        () =>
+          !cancelled &&
+          play({
+            ...heapScene,
+            from: { anchor: bowl.current, shape: mouth(), colors: PALETTE.spice },
+            duration: 1700,
+            scatter: 70,
+          }),
+        450,
+      );
+      revert = () => {
+        window.clearTimeout(t);
+        anims.forEach((a) => a.cancel());
+      };
     });
 
     return () => {
@@ -159,7 +160,7 @@ export function Opening() {
       {/* The pile, and the mortar it came from */}
       <div className="relative mt-8 h-[36svh] w-full flex-none lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:h-[52svh] lg:w-[58vw]">
         <div ref={pile} data-scene-anchor className="absolute inset-x-[4%] bottom-0 top-[18%]">
-          <StageArt kind="heap" colors={PALETTE.spice} count={420} w={600} h={300} />
+          <StageArt kind="heap" colors={PALETTE.spice} count={420} w={600} h={300} className="intro-still" />
         </div>
         <div
           ref={mortar}
