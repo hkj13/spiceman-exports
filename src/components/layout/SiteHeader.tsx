@@ -61,7 +61,7 @@ export function SiteHeader() {
       <div className="wrap flex h-full items-center justify-between gap-6">
         <Link
           href="/"
-          className="group relative z-10 -ml-3 flex items-center gap-2.5 rounded-full bg-paper/80 py-1.5 pl-2 pr-4 backdrop-blur-md night:bg-green-900/70"
+          className="enter-fade group relative z-10 -ml-3 flex items-center gap-2.5 rounded-full bg-paper/80 py-1.5 pl-2 pr-4 backdrop-blur-md night:bg-green-900/70"
         >
           <LogoMark className="h-8 w-8 transition-transform duration-500 ease-(--ease-settle) group-hover:-rotate-6" />
           <span className="flex flex-col leading-none">
@@ -75,7 +75,7 @@ export function SiteHeader() {
           <span className="sr-only">, home</span>
         </Link>
 
-        <nav aria-label="Primary" className="hidden lg:block">
+        <nav aria-label="Primary" className="enter-fade hidden lg:block" style={{ "--d": 120 } as React.CSSProperties}>
           <ul className="flex items-center gap-1 rounded-full bg-paper/80 px-2 py-1.5 backdrop-blur-md night:bg-green-900/70">
             {nav.map((item) => {
               const active = isActive(item.href);
@@ -108,7 +108,8 @@ export function SiteHeader() {
         <button
           ref={toggleRef}
           type="button"
-          className="mono-label relative z-10 flex items-center gap-2 rounded-full bg-paper/85 px-4 py-2.5 text-ink backdrop-blur-md lg:hidden"
+          style={{ "--d": 120 } as React.CSSProperties}
+          className="enter-fade mono-label relative z-10 flex items-center gap-2 rounded-full bg-paper/85 px-4 py-2.5 text-ink backdrop-blur-md lg:hidden"
           aria-expanded={open}
           aria-controls={menuId}
           onClick={() => setOpen((v) => !v)}

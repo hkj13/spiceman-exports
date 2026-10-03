@@ -46,43 +46,51 @@ export function Opening() {
         play(heapScene);
         return;
       }
-      // The grind uses the browser's own animation engine, so it starts the
-      // moment the particles are ready instead of waiting for GSAP to load.
-      const pestle = mortar.current?.querySelector<SVGGElement>(".pestle");
+      // The grind begins as the hero's entrance settles (about 0.9 s after the
+      // page opens), so the sequence reads as one: content in, then the
+      // mortar grinds and the spice rises.
+      const wait = Math.max(0, 900 - performance.now());
       const anims: Animation[] = [];
-      if (pestle) {
-        pestle.style.transformBox = "view-box";
-        pestle.style.transformOrigin = "74px 62px";
-        anims.push(
-          pestle.animate(
-            [{ transform: "none" }, { transform: "translate(-5px, 2px) rotate(-16deg)" }],
-            { duration: 200, iterations: 6, direction: "alternate", easing: "ease-in-out" },
-          ),
+      let grind = 0;
+      const begin = () => {
+        if (cancelled) return;
+        const pestle = mortar.current?.querySelector<SVGGElement>(".pestle");
+        if (pestle) {
+          pestle.style.transformBox = "view-box";
+          pestle.style.transformOrigin = "74px 62px";
+          anims.push(
+            pestle.animate(
+              [{ transform: "none" }, { transform: "translate(-5px, 2px) rotate(-16deg)" }],
+              { duration: 200, iterations: 6, direction: "alternate", easing: "ease-in-out" },
+            ),
+          );
+        }
+        if (mortar.current) {
+          anims.push(
+            mortar.current.animate([{ transform: "none" }, { transform: "translateY(-6px)" }], {
+              duration: 180,
+              iterations: 4,
+              direction: "alternate",
+              easing: "ease-in-out",
+            }),
+          );
+        }
+        grind = window.setTimeout(
+          () =>
+            !cancelled &&
+            play({
+              ...heapScene,
+              from: { anchor: bowl.current, shape: mouth(), colors: PALETTE.spice },
+              duration: 1700,
+              scatter: 70,
+            }),
+          420,
         );
-      }
-      if (mortar.current) {
-        anims.push(
-          mortar.current.animate([{ transform: "none" }, { transform: "translateY(-6px)" }], {
-            duration: 180,
-            iterations: 4,
-            direction: "alternate",
-            easing: "ease-in-out",
-          }),
-        );
-      }
-      const t = window.setTimeout(
-        () =>
-          !cancelled &&
-          play({
-            ...heapScene,
-            from: { anchor: bowl.current, shape: mouth(), colors: PALETTE.spice },
-            duration: 1700,
-            scatter: 70,
-          }),
-        450,
-      );
+      };
+      const startT = window.setTimeout(begin, wait);
       revert = () => {
-        window.clearTimeout(t);
+        window.clearTimeout(startT);
+        window.clearTimeout(grind);
         anims.forEach((a) => a.cancel());
       };
     });
@@ -127,7 +135,7 @@ export function Opening() {
       className="relative flex min-h-[100svh] flex-col overflow-x-clip pt-[calc(var(--header-h)+2.5rem)] lg:block"
     >
       <div className="wrap grid-12 relative z-10 lg:min-h-[calc(100svh-var(--header-h)-2.5rem)]">
-        <p className="body-l col-span-4 max-w-[30ch] text-brown md:col-span-4 md:col-start-5 lg:col-span-4 lg:col-start-9 xl:col-span-3 xl:col-start-10">
+        <p style={{ "--d": 420 } as React.CSSProperties} className="enter body-l col-span-4 max-w-[30ch] text-brown md:col-span-4 md:col-start-5 lg:col-span-4 lg:col-start-9 xl:col-span-3 xl:col-start-10">
           Wholesale trade and export of spices, rice, pulses and onions, from Pondicherry, India to buyers abroad, by sea and air cargo.
         </p>
 
@@ -135,13 +143,18 @@ export function Opening() {
           id="home-title"
           className="display-xxl col-span-4 mt-10 md:col-span-8 lg:absolute lg:bottom-[12vh] lg:left-[var(--margin)] lg:mt-0"
         >
-          Pure spices, <span className="lg:block">
+          <span className="enter inline-block lg:block" style={{ "--d": 120 } as React.CSSProperties}>
+            Pure spices,
+          </span>{" "}
+          <span className="enter inline-block lg:block" style={{ "--d": 220 } as React.CSSProperties}>
             from the <em className="display-em text-green">soil</em>
           </span>{" "}
-          <span className="lg:block">to the ship.</span>
+          <span className="enter inline-block lg:block" style={{ "--d": 320 } as React.CSSProperties}>
+            to the world.
+          </span>
         </h1>
 
-        <div className="col-span-4 mt-8 flex items-center gap-6 md:col-span-4 lg:absolute lg:bottom-[5vh] lg:left-[var(--margin)] lg:mt-0">
+        <div style={{ "--d": 520 } as React.CSSProperties} className="enter col-span-4 mt-8 flex items-center gap-6 md:col-span-4 lg:absolute lg:bottom-[5vh] lg:left-[var(--margin)] lg:mt-0">
           <Link
             href="/contact"
             className="mono-label group inline-flex items-center gap-3 whitespace-nowrap rounded-full bg-ink px-5 py-3.5 text-paper transition-colors hover:bg-green"
@@ -167,7 +180,9 @@ export function Opening() {
           ref={mortar}
           className="absolute right-[max(var(--margin),6%)] top-0 w-[22vw] max-w-[190px] min-w-[96px] lg:right-[8%] lg:top-[-6%]"
         >
-          <LogoMark compact className="w-full" />
+          <div className="enter-scale" style={{ "--d": 600 } as React.CSSProperties}>
+            <LogoMark compact className="w-full" />
+          </div>
           <div ref={bowl} aria-hidden className="absolute left-[16%] top-[45%] h-[8%] w-[68%]" />
         </div>
       </div>

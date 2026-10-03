@@ -8,6 +8,8 @@ import { RouteLine } from "@/components/layout/RouteLine";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { MotionRoot } from "@/components/motion/MotionRoot";
 import { NavigationWatcher } from "@/components/motion/navigation";
+import { ToneScrub } from "@/components/motion/ToneScrub";
+import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMeta } from "@/lib/seo";
 import "./globals.css";
@@ -72,7 +74,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script
           dangerouslySetInnerHTML={{
             __html:
-              'document.documentElement.dataset.js="1";if(location.pathname==="/"&&"scrollRestoration"in history)history.scrollRestoration="manual";',
+              'var d=document.documentElement;d.dataset.js="1";d.dataset.entrance="1";setTimeout(function(){delete d.dataset.entrance},2600);if(location.pathname==="/"&&"scrollRestoration"in history)history.scrollRestoration="manual";',
           }}
         />
       </head>
@@ -85,6 +87,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <NavigationWatcher />
+        <ToneScrub />
+        <ScrollReveal />
         <MotionRoot />
         <SiteHeader />
         <RouteLine />

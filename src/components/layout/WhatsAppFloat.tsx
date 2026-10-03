@@ -74,7 +74,8 @@ export function WhatsAppFloat() {
     <div
       ref={root}
       data-aside={aside && !open}
-      className="transition-[opacity,transform] duration-300 data-[aside=true]:pointer-events-none data-[aside=true]:translate-y-3 data-[aside=true]:opacity-0 fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-50 flex flex-col items-end gap-2 [view-transition-name:whatsapp]"
+      style={{ "--d": 850 } as React.CSSProperties}
+      className="enter-fade transition-[opacity,transform] duration-300 data-[aside=true]:pointer-events-none data-[aside=true]:translate-y-3 data-[aside=true]:opacity-0 fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-[max(1rem,env(safe-area-inset-right))] z-50 flex flex-col items-end gap-2 [view-transition-name:whatsapp]"
     >
       <div
         id={panelId}
