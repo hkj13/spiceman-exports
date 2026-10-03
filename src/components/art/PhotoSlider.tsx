@@ -8,6 +8,8 @@ import { PhotoFrame } from "./PhotoFrame";
 export type SlideItem = {
   key: string;
   photo: Photo;
+  /** A second photo shown under the first, each half captioned (e.g. sea and air) */
+  pair?: { photo: Photo; captions: [string, string]; /** object-position of the second photo */ position?: string };
   title: string;
   /** Small label above the title, e.g. "01" or "Spice" */
   eyebrow?: string;
@@ -15,6 +17,8 @@ export type SlideItem = {
   meta?: string;
   href?: string;
 };
+
+const SIZES = "(min-width: 1280px) 24vw, (min-width: 1024px) 30vw, (min-width: 640px) 44vw, 76vw";
 
 type Props = {
   items: SlideItem[];
@@ -105,11 +109,25 @@ export function PhotoSlider({
         {items.map((item, i) => {
           const body = (
             <>
-              <PhotoFrame
-                photo={item.photo}
-                sizes="(min-width: 1280px) 24vw, (min-width: 1024px) 30vw, (min-width: 640px) 44vw, 76vw"
-                className={`w-full ${aspect}`}
-              />
+              {item.pair ? (
+                <div className={`grid w-full grid-rows-2 gap-2 ${aspect}`}>
+                  {([item.photo, item.pair.photo] as const).map((ph, k) => (
+                    <div key={k} className="relative min-h-0">
+                      <PhotoFrame
+                        photo={ph}
+                        sizes={SIZES}
+                        position={k === 1 ? item.pair!.position : undefined}
+                        className="h-full w-full"
+                      />
+                      <span className="mono-label absolute left-2 top-2 rounded-full bg-paper/90 px-2.5 py-1 text-[0.6rem] text-ink">
+                        {item.pair!.captions[k]}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <PhotoFrame photo={item.photo} sizes={SIZES} className={`w-full ${aspect}`} />
+              )}
               <span className="mt-4 block">
                 {item.eyebrow && (
                   <span className={`mono-label block ${dark ? "text-turmeric" : "text-chilli"}`}>{item.eyebrow}</span>

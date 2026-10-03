@@ -30,6 +30,7 @@ import stagePack from "@/assets/photos/stage-pack.jpg";
 import stageContainer from "@/assets/photos/stage-container.jpg";
 import stagePort from "@/assets/photos/stage-port.jpg";
 import stageAir from "@/assets/photos/stage-air.jpg";
+import stageAirCargo from "@/assets/photos/stage-air-cargo.jpg";
 
 export type Credit = { title: string; author: string; license: string; license_url: string; source: string };
 export type Photo = { src: StaticImageData; alt: string; credit: Credit };
@@ -179,13 +180,13 @@ export const photos = {
   },
   "black-urad-dal": {
     src: blackUradDal,
-    alt: "Split black urad dal with skin, heaped on a banana leaf",
+    alt: "Split black urad dal with skin in a bowl",
     credit: {
-      title: "Black gram with skin.jpg",
-      author: "Thamizhpparithi Maari",
-      license: "CC BY-SA 4.0",
-      license_url: "https://creativecommons.org/licenses/by-sa/4.0",
-      source: "https://commons.wikimedia.org/wiki/File:Black_gram_with_skin.jpg",
+      title: "Organic urad dal",
+      author: "ifestore.com",
+      license: "Supplied by the client",
+      license_url: "",
+      source: "https://ifestore.com/product/buy-organic-urad-dal-online/",
     },
   },
   masoor: {
@@ -201,24 +202,24 @@ export const photos = {
   },
   "small-onion": {
     src: smallOnion,
-    alt: "A heap of small red sambar onions",
+    alt: "A heap of small red shallots",
     credit: {
-      title: "Shallot (Sambar Onion) (2).JPG",
-      author: "Ask27",
-      license: "CC BY-SA 3.0",
-      license_url: "https://creativecommons.org/licenses/by-sa/3.0",
-      source: "https://commons.wikimedia.org/wiki/File:Shallot_(Sambar_Onion)_(2).JPG",
+      title: "Shallot background",
+      author: "Freepik",
+      license: "Freepik free licence (attribution)",
+      license_url: "https://www.freepik.com/legal/terms-of-use",
+      source: "https://www.magnific.com/free-photo/shallot-background_4284277.htm",
     },
   },
   "big-onion": {
     src: bigOnion,
-    alt: "Large red onions piled together",
+    alt: "Red onions piled in a woven basket",
     credit: {
-      title: "Red Onions (2724039538).jpg",
-      author: "Bob",
-      license: "CC BY 2.0",
-      license_url: "https://creativecommons.org/licenses/by/2.0",
-      source: "https://commons.wikimedia.org/wiki/File:Red_Onions_(2724039538).jpg",
+      title: "Close up view of basket of red onions",
+      author: "Freepik",
+      license: "Freepik free licence (attribution)",
+      license_url: "https://www.freepik.com/legal/terms-of-use",
+      source: "https://www.magnific.com/free-photo/close-up-view-basket-red-onions_8328185.htm",
     },
   },
   "stage-soil": {
@@ -307,6 +308,17 @@ export const photos = {
       license: "CC BY-SA 2.0",
       license_url: "https://creativecommons.org/licenses/by-sa/2.0",
       source: "https://commons.wikimedia.org/wiki/File:N791CK_Kalitta_Air_B747_Freighter_(9556048675).jpg",
+    },
+  },
+  "stage-air-cargo": {
+    src: stageAirCargo,
+    alt: "Air cargo containers on a loader beside a passenger jet",
+    credit: {
+      title: "Unloading JAL 747.jpg",
+      author: "Dtom",
+      license: "Public domain",
+      license_url: "",
+      source: "https://commons.wikimedia.org/wiki/File:Unloading_JAL_747.jpg",
     },
   },
 } satisfies Record<string, Photo>;

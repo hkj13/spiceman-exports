@@ -2,7 +2,7 @@
 
 ## Photographs
 
-Photographs in `src/assets/photos` were either supplied by Spiceman Exports or are openly licensed for commercial use from Wikimedia Commons and Openverse. Each is resized, and on the site shown in a plain rectangular frame with a light colour grade. Photos under CC BY-SA remain under that licence.
+Photographs in `src/assets/photos` were supplied by Spiceman Exports, or come from Freepik (free licence, credited) and Wikimedia Commons / Openverse (open licences). Each is resized, and on the site shown in a plain rectangular frame with a light colour grade. Photos under CC BY-SA remain under that licence.
 
 Openly licensed photos are **illustrative**: they show the goods and the general trade, not Spiceman Exports' own stock, people or premises. Replace them with the business's own photographs when available (see the README).
 
@@ -21,10 +21,10 @@ Openly licensed photos are **illustrative**: they show the goods and the general
 | `toor-dal.jpg` | [Pigeon Pea (Toor Dal) (49683602388).jpg](https://commons.wikimedia.org/wiki/File:Pigeon_Pea_(Toor_Dal)_(49683602388).jpg) | Ajay Suresh from New York, NY, USA | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) |
 | `moong.jpg` | [Green Mung Beans.jpg](https://commons.wikimedia.org/wiki/File:Green_Mung_Beans.jpg) | Sanjay Acharya | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | `white-urad-dal.jpg` | [Vigna mungo without skin.jpg](https://commons.wikimedia.org/wiki/File:Vigna_mungo_without_skin.jpg) | Thamizhpparithi Maari | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| `black-urad-dal.jpg` | [Black gram with skin.jpg](https://commons.wikimedia.org/wiki/File:Black_gram_with_skin.jpg) | Thamizhpparithi Maari | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
+| `black-urad-dal.jpg` | [Organic urad dal](https://ifestore.com/product/buy-organic-urad-dal-online/) | ifestore.com | Supplied by the client |
 | `masoor.jpg` | [Red lentils (1).jpg](https://commons.wikimedia.org/wiki/File:Red_lentils_(1).jpg) | Fumikas Sagisavas | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
-| `small-onion.jpg` | [Shallot (Sambar Onion) (2).JPG](https://commons.wikimedia.org/wiki/File:Shallot_(Sambar_Onion)_(2).JPG) | Ask27 | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| `big-onion.jpg` | [Red Onions (2724039538).jpg](https://commons.wikimedia.org/wiki/File:Red_Onions_(2724039538).jpg) | Bob | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) |
+| `small-onion.jpg` | [Shallot background](https://www.magnific.com/free-photo/shallot-background_4284277.htm) | Freepik | [Freepik free licence (attribution)](https://www.freepik.com/legal/terms-of-use) |
+| `big-onion.jpg` | [Close up view of basket of red onions](https://www.magnific.com/free-photo/close-up-view-basket-red-onions_8328185.htm) | Freepik | [Freepik free licence (attribution)](https://www.freepik.com/legal/terms-of-use) |
 | `stage-soil.jpg` | [Pigeon Pea field in Andhra Pradesh (96030).jpg](https://commons.wikimedia.org/wiki/File:Pigeon_Pea_field_in_Andhra_Pradesh_(96030).jpg) | PJeganathan | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
 | `stage-harvest.jpg` | [Piper nigrum 04236.jpg](https://commons.wikimedia.org/wiki/File:Piper_nigrum_04236.jpg) | Vengolis | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | `stage-sun.jpg` | [Drying spices.jpg](https://commons.wikimedia.org/wiki/File:Drying_spices.jpg) | Arie Basuki | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
@@ -33,6 +33,7 @@ Openly licensed photos are **illustrative**: they show the goods and the general
 | `stage-container.jpg` | [Containers Rotterdam.JPG](https://commons.wikimedia.org/wiki/File:Containers_Rotterdam.JPG) | Steven Lek | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | `stage-port.jpg` | [Container ship in Koper 2013.jpg](https://commons.wikimedia.org/wiki/File:Container_ship_in_Koper_2013.jpg) | Martin Dörsch | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
 | `stage-air.jpg` | [N791CK Kalitta Air B747 Freighter (9556048675).jpg](https://commons.wikimedia.org/wiki/File:N791CK_Kalitta_Air_B747_Freighter_(9556048675).jpg) | RHL Images from England | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
+| `stage-air-cargo.jpg` | [Unloading JAL 747.jpg](https://commons.wikimedia.org/wiki/File:Unloading_JAL_747.jpg) | Dtom | Public domain |
 
 ## Illustrations
 
