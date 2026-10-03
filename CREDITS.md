@@ -32,6 +32,7 @@ Openly licensed photos are **illustrative**: they show the goods and the general
 | `stage-pack.jpg` | [Bird on a sack of rice.jpg](https://commons.wikimedia.org/wiki/File:Bird_on_a_sack_of_rice.jpg) | Kritzolina | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | `stage-container.jpg` | [Containers Rotterdam.JPG](https://commons.wikimedia.org/wiki/File:Containers_Rotterdam.JPG) | Steven Lek | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | `stage-port.jpg` | [Container ship in Koper 2013.jpg](https://commons.wikimedia.org/wiki/File:Container_ship_in_Koper_2013.jpg) | Martin Dörsch | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
+| `stage-air.jpg` | [N791CK Kalitta Air B747 Freighter (9556048675).jpg](https://commons.wikimedia.org/wiki/File:N791CK_Kalitta_Air_B747_Freighter_(9556048675).jpg) | RHL Images from England | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
 
 ## Illustrations
 

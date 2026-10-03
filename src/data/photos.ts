@@ -29,6 +29,7 @@ import stageSort from "@/assets/photos/stage-sort.jpg";
 import stagePack from "@/assets/photos/stage-pack.jpg";
 import stageContainer from "@/assets/photos/stage-container.jpg";
 import stagePort from "@/assets/photos/stage-port.jpg";
+import stageAir from "@/assets/photos/stage-air.jpg";
 
 export type Credit = { title: string; author: string; license: string; license_url: string; source: string };
 export type Photo = { src: StaticImageData; alt: string; credit: Credit };
@@ -295,6 +296,17 @@ export const photos = {
       license: "CC0",
       license_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       source: "https://commons.wikimedia.org/wiki/File:Container_ship_in_Koper_2013.jpg",
+    },
+  },
+  "stage-air": {
+    src: stageAir,
+    alt: "A white cargo freighter aircraft on the taxiway",
+    credit: {
+      title: "N791CK Kalitta Air B747 Freighter (9556048675).jpg",
+      author: "RHL Images from England",
+      license: "CC BY-SA 2.0",
+      license_url: "https://creativecommons.org/licenses/by-sa/2.0",
+      source: "https://commons.wikimedia.org/wiki/File:N791CK_Kalitta_Air_B747_Freighter_(9556048675).jpg",
     },
   },
 } satisfies Record<string, Photo>;
