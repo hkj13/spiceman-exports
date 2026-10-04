@@ -59,14 +59,6 @@ export default function AboutPage() {
               service. Our commitment to excellence is reflected in everything we do, from sourcing to delivery.
             </p>
           </div>
-          <div className="mt-8 border-l-2 border-turmeric pl-5">
-            <p className="font-display text-[clamp(1.5rem,2.2vw,2rem)] italic leading-tight text-green [font-variation-settings:'opsz'_48]">
-              {proprietor.name}
-            </p>
-            <p className="mono-label mt-2 text-brown">
-              {proprietor.role} · {site.name}
-            </p>
-          </div>
           <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3">
             <a
               href={whatsappLink(site.phones[0])}

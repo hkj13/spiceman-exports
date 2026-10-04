@@ -29,10 +29,9 @@ export const site = {
   url: "https://spicemanexports.com",
   locale: "en_IN",
 
+  /** Named on the About page only; everywhere else the brand leads. */
   proprietor: {
     name: "Shanthi Krishnamurthy",
-    /** Named on the About page only; everywhere else the brand leads. */
-    role: "Founder",
   },
 
   address: {
