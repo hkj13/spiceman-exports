@@ -6,6 +6,7 @@ import { Opening } from "@/components/home/Opening";
 import { QuoteStarter } from "@/components/home/QuoteStarter";
 import { NightZone } from "@/components/home/NightZone";
 import { SceneSection } from "@/components/home/SceneSection";
+import { Welcome } from "@/components/home/Welcome";
 import { CatalogueDownload } from "@/components/products/CatalogueDownload";
 import { Reveal } from "@/components/motion/Reveal";
 import { site, stages, whatsappLink } from "@/config/site";
@@ -57,6 +58,7 @@ const STOP_SLIDES: SlideItem[] = stages.map((st) => ({
 export default function Home() {
   return (
     <>
+      <Welcome />
       <Opening />
 
       {/* What we do: one sentence, then the four categories across the full width */}
@@ -183,12 +185,19 @@ export default function Home() {
           </div>
           <div className="col-span-4 md:col-span-5 md:col-start-4 xl:col-span-6 xl:col-start-6">
             <h2 id="note-title" className="display-l">
-              Run by {site.proprietor.name}, and answered directly.
+              {site.name}: quality, reliability and sustainability.
             </h2>
-            <p className="body-l mt-6 max-w-[48ch] text-paper/80">
-              Spiceman Exports is a sole proprietorship. Inquiries go straight to the sole proprietor by phone, WhatsApp or
-              email, with a straight answer on what can be supplied.
-            </p>
+            <div className="body-l mt-6 max-w-[48ch] space-y-4 text-paper/80">
+              <p>
+                {site.name} is dedicated to delivering the finest pulses, onions, and spices to markets around the world,
+                ensuring that every product meets the highest standards. We source our products from the best farms, ensuring
+                they are fresh, nutritious, and free from harmful chemicals.
+              </p>
+              <p>
+                We believe in building strong relationships with our clients through trust and exceptional service, from
+                sourcing to delivery.
+              </p>
+            </div>
             <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
               <Link href="/about" className="mono-label link-draw text-turmeric">
                 About the business →

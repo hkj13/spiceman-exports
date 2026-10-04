@@ -65,37 +65,18 @@ export const photos = {
   },
   turmeric: {
     src: turmeric,
-    alt: "A heap of dried turmeric fingers",
-    credit: {
-      title:
-        "A close-up view of dried turmeric roots fills the frame, showing their natural shapes, rough texture, and bright golden-yellow color. The repeating forms create a simple but striking natural pattern. Captured in Kuttikkattoor, Kozhikode, Kerala.",
-      author: "Bigul Malayi",
-      license: "CC0 1.0",
-      license_url: "https://creativecommons.org/publicdomain/zero/1.0/",
-      source: "https://wordpress.org/photos/photo/2706a7b3fe/",
-    },
+    alt: "A heap of dried turmeric fingers, two broken open to show the orange inside",
+    credit: SUPPLIED_AI,
   },
   "red-chilli": {
     src: redChilli,
-    alt: "A heap of dried red chillies with their stems on",
-    credit: {
-      title: "Dried chillies 4.jpg",
-      author: "Richard Mortel",
-      license: "CC BY 2.0",
-      license_url: "https://creativecommons.org/licenses/by/2.0",
-      source: "https://commons.wikimedia.org/wiki/File:Dried_chillies_4.jpg",
-    },
+    alt: "Close-up of dried red chillies with their stems on",
+    credit: SUPPLIED_AI,
   },
   cardamom: {
     src: cardamom,
-    alt: "Green cardamom pods in a brass bowl",
-    credit: {
-      title: "Green Cardamom Pods.jpg",
-      author: "Misterneedlemouse",
-      license: "CC0",
-      license_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-      source: "https://commons.wikimedia.org/wiki/File:Green_Cardamom_Pods.jpg",
-    },
+    alt: "Green cardamom pods in a copper bowl",
+    credit: SUPPLIED_AI,
   },
   "coriander-seeds": {
     src: corianderSeeds,
@@ -148,13 +129,7 @@ export const photos = {
   "toor-dal": {
     src: toorDal,
     alt: "Close-up of split toor dal",
-    credit: {
-      title: "Pigeon Pea (Toor Dal) (49683602388).jpg",
-      author: "Ajay Suresh from New York, NY, USA",
-      license: "CC BY 2.0",
-      license_url: "https://creativecommons.org/licenses/by/2.0",
-      source: "https://commons.wikimedia.org/wiki/File:Pigeon_Pea_(Toor_Dal)_(49683602388).jpg",
-    },
+    credit: SUPPLIED_AI,
   },
   moong: {
     src: moong,
@@ -191,14 +166,8 @@ export const photos = {
   },
   masoor: {
     src: masoor,
-    alt: "Close-up of split red masoor",
-    credit: {
-      title: "Red lentils (1).jpg",
-      author: "Fumikas Sagisavas",
-      license: "CC0",
-      license_url: "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
-      source: "https://commons.wikimedia.org/wiki/File:Red_lentils_(1).jpg",
-    },
+    alt: "Split red masoor in a clay bowl",
+    credit: SUPPLIED_AI,
   },
   "small-onion": {
     src: smallOnion,

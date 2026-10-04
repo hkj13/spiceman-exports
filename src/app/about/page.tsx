@@ -7,9 +7,9 @@ import { Slot } from "@/components/placeholder/Slot";
 import { site, whatsappLink } from "@/config/site";
 
 export const metadata: Metadata = pageMeta({
-  title: "About: Shanthi Krishnamurthy, Pondicherry, India",
+  title: "About us: Spiceman Exports, Lawspet, Pondicherry",
   description:
-    "Spiceman Exports is a sole proprietorship run by Shanthi Krishnamurthy from Pondicherry, India, trading spices, rice, pulses and onions wholesale and for export.",
+    "Spiceman Exports, a sole proprietorship company founded by Shanthi Krishnamurthy in Lawspet, Pondicherry, is dedicated to delivering the finest pulses, onions and spices to markets around the world.",
   path: "/about",
 });
 
@@ -34,25 +34,37 @@ export default function AboutPage() {
         </div>
       </header>
 
-      {/* Sole proprietor */}
-      <section aria-labelledby="proprietor" data-rail="Sole proprietor" className="wrap grid-12 items-center gap-y-12 py-12 md:py-20">
+      {/* The founder: the only place on the site she is named */}
+      <section aria-labelledby="founder" data-rail="About the Founder" className="wrap grid-12 items-center gap-y-12 py-12 md:py-20">
         <div className="col-span-3 md:col-span-3 xl:col-span-4 xl:col-start-2">
           <LeafStage monogram={monogram} />
         </div>
         <div className="col-span-4 md:col-span-5 md:col-start-4 xl:col-span-5 xl:col-start-7">
-          <p className="mono-label text-brown">{proprietor.role}</p>
-          <h2 id="proprietor" className="display-l mt-4">
-            {proprietor.name}
+          <p className="mono-label text-brown">Sole proprietorship company</p>
+          <h2 id="founder" className="display-l mt-4">
+            About the <em className="display-em text-green">Founder</em>
           </h2>
           <div className="body-l mt-8 max-w-[44ch] space-y-5 text-ink">
             <p>
-              Spiceman Exports is a sole proprietorship run by {proprietor.name}. The business buys and sells spices, rice,
-              pulses and onions in wholesale quantities and prepares them for export.
+              {site.name}, founded by <strong className="font-semibold text-green">{proprietor.name}</strong>, is
+              dedicated to delivering the finest pulses, onions, and spices to markets around the world. Our company prides
+              itself on quality, reliability, and sustainability, ensuring that every product meets the highest standards.
             </p>
             <p>
-              Inquiries go straight to the sole proprietor, by phone, WhatsApp or email. Say what you buy, the
-              specification you buy to and where it needs to go, and you will get a straight answer on what can be
-              supplied.
+              We source our products from the best farms, ensuring they are fresh, nutritious, and free from harmful
+              chemicals.
+            </p>
+            <p>
+              At {site.name}, we believe in building strong relationships with our clients through trust and exceptional
+              service. Our commitment to excellence is reflected in everything we do, from sourcing to delivery.
+            </p>
+          </div>
+          <div className="mt-8 border-l-2 border-turmeric pl-5">
+            <p className="font-display text-[clamp(1.5rem,2.2vw,2rem)] italic leading-tight text-green [font-variation-settings:'opsz'_48]">
+              {proprietor.name}
+            </p>
+            <p className="mono-label mt-2 text-brown">
+              {proprietor.role} · {site.name}
             </p>
           </div>
           <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3">
@@ -85,7 +97,7 @@ export default function AboutPage() {
         <div className="col-span-4 md:col-span-4 xl:col-span-5 xl:col-start-2">
           <p className="mono-label text-brown">The base</p>
           <h2 id="base" className="display-l mt-4">
-            Pondicherry, India.
+            Lawspet, Pondicherry, India.
           </h2>
           <div className="mt-8 max-w-[46ch] space-y-5 text-[1.0625rem]">
             <p>

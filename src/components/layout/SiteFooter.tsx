@@ -74,7 +74,7 @@ export function SiteFooter() {
         {/* Right padding keeps the logo clear of the floating WhatsApp button */}
         <div className="col-span-4 flex items-end justify-between gap-6 pr-16 md:col-span-8 xl:col-span-12">
           <p className="mono-label text-[0.65rem] text-paper/60">
-            © {year} {site.legalName} · Sole&nbsp;proprietor {site.proprietor.name} ·{" "}
+            Copyright © {year} {site.legalName}. All rights reserved. ·{" "}
             <Link href="/credits" className="tap underline-offset-4 hover:text-paper hover:underline">
               Photo credits
             </Link>

@@ -14,11 +14,12 @@ import { PALETTE } from "./palette";
 import { homeScenes } from "./scenes";
 
 /**
- * The first screen. The headline is server-rendered and never waits for
- * animation. Every time Home is loaded (refreshes included) the mortar grinds
- * and the ground spice rises out of the bowl to become the particle field,
- * which settles into a heap. Arriving from another page of the site, the
- * grains flow in from that page instead.
+ * The screen after the welcome banner. The headline is server-rendered and
+ * never waits for animation. On a page load (refreshes included) the mortar
+ * grinds once this section comes into view, and the ground spice rises out
+ * of the bowl to become the particle field, which settles into a heap.
+ * Arriving from another page of the site, the grains flow in from that page
+ * instead.
  */
 export function Opening() {
   const section = useRef<HTMLElement>(null);
@@ -41,17 +42,17 @@ export function Opening() {
       if (cancelled || !engine) return;
       const base = homeScenes.heap(pile.current);
       const heapScene = { ...base, onSettled: pile.current ? claimStage(pile.current) : undefined };
-      // Arrived from another page, or already scrolled on: just form the heap.
-      if (!loaded || window.scrollY > 40) {
+      // Arrived from another page: just form the heap.
+      if (!loaded) {
         play(heapScene);
         return;
       }
-      // The grind begins as the hero's entrance settles (about 0.9 s after the
-      // page opens), so the sequence reads as one: content in, then the
-      // mortar grinds and the spice rises.
-      const wait = Math.max(0, 900 - performance.now());
+      // The welcome banner sits above this section, so the grind waits until
+      // the section is well into view (and never starts before the page's
+      // entrance has settled, about 0.9 s in), so the sequence is seen whole.
       const anims: Animation[] = [];
       let grind = 0;
+      let startT = 0;
       const begin = () => {
         if (cancelled) return;
         const pestle = mortar.current?.querySelector<SVGGElement>(".pestle");
@@ -87,8 +88,17 @@ export function Opening() {
           420,
         );
       };
-      const startT = window.setTimeout(begin, wait);
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((e) => e.isIntersecting)) return;
+          io.disconnect();
+          startT = window.setTimeout(begin, Math.max(0, 900 - performance.now()));
+        },
+        { rootMargin: "0px 0px -35% 0px" },
+      );
+      if (section.current) io.observe(section.current);
       revert = () => {
+        io.disconnect();
         window.clearTimeout(startT);
         window.clearTimeout(grind);
         anims.forEach((a) => a.cancel());
@@ -130,8 +140,9 @@ export function Opening() {
   return (
     <section
       ref={section}
+      id="opening"
       aria-labelledby="home-title"
-      data-rail="Welcome"
+      data-rail="Pure spices"
       className="relative flex min-h-[100svh] flex-col overflow-x-clip pt-[calc(var(--header-h)+2.5rem)] lg:block"
     >
       <div className="wrap grid-12 relative z-10 lg:min-h-[calc(100svh-var(--header-h)-2.5rem)]">
@@ -139,7 +150,7 @@ export function Opening() {
           Wholesale trade and export of spices, rice, pulses and onions, from Pondicherry, India to buyers abroad, by sea and air cargo.
         </p>
 
-        <h1
+        <h2
           id="home-title"
           className="display-xxl col-span-4 mt-10 md:col-span-8 lg:absolute lg:bottom-[12vh] lg:left-[var(--margin)] lg:mt-0"
         >
@@ -152,7 +163,7 @@ export function Opening() {
           <span className="enter inline-block lg:block" style={{ "--d": 320 } as React.CSSProperties}>
             to the world.
           </span>
-        </h1>
+        </h2>
 
         <div style={{ "--d": 520 } as React.CSSProperties} className="enter col-span-4 mt-8 flex items-center gap-6 md:col-span-4 lg:absolute lg:bottom-[5vh] lg:left-[var(--margin)] lg:mt-0">
           <Link

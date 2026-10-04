@@ -6,7 +6,7 @@ const INTERACTIVE = "a, button, [role='button'], label, select, summary, [data-c
 const TEXT_ENTRY = "input:not([type='checkbox']):not([type='radio']):not([type='submit']), textarea";
 
 /**
- * A peppercorn that follows the pointer and opens into a ring over anything
+ * A red chilli that follows the pointer and opens into a ring over anything
  * clickable, with an optional label from `data-cursor`. Mouse only; the
  * native cursor comes back over text fields.
  */
