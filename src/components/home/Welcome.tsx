@@ -37,7 +37,7 @@ export function Welcome() {
           style={{ "--d": 80 } as React.CSSProperties}
         >
           <span aria-hidden className="inline-block h-px w-8 bg-turmeric" />
-          Welcome to {site.name}
+          Welcome to
           <span aria-hidden className="inline-block h-px w-8 bg-turmeric" />
         </p>
         <h1
