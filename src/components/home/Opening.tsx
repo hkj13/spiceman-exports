@@ -140,7 +140,6 @@ export function Opening() {
   return (
     <section
       ref={section}
-      id="opening"
       aria-labelledby="home-title"
       data-rail="Pure spices"
       className="relative flex min-h-[100svh] flex-col overflow-x-clip pt-[calc(var(--header-h)+2.5rem)] lg:block"

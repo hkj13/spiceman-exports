@@ -31,7 +31,7 @@ export function Welcome() {
         className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(18_54_28/0.62)_0%,rgb(18_54_28/0.5)_42%,rgb(18_54_28/0.84)_100%)]"
       />
 
-      <div className="wrap relative w-full pb-24 pt-[calc(var(--header-h)+3rem)] text-center">
+      <div className="wrap relative w-full pb-16 pt-[calc(var(--header-h)+3rem)] text-center">
         <p
           className="enter mono-label flex items-center justify-center gap-3 text-paper"
           style={{ "--d": 80 } as React.CSSProperties}
@@ -78,17 +78,6 @@ export function Welcome() {
           </Link>
         </div>
       </div>
-
-      {/* A nudge down to the opening below */}
-      <a
-        href="#opening"
-        aria-label="Scroll to the next section"
-        className="enter-fade mono-label absolute inset-x-0 bottom-6 mx-auto flex w-max flex-col items-center gap-2 text-[0.65rem] text-paper/80 hover:text-paper"
-        style={{ "--d": 700 } as React.CSSProperties}
-      >
-        Scroll
-        <span aria-hidden className="block h-8 w-px bg-current" />
-      </a>
     </section>
   );
 }
