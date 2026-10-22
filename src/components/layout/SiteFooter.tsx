@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { nav, site, whatsappLink } from "@/config/site";
 import { LogoMark } from "@/components/brand/LogoMark";
+import { EmailList } from "@/components/contact/EmailList";
 import { CatalogueDownload } from "@/components/products/CatalogueDownload";
 
 export function SiteFooter() {
@@ -29,9 +30,6 @@ export function SiteFooter() {
             <br />
             {site.address.country}
           </p>
-          <a href={`mailto:${site.email}`} className="link-draw mt-4 inline-block [overflow-wrap:anywhere]">
-            {site.email}
-          </a>
         </address>
 
         <div className="col-span-4 sm:col-span-2 md:col-span-3 md:col-start-6 xl:col-span-2 xl:col-start-11">
@@ -54,6 +52,14 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="col-span-4 md:col-span-8 xl:col-span-12">
+          <p className="mono-label mb-4 text-turmeric">Email</p>
+          <EmailList
+            tone="dark"
+            className="grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3"
+          />
         </div>
 
         <nav aria-label="Footer" className="col-span-4 md:col-span-8 xl:col-span-12">

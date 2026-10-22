@@ -15,6 +15,8 @@ export type Phone = {
   e164: string;
 };
 
+export type Email = { address: string; label: string };
+
 export type Certification = { name: string; issuer: string; id?: string; href?: string };
 export type Testimonial = { quote: string; name: string; company: string; country: string };
 export type Client = { name: string; country: string; logo?: string };
@@ -52,7 +54,17 @@ export const site = {
     { display: "+91 87782 62010", e164: "918778262010" },
   ] satisfies Phone[],
 
-  email: "spicemanexports@gmail.com",
+  /** The main inbox: quote forms, mailto links, spec sheets and structured data. */
+  email: "info@spicemanexports.com",
+
+  /** Every department inbox, shown with its label on Contact, Home, Journey and the footer. */
+  emails: [
+    { address: "info@spicemanexports.com", label: "General enquiries" },
+    { address: "exports@spicemanexports.com", label: "Export orders" },
+    { address: "sales@spicemanexports.com", label: "Sales" },
+    { address: "purchase@spicemanexports.com", label: "Purchase & suppliers" },
+    { address: "accounts@spicemanexports.com", label: "Accounts & payments" },
+  ] satisfies Email[],
 
   // Trust content: add only what can be documented. Empty = hidden.
   certifications: [] as Certification[],

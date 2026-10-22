@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMeta } from "@/lib/seo";
 import { Suspense } from "react";
 import { WhatsAppGlyph } from "@/components/brand/WhatsAppGlyph";
+import { EmailList } from "@/components/contact/EmailList";
 import { MapFacade } from "@/components/contact/MapFacade";
 import { PrefilledQuoteForm } from "@/components/contact/PrefilledQuoteForm";
 import { QuoteForm } from "@/components/contact/QuoteForm";
@@ -11,7 +12,7 @@ import { site, whatsappLink } from "@/config/site";
 export const metadata: Metadata = pageMeta({
   title: "Get a quote",
   description:
-    "Request a quote for spices, rice, pulses and onions from Spiceman Exports, Pondicherry. WhatsApp +91 98945 21812 or +91 87782 62010, or email spicemanexports@gmail.com.",
+    "Request a quote for spices, rice, pulses and onions from Spiceman Exports, Pondicherry. WhatsApp +91 98945 21812 or +91 87782 62010, or email info@spicemanexports.com.",
   path: "/contact",
 });
 
@@ -66,11 +67,10 @@ export default function ContactPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-6">
-            <a href={`mailto:${site.email}`} className="link-draw [overflow-wrap:anywhere] text-lg">
-              {site.email}
-            </a>
-          </p>
+          <div className="mt-10">
+            <p className="mono-label text-brown">Email</p>
+            <EmailList size="lg" className="mt-4 space-y-4" />
+          </div>
 
           <address className="mt-10 not-italic">
             <p className="mono-label text-brown">Address</p>

@@ -3,6 +3,7 @@ import { pageMeta } from "@/lib/seo";
 import { StageArt } from "@/components/art/StageArt";
 import { SampleTag } from "@/components/art/SampleTag";
 import { PhotoFrame } from "@/components/art/PhotoFrame";
+import { EmailList } from "@/components/contact/EmailList";
 import { ChapterLabel, StepNumber } from "@/components/home/ChapterLabel";
 import { HorizontalChapters } from "@/components/home/HorizontalChapters";
 import { QuoteStarter } from "@/components/home/QuoteStarter";
@@ -353,10 +354,10 @@ export default function JourneyPage() {
               Tell us what you need to <em className="display-em text-turmeric">ship</em>.
             </Reveal>
             <div data-scene-anchor aria-hidden className="mt-10 h-3 w-full max-w-[520px]" />
-            <div className="mt-8 grid gap-x-10 gap-y-6 text-paper/85 sm:grid-cols-2 lg:mt-10">
+            <div className="mt-8 grid gap-y-8 text-paper/85 lg:mt-10">
               <div>
                 <p className="mono-label text-turmeric">WhatsApp or call</p>
-                <ul className="mt-3 space-y-2">
+                <ul className="mt-3 flex flex-wrap gap-x-10 gap-y-2">
                   {site.phones.map((p) => (
                     <li key={p.e164}>
                       <a href={whatsappLink(p)} target="_blank" rel="noopener noreferrer" className="link-draw text-xl">
@@ -368,9 +369,11 @@ export default function JourneyPage() {
               </div>
               <div>
                 <p className="mono-label text-turmeric">Email</p>
-                <a href={`mailto:${site.email}`} className="link-draw mt-3 inline-block text-xl [overflow-wrap:anywhere]">
-                  {site.email}
-                </a>
+                <EmailList
+                  tone="dark"
+                  size="lg"
+                  className="mt-3 grid gap-x-10 gap-y-4 sm:grid-cols-[repeat(auto-fill,minmax(18.5rem,1fr))]"
+                />
               </div>
             </div>
           </div>

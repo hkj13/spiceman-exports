@@ -23,12 +23,19 @@ export function JsonLd() {
         slogan: site.tagline,
         description: site.description,
         address,
-        contactPoint: site.phones.map((p) => ({
-          "@type": "ContactPoint",
-          telephone: `+${p.e164}`,
-          contactType: "sales",
-          email: site.email,
-        })),
+        contactPoint: [
+          ...site.phones.map((p) => ({
+            "@type": "ContactPoint",
+            telephone: `+${p.e164}`,
+            contactType: "sales",
+            email: site.email,
+          })),
+          ...site.emails.map((e) => ({
+            "@type": "ContactPoint",
+            contactType: e.label,
+            email: e.address,
+          })),
+        ],
       },
       {
         "@type": "LocalBusiness",

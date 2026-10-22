@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PhotoSlider, type SlideItem } from "@/components/art/PhotoSlider";
+import { EmailList } from "@/components/contact/EmailList";
 import { ChapterLabel } from "@/components/home/ChapterLabel";
 import { Opening } from "@/components/home/Opening";
 import { QuoteStarter } from "@/components/home/QuoteStarter";
@@ -226,10 +227,10 @@ export default function Home() {
               Tell us what you need to <em className="display-em text-turmeric">ship</em>.
             </Reveal>
             <div data-scene-anchor aria-hidden className="mt-10 h-3 w-full max-w-[520px]" />
-            <div className="mt-8 grid gap-x-10 gap-y-6 text-paper/85 sm:grid-cols-2 lg:mt-10">
+            <div className="mt-8 grid gap-y-8 text-paper/85 lg:mt-10">
               <div>
                 <p className="mono-label text-turmeric">WhatsApp or call</p>
-                <ul className="mt-3 space-y-2">
+                <ul className="mt-3 flex flex-wrap gap-x-10 gap-y-2">
                   {site.phones.map((p) => (
                     <li key={p.e164}>
                       <a href={whatsappLink(p)} target="_blank" rel="noopener noreferrer" className="link-draw text-lg">
@@ -241,9 +242,11 @@ export default function Home() {
               </div>
               <div>
                 <p className="mono-label text-turmeric">Email</p>
-                <a href={`mailto:${site.email}`} className="link-draw mt-3 inline-block break-words text-lg">
-                  {site.email}
-                </a>
+                <EmailList
+                  tone="dark"
+                  size="lg"
+                  className="mt-3 grid gap-x-10 gap-y-4 sm:grid-cols-[repeat(auto-fill,minmax(18.5rem,1fr))]"
+                />
               </div>
             </div>
           </div>
